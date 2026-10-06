@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>OnEvent - Edit Profile</title>
+</head>
+
+<body>
+
+    <header>
+
+        <h2>OnEvent</h2>
+
+        <%- include("../partials/navbar") %>
+
+        <link rel="stylesheet" href="/css/user/editProfile.css">
+
+    </header>
+
+
+    <main>
+
+        <h1>Edit Profile</h1>
+
+
+        <!-- Profile Image -->
+
+        <h2>Profile Image</h2>
+
+        <% if (user.profileImage) { %>
+
+            <img
+                src="<%= user.profileImage %>"
+                alt="Profile Image"
+                width="120"
+                height="120"
+            >
+
+        <% } else { %>
+
+            <p>No profile image uploaded.</p>
+
+        <% } %>
+
+
+        <form
+            action="/profile/upload-image"
+            method="POST"
+            enctype="multipart/form-data"
+        >
+
+            <input
+                type="file"
+                name="profileImage"
+                accept="image/jpeg,image/png,image/webp"
+                required
+            >
+
+            <button type="submit">
+                Upload Image
+            </button>
+
+        </form>
+
+
+        <br>
+        <hr>
+        <br>
+
+
+        <!-- Edit Profile -->
+
+        <form action="/profile/edit" method="POST">
+
+
+            <!-- Name -->
+
+            <div>
+
+                <label for="name">
+                    Name
+                </label>
+
+                <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    value="<%= user.name %>"
+                    required
+                >
+
+            </div>
+
+
+            <br>
+
+
+            <!-- Current Email -->
+
+            <div>
+
+                <label for="currentEmail">
+                    Current Email
+                </label>
+
+                <input
+                    type="email"
+                    id="currentEmail"
+                    value="<%= user.email %>"
+                    disabled
+                >
+
+            </div>
+
+
+            <br>
+
+
+            <!-- New Email -->
+
+            <div>
+
+                <label for="newEmail">
+                    New Email
+                </label>
+
+                <input
+                    type="email"
+                    id="newEmail"
+                    name="email"
+                    placeholder="Enter new email"
+                >
+
+                <button
+                    type="submit"
+                    formaction="/profile/change-email"
+                    formmethod="POST"
+                >
+                    Change Email
+                </button>
+
+            </div>
+
+
+            <br>
+
+
+            <!-- Phone -->
+
+            <div>
+
+                <label for="phone">
+                    Phone
+                </label>
+
+                <input
+                    type="text"
+                    id="phone"
+                    name="phone"
+                    value="<%= user.phone || '' %>"
+                    maxlength="10"
+                    required
+                >
+
+            </div>
+
+
+            <br>
+
+
+            <!-- Save Changes -->
+
+            <button type="submit">
+                Save Changes
+            </button>
+
+
+            <a href="/profile">
+                Cancel
+            </a>
+
+
+        </form>
+
+    </main>
+
+</body>
+
+</html>

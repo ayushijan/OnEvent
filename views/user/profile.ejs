@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>OnEvent - Profile</title>
+
+    <link rel="stylesheet" href="/css/user/profile.css">
+
+</head>
+
+<body>
+
+    <header>
+
+        <h2>OnEvent</h2>
+
+        <%- include("../partials/navbar") %>
+
+    </header>
+
+    <main>
+
+        <h1>My Profile</h1>
+
+        <% if (user.profileImage) { %>
+
+            <img
+                src="<%= user.profileImage %>"
+                alt="Profile Image"
+                width="120"
+                height="120"
+            >
+
+        <% } else { %>
+
+            <p>No profile image</p>
+
+        <% } %>
+
+        <h3>Personal Details</h3>
+
+        <p>
+            <strong>Name:</strong>
+            <%= user.name %>
+        </p>
+
+        <p>
+            <strong>Email:</strong>
+            <%= user.email %>
+        </p>
+
+        <p>
+            <strong>Phone:</strong>
+            <%= user.phone || "Not provided" %>
+        </p>
+
+        <a href="/profile/edit">Edit Profile</a>
+
+        <br><br>
+
+        <a href="/profile/change-password">
+            Change Password
+        </a>
+
+    </main>
+
+</body>
+
+</html>

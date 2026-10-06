@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>OnEvent - Admin Dashboard</title>
+
+    <link rel="stylesheet" href="/css/admin/dashboard.css">
+
+</head>
+
+<body>
+
+    <header>
+
+        <h1>OnEvent Admin Dashboard</h1>
+
+        <a href="/admin/logout">
+            Logout
+        </a>
+
+    </header>
+
+
+    <main>
+
+        <h2>User Management</h2>
+
+
+        <!-- Search -->
+
+        <form action="/admin/dashboard" method="GET">
+
+            <input
+                type="text"
+                name="search"
+                placeholder="Search by name or email"
+                value="<%= search || '' %>"
+            >
+
+            <button type="submit">
+                Search
+            </button>
+
+            <a href="/admin/dashboard">
+                Clear
+            </a>
+
+        </form>
+
+
+        <br>
+
+
+        <% if (users.length === 0) { %>
+
+            <p>No users found.</p>
+
+        <% } else { %>
+
+            <table border="1">
+
+                <thead>
+
+                    <tr>
+
+                        <th>Name</th>
+
+                        <th>Email</th>
+
+                        <th>Phone</th>
+
+                        <th>Status</th>
+
+                        <th>Created At</th>
+
+                        <th>Action</th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    <% users.forEach(user => { %>
+
+                        <tr>
+
+                            <td>
+                                <%= user.name %>
+                            </td>
+
+                            <td>
+                                <%= user.email %>
+                            </td>
+
+                            <td>
+                                <%= user.phone || "-" %>
+                            </td>
+
+                            <td>
+                                <%= user.status %>
+                            </td>
+
+                            <td>
+                                <%= user.createdAt.toLocaleDateString() %>
+                            </td>
+
+                            <td>
+
+                                <% if (user.status === "active") { %>
+
+                                    <form
+                                        action="/admin/users/<%= user._id %>/status"
+                                        method="POST"
+                                        onsubmit="return confirm('Are you sure you want to block this user?');"
+                                    >
+
+                                        <input
+                                            type="hidden"
+                                            name="status"
+                                            value="blocked"
+                                        >
+
+                                        <button type="submit">
+                                            Block
+                                        </button>
+
+                                    </form>
+
+                                <% } else { %>
+
+                                    <form
+                                        action="/admin/users/<%= user._id %>/status"
+                                        method="POST"
+                                        onsubmit="return confirm('Are you sure you want to unblock this user?');"
+                                    >
+
+                                        <input
+                                            type="hidden"
+                                            name="status"
+                                            value="active"
+                                        >
+
+                                        <button type="submit">
+                                            Unblock
+                                        </button>
+
+                                    </form>
+
+                                <% } %>
+
+                            </td>
+
+                        </tr>
+
+                    <% }) %>
+
+                </tbody>
+
+            </table>
+
+
+            <br>
+
+
+            <!-- Pagination -->
+
+            <div>
+
+                <% if (currentPage > 1) { %>
+
+                    <a
+                        href="/admin/dashboard?page=<%= currentPage - 1 %>&search=<%= encodeURIComponent(search || '') %>"
+                    >
+                        <button type="button">
+                            Previous
+                        </button>
+                    </a>
+
+                <% } %>
+
+
+                <span>
+
+                    Page <%= currentPage %> of <%= totalPages %>
+
+                </span>
+
+
+                <% if (currentPage < totalPages) { %>
+
+                    <a
+                        href="/admin/dashboard?page=<%= currentPage + 1 %>&search=<%= encodeURIComponent(search || '') %>"
+                    >
+                        <button type="button">
+                            Next
+                        </button>
+                    </a>
+
+                <% } %>
+
+            </div>
+
+        <% } %>
+
+    </main>
+
+</body>
+
+</html>
