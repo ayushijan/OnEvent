@@ -1,0 +1,310 @@
+/* ========================================
+   ONEVENT FOOTER
+======================================== */
+
+.onevent-footer {
+    width: 100%;
+    margin-top: auto;
+    padding: 32px 40px 0;
+
+    background: #ffffff;
+    border-top: 1px solid #eae8f5;
+
+    box-sizing: border-box;
+    font-family: inherit;
+}
+
+/* ========================================
+   MAIN FOOTER CONTAINER
+======================================== */
+
+.footer-container {
+    width: 100%;
+    max-width: 1240px;
+
+    margin: 0 auto;
+    padding-bottom: 30px;
+
+    display: grid;
+    grid-template-columns: 2fr 1fr 0.8fr 1fr;
+    gap: 35px;
+
+    box-sizing: border-box;
+}
+
+/* ========================================
+   BRAND SECTION
+======================================== */
+
+.footer-brand {
+    max-width: 340px;
+}
+
+.footer-logo {
+    display: inline-flex;
+    align-items: center;
+
+    margin-bottom: 12px;
+    text-decoration: none;
+}
+
+.footer-logo img {
+    display: block;
+
+    width: 125px;
+    height: auto;
+    max-height: 42px;
+
+    object-fit: contain;
+}
+
+.footer-brand p {
+    max-width: 340px;
+
+    margin: 0 0 14px;
+
+    color: #77778d;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 1.65;
+}
+
+/* ========================================
+   SOCIAL MEDIA ICONS
+======================================== */
+
+.footer-socials {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.footer-socials a {
+    width: 27px;
+    height: 27px;
+    min-width: 27px;
+    min-height: 27px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    overflow: hidden;
+    box-sizing: border-box;
+
+    color: #77778d;
+    background: #ffffff;
+
+    border: 1px solid #e5e3ee;
+    border-radius: 50%;
+
+    font-size: 12px;
+    text-decoration: none;
+
+    transition:
+        color 0.2s ease,
+        border-color 0.2s ease,
+        background-color 0.2s ease;
+}
+
+/* Fix downloaded image icon sizes */
+
+.footer-socials a img {
+    display: block;
+
+    width: 13px !important;
+    height: 13px !important;
+
+    max-width: 13px;
+    max-height: 13px;
+
+    object-fit: contain;
+    flex-shrink: 0;
+}
+
+.footer-socials a:hover {
+    color: #5546e8;
+    border-color: #5546e8;
+    background: #f5f3ff;
+}
+
+/* ========================================
+   FOOTER LINK COLUMNS
+======================================== */
+
+.footer-links {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 9px;
+}
+
+.footer-links h3 {
+    margin: 3px 0 2px;
+
+    color: #18213b;
+    font-size: 10px;
+    font-weight: 700;
+    line-height: 1.5;
+
+    letter-spacing: 0.15px;
+    text-transform: uppercase;
+}
+
+.footer-links a {
+    color: #77778d;
+
+    font-size: 11px;
+    font-weight: 400;
+    line-height: 1.5;
+
+    text-decoration: none;
+
+    transition: color 0.2s ease;
+}
+
+.footer-links a:hover {
+    color: #5546e8;
+}
+
+/* ========================================
+   COPYRIGHT SECTION
+======================================== */
+
+.footer-bottom {
+    width: 100%;
+    max-width: 1240px;
+
+    min-height: 52px;
+    margin: 0 auto;
+    padding: 15px 0;
+
+    border-top: 1px solid #eae8f5;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 15px;
+    box-sizing: border-box;
+}
+
+.footer-bottom p {
+    margin: 0;
+
+    color: #85859a;
+    font-size: 10px;
+    font-weight: 400;
+    line-height: 1.5;
+}
+
+/* ========================================
+   BOTTOM LEGAL LINKS
+======================================== */
+
+.footer-bottom-links {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 12px;
+}
+
+.footer-bottom-links a {
+    color: #77778d;
+
+    font-size: 10px;
+    line-height: 1.5;
+
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.footer-bottom-links a:hover {
+    color: #5546e8;
+}
+
+.footer-bottom-links span {
+    color: #c5c1d6;
+    font-size: 10px;
+}
+
+/* ========================================
+   TABLET RESPONSIVENESS
+======================================== */
+
+@media (max-width: 900px) {
+
+    .onevent-footer {
+        padding: 28px 28px 0;
+    }
+
+    .footer-container {
+        grid-template-columns: 1.5fr 1fr 1fr;
+        gap: 28px;
+    }
+
+    .footer-brand {
+        grid-column: 1 / -1;
+        max-width: 450px;
+    }
+}
+
+/* ========================================
+   MOBILE RESPONSIVENESS
+======================================== */
+
+@media (max-width: 600px) {
+
+    .onevent-footer {
+        padding: 25px 20px 0;
+    }
+
+    .footer-container {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 28px 20px;
+
+        padding-bottom: 25px;
+    }
+
+    .footer-brand {
+        grid-column: 1 / -1;
+        max-width: 100%;
+    }
+
+    .footer-brand p {
+        max-width: 100%;
+    }
+
+    .footer-bottom {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 10px;
+
+        padding: 15px 0;
+    }
+
+    .footer-bottom-links {
+        justify-content: flex-start;
+    }
+}
+
+/* ========================================
+   SMALL MOBILE SCREENS
+======================================== */
+
+@media (max-width: 360px) {
+
+    .onevent-footer {
+        padding-right: 15px;
+        padding-left: 15px;
+    }
+
+    .footer-container {
+        grid-template-columns: 1fr;
+        gap: 22px;
+    }
+
+    .footer-brand {
+        grid-column: auto;
+    }
+}

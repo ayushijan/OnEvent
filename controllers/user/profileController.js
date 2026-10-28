@@ -54,44 +54,59 @@ const editProfile = async (req, res) => {
         res.redirect("/profile");
 
     } catch (error) {
+    const user = await service(req.session.userId);
 
-        res.status(error.statusCode || 500).send(error.message);
+    const isPhoneError = error.code === "INVALID_PHONE";
 
-    }
+    res.status(error.statusCode || 400).render("user/editProfile", {
+        user: user,
+        nameError: isPhoneError ? "" : error.message,
+        phoneError: isPhoneError ? error.message : ""
+    });
+}
 
 };
 
 
 const uploadProfileImage = async (req, res) => {
+  try {
+    if (!req.file) {
+      return res.status(400).send("Please select an image");
+    }
 
+    const user = await User.findById(req.session.userId);
+
+    if (!user) {
+      return res.status(404).send("User not found");
+    }
+
+    user.profileImage = "/uploads/" + req.file.filename;
+
+    await user.save();
+
+    // Stay on the Edit Profile page after uploading
+    res.redirect("/profile/edit");
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+};
+
+const removeProfileImage = async (req, res) => {
     try {
-
-        if (!req.file) {
-
-            return res.status(400).send("Please select an image");
-
-        }
-
         const user = await User.findById(req.session.userId);
 
         if (!user) {
-
             return res.status(404).send("User not found");
-
         }
 
-        user.profileImage = "/uploads/" + req.file.filename;
+        user.profileImage = null;
 
         await user.save();
 
-        res.redirect("/profile");
-
+        res.redirect("/profile/edit");
     } catch (error) {
-
         res.status(500).send(error.message);
-
     }
-
 };
 
 
@@ -99,5 +114,6 @@ module.exports = {
     getProfile,
     editProfilePage,
     editProfile,
-    uploadProfileImage
+    uploadProfileImage,
+    removeProfileImage
 };

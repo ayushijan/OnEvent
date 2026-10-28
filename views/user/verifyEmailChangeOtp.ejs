@@ -2,45 +2,518 @@
 <html lang="en">
 
 <head>
-
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Verify New Email</title>
+    <title>OnEvent - Verify New Email</title>
 
+    <link rel="stylesheet" href="/css/user/verifyEmailChangeOtp.css">
+
+    <style>
+        /* Ensure hidden messages never remain visible. */
+        .error-message[hidden],
+        .success-message[hidden] {
+            display: none !important;
+        }
+    </style>
 </head>
 
 <body>
 
-    <h1>Verify New Email</h1>
+    <main class="verify-email-page">
 
-    <p>
-        Enter the OTP sent to:
-        <strong><%= email %></strong>
-    </p>
+        <div class="verify-email-container">
 
-    <form action="/profile/change-email/verify" method="POST">
+            <a href="/profile/edit" class="back-link">
+                ← Back to Edit Profile
+            </a>
 
-        <input
-            type="hidden"
-            name="email"
-            value="<%= email %>"
-        >
+            <section class="verify-email-card">
 
-        <input
-            type="text"
-            name="otp"
-            maxlength="6"
-            placeholder="Enter 6-digit OTP"
-            required
-        >
+                <div class="verify-email-icon">✉</div>
 
-        <button type="submit">
-            Verify OTP
-        </button>
+                <span class="security-badge">
+                    <span class="security-dot"></span>
+                    EMAIL VERIFICATION
+                </span>
 
-    </form>
+                <h1>Verify New Email</h1>
+
+                <p class="verify-email-description">
+                    Enter the six-digit verification code sent to your new
+                    email address to complete the email change.
+                </p>
+
+                <div class="verify-email-address">
+
+                    <div class="verify-email-address-icon">✉</div>
+
+                    <div class="verify-email-address-content">
+                        <span>Verification code sent to</span>
+                        <strong><%= email %></strong>
+                    </div>
+
+                </div>
+
+                <!-- Error message -->
+                <div
+                    class="error-message"
+                    id="verificationError"
+                    role="alert"
+                    aria-live="polite"
+                    <%= typeof errorMessage !== "undefined" && errorMessage ? "" : "hidden" %>
+                ><%= typeof errorMessage !== "undefined" ? errorMessage : "" %></div>
+
+                <!-- Success message -->
+                <div
+                    class="success-message"
+                    id="verificationSuccess"
+                    role="status"
+                    aria-live="polite"
+                    <%= typeof successMessage !== "undefined" && successMessage ? "" : "hidden" %>
+                ><%= typeof successMessage !== "undefined" ? successMessage : "" %></div>
+
+                <!-- OTP form -->
+                <form
+                    id="verifyEmailChangeForm"
+                    method="POST"
+                    action="/profile/change-email/verify"
+                >
+
+                    <input
+                        type="hidden"
+                        name="email"
+                        value="<%= email %>"
+                    >
+
+                    <label for="otp" class="otp-label">
+                        ONE-TIME PASSWORD (OTP)
+                    </label>
+
+                    <input
+                        type="text"
+                        id="otp"
+                        name="otp"
+                        class="otp-input"
+                        inputmode="numeric"
+                        autocomplete="one-time-code"
+                        maxlength="6"
+                        pattern="[0-9]{6}"
+                        placeholder="Enter 6-digit OTP"
+                        aria-describedby="otpHelp verificationError"
+                        required
+                    >
+
+                    <p class="otp-help" id="otpHelp">
+                        Enter the six-digit code sent to your email.
+                    </p>
+
+                    <button
+                        type="submit"
+                        id="verifyOtpButton"
+                        class="verify-otp-button"
+                    >
+                        <span id="verifyButtonText">Verify Email</span>
+                        <span class="button-arrow">→</span>
+                    </button>
+
+                </form>
+
+                <!-- Resend OTP -->
+                <div class="resend-container">
+
+                    <div class="resend-timer-info">
+                        <span class="resend-icon">◷</span>
+                        <span id="resendText">Resend OTP in</span>
+                        <strong class="timer" id="resendTimer">01:00</strong>
+                    </div>
+
+                    <button
+                        type="button"
+                        id="resendOtpButton"
+                        class="resend-btn"
+                        disabled
+                    >
+                        Resend Code
+                    </button>
+
+                </div>
+
+                <div
+                    class="resend-message"
+                    id="resendMessage"
+                    role="status"
+                    aria-live="polite"
+                ></div>
+
+                <!-- Security notice -->
+                <div class="verify-email-security">
+
+                    <span class="verify-email-security-icon">✓</span>
+
+                    <p>
+                        Your email address will only be updated after
+                        successful OTP verification. Never share your
+                        verification code with anyone.
+                    </p>
+
+                </div>
+
+                <p class="bottom-link">
+                    <span>Entered the wrong email?</span>
+                    <a href="/profile/edit">Go back and change it</a>
+                </p>
+
+            </section>
+
+        </div>
+
+    </main>
+
+    <footer class="verify-email-footer">
+
+        <p>
+            © <%= new Date().getFullYear() %> OnEvent. All rights reserved.
+        </p>
+
+        <div class="footer-links">
+            <a href="/about">About</a>
+            <a href="/contact">Contact</a>
+            <a href="/privacy-policy">Privacy Policy</a>
+        </div>
+
+    </footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+
+            // =====================================
+            // ELEMENTS
+            // =====================================
+
+            const form = document.getElementById("verifyEmailChangeForm");
+            const otpInput = document.getElementById("otp");
+
+            const verifyButton = document.getElementById("verifyOtpButton");
+            const verifyButtonText = document.getElementById("verifyButtonText");
+
+            const resendButton = document.getElementById("resendOtpButton");
+            const resendTimer = document.getElementById("resendTimer");
+            const resendText = document.getElementById("resendText");
+            const resendMessage = document.getElementById("resendMessage");
+
+            const errorMessage = document.getElementById("verificationError");
+            const successMessage = document.getElementById("verificationSuccess");
+
+            // Safely pass the email from EJS into JavaScript.
+            const email = <%- JSON.stringify(email) %>;
+
+            let remainingSeconds = 60;
+            let timerInterval = null;
+            let isSubmitting = false;
+            let isResending = false;
+
+
+            // =====================================
+            // SHOW ERROR
+            // =====================================
+
+            function showError(message) {
+
+                errorMessage.textContent = message;
+
+                errorMessage.hidden = false;
+                errorMessage.style.removeProperty("display");
+
+                if (successMessage) {
+                    successMessage.textContent = "";
+                    successMessage.hidden = true;
+                }
+            }
+
+
+            // =====================================
+            // CLEAR ERROR
+            // =====================================
+
+            function clearError() {
+
+                errorMessage.textContent = "";
+
+                // Set hidden attribute and force CSS to hide it.
+                errorMessage.hidden = true;
+                errorMessage.setAttribute("hidden", "");
+                errorMessage.style.setProperty("display", "none", "important");
+            }
+
+
+            // =====================================
+            // CLEAR SUCCESS
+            // =====================================
+
+            function clearSuccess() {
+
+                if (!successMessage) {
+                    return;
+                }
+
+                successMessage.textContent = "";
+                successMessage.hidden = true;
+                successMessage.setAttribute("hidden", "");
+                successMessage.style.setProperty("display", "none", "important");
+            }
+
+
+            // =====================================
+            // SHOW SUCCESS
+            // =====================================
+
+            function showSuccess(message) {
+
+                clearError();
+
+                successMessage.textContent = message;
+                successMessage.hidden = false;
+                successMessage.removeAttribute("hidden");
+                successMessage.style.removeProperty("display");
+            }
+
+
+            // =====================================
+            // RESEND STATUS MESSAGE
+            // =====================================
+
+            function showResendMessage(message, type) {
+
+                resendMessage.textContent = message;
+                resendMessage.className = "resend-message";
+
+                if (type) {
+                    resendMessage.classList.add(type);
+                }
+            }
+
+
+            // =====================================
+            // OTP INPUT
+            // =====================================
+
+            otpInput.addEventListener("input", function () {
+
+                // Allow digits only and limit the OTP to six digits.
+                this.value = this.value.replace(/\D/g, "").slice(0, 6);
+
+                // Immediately remove the previous incorrect OTP error.
+                clearError();
+
+                // Remove any previous success message.
+                clearSuccess();
+            });
+
+
+            // Also clear the error when the user focuses on the OTP field.
+            otpInput.addEventListener("focus", function () {
+
+                clearError();
+            });
+
+
+            // =====================================
+            // VERIFY OTP
+            // =====================================
+
+            form.addEventListener("submit", function (event) {
+
+                clearError();
+
+                const otp = otpInput.value.trim();
+
+                // Validate the six-digit OTP.
+                if (!/^\d{6}$/.test(otp)) {
+
+                    event.preventDefault();
+
+                    showError("Please enter a valid six-digit OTP.");
+
+                    otpInput.focus();
+
+                    return;
+                }
+
+                // Prevent repeated submissions.
+                if (isSubmitting) {
+                    event.preventDefault();
+                    return;
+                }
+
+                isSubmitting = true;
+
+                verifyButton.disabled = true;
+                verifyButtonText.textContent = "Verifying...";
+
+                // Submit normally to the server.
+                // The server handles OTP verification.
+            });
+
+
+            // =====================================
+            // UPDATE RESEND TIMER
+            // =====================================
+
+            function updateTimer() {
+
+                const minutes = Math.floor(remainingSeconds / 60);
+                const seconds = remainingSeconds % 60;
+
+                resendTimer.textContent =
+                    String(minutes).padStart(2, "0") +
+                    ":" +
+                    String(seconds).padStart(2, "0");
+
+                if (remainingSeconds <= 0) {
+
+                    clearInterval(timerInterval);
+                    timerInterval = null;
+
+                    resendText.textContent = "Didn't receive it?";
+                    resendButton.disabled = false;
+
+                    return;
+                }
+
+                resendButton.disabled = true;
+
+                remainingSeconds--;
+            }
+
+
+            // =====================================
+            // START RESEND TIMER
+            // =====================================
+
+            function startTimer() {
+
+                if (timerInterval) {
+                    clearInterval(timerInterval);
+                }
+
+                remainingSeconds = 60;
+
+                resendButton.disabled = true;
+                resendText.textContent = "Resend OTP in";
+
+                updateTimer();
+
+                timerInterval = setInterval(updateTimer, 1000);
+            }
+
+
+            // Start timer when page loads.
+            startTimer();
+
+
+            // =====================================
+            // RESEND OTP
+            // =====================================
+
+            resendButton.addEventListener("click", async function () {
+
+                if (isResending || remainingSeconds > 0) {
+                    return;
+                }
+
+                isResending = true;
+
+                clearError();
+                clearSuccess();
+
+                showResendMessage("", "");
+
+                resendButton.disabled = true;
+                resendButton.textContent = "Sending...";
+
+                try {
+
+                    const response = await fetch(
+                        "/profile/change-email/resend-otp",
+                        {
+                            method: "POST",
+
+                            headers: {
+                                "Content-Type": "application/json",
+                                "Accept": "application/json"
+                            },
+
+                            credentials: "same-origin",
+
+                            body: JSON.stringify({
+                                email: email
+                            })
+                        }
+                    );
+
+                    const contentType =
+                        response.headers.get("content-type") || "";
+
+                    if (!contentType.includes("application/json")) {
+                        throw new Error(
+                            "Unexpected server response. Please try again."
+                        );
+                    }
+
+                    const result = await response.json();
+
+                    if (!response.ok || !result.success) {
+
+                        showResendMessage(
+                            result.message ||
+                            "Unable to resend the OTP. Please try again.",
+                            "error"
+                        );
+
+                        return;
+                    }
+
+                    // Clear the previous OTP and messages.
+                    otpInput.value = "";
+
+                    clearError();
+                    clearSuccess();
+
+                    showResendMessage(
+                        result.message || "A new OTP has been sent.",
+                        "success"
+                    );
+
+                    // Restart timer after successfully resending.
+                    startTimer();
+
+                    otpInput.focus();
+
+                } catch (error) {
+
+                    console.error("Resend OTP error:", error);
+
+                    showResendMessage(
+                        error.message ||
+                        "Unable to resend the OTP. Please try again.",
+                        "error"
+                    );
+
+                } finally {
+
+                    isResending = false;
+
+                    resendButton.textContent = "Resend Code";
+
+                    if (remainingSeconds <= 0) {
+                        resendButton.disabled = false;
+                    }
+                }
+            });
+
+        });
+    </script>
 
 </body>
 

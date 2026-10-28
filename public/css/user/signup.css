@@ -15,8 +15,11 @@
     --page-bg: #f8f7ff;
     --white: #ffffff;
     --border: #e6e3ef;
+    --error: #d93025;
+    --error-bg: #fff0f0;
+    --success: #207747;
+    --success-bg: #edfaf2;
 }
-
 
 /* =====================================================
    BASE
@@ -44,7 +47,6 @@ a {
     color: inherit;
 }
 
-
 /* =====================================================
    HEADER
 ===================================================== */
@@ -57,7 +59,7 @@ a {
     align-items: center;
     justify-content: space-between;
 
-    background: #ffffff;
+    background: var(--white);
     border-bottom: 1px solid var(--border);
 }
 
@@ -73,7 +75,7 @@ a {
     gap: 8px;
 
     font-size: 13px;
-    color: #667085;
+    color: var(--muted);
 }
 
 .login-link a {
@@ -84,7 +86,6 @@ a {
 .login-link a:hover {
     color: var(--primary);
 }
-
 
 /* =====================================================
    MAIN SIGNUP CARD
@@ -99,8 +100,7 @@ a {
     display: grid;
     grid-template-columns: 40% 60%;
 
-    background: #ffffff;
-
+    background: var(--white);
     border-radius: 20px;
     overflow: hidden;
 
@@ -108,7 +108,6 @@ a {
         0 18px 45px rgba(48, 32, 168, 0.10),
         0 3px 10px rgba(20, 20, 40, 0.04);
 }
-
 
 /* =====================================================
    LEFT PANEL
@@ -124,14 +123,13 @@ a {
         #5337d8 100%
     );
 
-    color: #ffffff;
+    color: var(--white);
 
     display: flex;
     flex-direction: column;
 
     border-radius: 20px 0 0 20px;
 }
-
 
 /* =====================================================
    ATTENDEE PASS
@@ -140,13 +138,12 @@ a {
 .pass-title {
     display: flex;
     align-items: center;
-
     gap: 8px;
+
     margin-bottom: 15px;
 
     font-size: 12px;
     font-weight: 700;
-
     letter-spacing: 0.8px;
 }
 
@@ -155,7 +152,6 @@ a {
     height: 21px;
 
     border-radius: 50%;
-
     background: rgba(255, 255, 255, 0.16);
 
     display: flex;
@@ -163,16 +159,12 @@ a {
     justify-content: center;
 }
 
-
-/* PASS ICON → WHITE */
-
 .pass-icon img {
     width: 12px;
     height: 12px;
 
     filter: brightness(0) invert(1);
 }
-
 
 /* =====================================================
    EVENT IMAGE
@@ -183,15 +175,12 @@ a {
     height: 180px;
 
     overflow: hidden;
-
     border-radius: 12px;
 
     position: relative;
-
     margin-bottom: 20px;
 
-    box-shadow:
-        0 7px 18px rgba(20, 10, 80, 0.18);
+    box-shadow: 0 7px 18px rgba(20, 10, 80, 0.18);
 }
 
 .event-image > img {
@@ -201,7 +190,6 @@ a {
     object-fit: cover;
     display: block;
 }
-
 
 /* =====================================================
    EVENT IMAGE OVERLAY
@@ -215,7 +203,6 @@ a {
     bottom: 0;
 
     min-height: 38px;
-
     padding: 8px 11px;
 
     background: linear-gradient(
@@ -229,20 +216,16 @@ a {
     justify-content: space-between;
 
     gap: 8px;
-
     font-size: 11px;
 }
 
 .event-overlay span {
     display: flex;
     align-items: center;
-
     gap: 6px;
+
     white-space: nowrap;
 }
-
-
-/* LIGHTNING → YELLOW / ORANGE */
 
 .event-overlay span img {
     width: 11px;
@@ -263,16 +246,14 @@ a {
     flex-shrink: 0;
 
     background: var(--accent);
-    color: #ffffff;
+    color: var(--white);
 
     padding: 5px 8px;
-
     border-radius: 20px;
 
     font-size: 9px;
     font-weight: 700;
 }
-
 
 /* =====================================================
    LEFT CONTENT
@@ -280,11 +261,8 @@ a {
 
 .signup-left h2 {
     font-size: 28px;
-
     line-height: 1.16;
-
     font-weight: 700;
-
     letter-spacing: -0.5px;
 
     margin-bottom: 11px;
@@ -294,14 +272,11 @@ a {
     color: rgba(255, 255, 255, 0.82);
 
     font-size: 13px;
-
     line-height: 1.55;
 
     margin-bottom: 20px;
-
     max-width: 96%;
 }
-
 
 /* =====================================================
    FEATURE CARDS
@@ -309,40 +284,30 @@ a {
 
 .feature {
     display: flex;
-
     align-items: flex-start;
-
     gap: 10px;
 
     padding: 12px;
-
     margin-bottom: 8px;
 
     border-radius: 10px;
 
     background: rgba(255, 255, 255, 0.095);
-
     border: 1px solid rgba(255, 255, 255, 0.09);
 }
 
 .feature-icon {
     width: 25px;
     height: 25px;
-
     min-width: 25px;
 
     border-radius: 50%;
-
     background: rgba(255, 255, 255, 0.14);
 
     display: flex;
-
     align-items: center;
     justify-content: center;
 }
-
-
-/* FEATURE ICONS → WHITE */
 
 .feature-icon img {
     width: 14px;
@@ -355,7 +320,6 @@ a {
     display: block;
 
     font-size: 12px;
-
     font-weight: 600;
 
     margin-bottom: 4px;
@@ -365,10 +329,8 @@ a {
     color: rgba(255, 255, 255, 0.76);
 
     font-size: 10px;
-
     line-height: 1.45;
 }
-
 
 /* =====================================================
    RATING
@@ -376,20 +338,15 @@ a {
 
 .rating {
     display: flex;
-
     align-items: center;
-
     gap: 9px;
 
     margin-top: auto;
-
     padding-top: 22px;
 
     width: 100%;
-
     min-width: 0;
 }
-
 
 /* =====================================================
    REVIEW AVATARS
@@ -397,9 +354,7 @@ a {
 
 .review-avatars {
     display: flex;
-
     align-items: center;
-
     flex-shrink: 0;
 
     padding-left: 5px;
@@ -410,11 +365,9 @@ a {
     height: 34px;
 
     object-fit: cover;
-
     border-radius: 50%;
 
     border: 2px solid #4f35d4;
-
     margin-left: -8px;
 
     display: block;
@@ -424,30 +377,22 @@ a {
     margin-left: 0;
 }
 
-
 /* =====================================================
    RATING TEXT
 ===================================================== */
 
 .rating-text {
     display: flex;
-
     align-items: center;
-
     gap: 5px;
 
     min-width: 0;
-
     white-space: nowrap;
 }
-
-
-/* RATING STAR → GOLD */
 
 .rating-star {
     width: 15px;
     height: 15px;
-
     flex-shrink: 0;
 
     filter:
@@ -464,21 +409,17 @@ a {
 .rating-text strong {
     font-size: 15px;
     font-weight: 700;
-
     flex-shrink: 0;
 }
 
 .rating-text span {
     font-size: 12px;
-
     color: rgba(255, 255, 255, 0.88);
 
     overflow: hidden;
     text-overflow: ellipsis;
-
     min-width: 0;
 }
-
 
 /* =====================================================
    RIGHT PANEL
@@ -487,11 +428,9 @@ a {
 .signup-right {
     padding: 38px 42px 32px;
 
-    background: #ffffff;
-
+    background: var(--white);
     border-radius: 0 20px 20px 0;
 }
-
 
 /* =====================================================
    FORM BADGE
@@ -499,26 +438,20 @@ a {
 
 .form-badge {
     display: inline-flex;
-
     align-items: center;
 
     padding: 6px 10px;
-
     border-radius: 20px;
 
     background: var(--primary-light);
-
     color: var(--primary);
 
     font-size: 10px;
-
     font-weight: 700;
-
     letter-spacing: 0.4px;
 
     margin-bottom: 11px;
 }
-
 
 /* =====================================================
    RIGHT HEADING
@@ -526,13 +459,10 @@ a {
 
 .signup-right h1 {
     font-size: 32px;
-
     line-height: 1.15;
 
     color: var(--navy);
-
     font-weight: 700;
-
     letter-spacing: -0.6px;
 
     margin-bottom: 8px;
@@ -542,12 +472,39 @@ a {
     color: var(--muted);
 
     font-size: 14px;
-
     line-height: 1.5;
 
     margin-bottom: 21px;
 }
 
+/* =====================================================
+   SERVER-SIDE MESSAGES
+===================================================== */
+
+.server-error-message,
+.server-success-message {
+    margin: 16px 0;
+    padding: 12px 14px;
+
+    border-radius: 8px;
+
+    font-size: 13px;
+    line-height: 1.6;
+
+    overflow-wrap: anywhere;
+}
+
+.server-error-message {
+    color: #b42332;
+    background: var(--error-bg);
+    border: 1px solid #ffd8d8;
+}
+
+.server-success-message {
+    color: var(--success);
+    background: var(--success-bg);
+    border: 1px solid #ccefd9;
+}
 
 /* =====================================================
    GOOGLE BUTTON
@@ -558,26 +515,19 @@ a {
     height: 44px;
 
     border: 1px solid #eeeaf8;
-
     border-radius: 9px;
 
     background: #fbfaff;
-
     color: var(--navy);
 
     cursor: pointer;
-
     font-family: inherit;
-
     font-size: 13px;
-
     font-weight: 600;
 
     display: flex;
-
     align-items: center;
     justify-content: center;
-
     gap: 9px;
 }
 
@@ -590,7 +540,6 @@ a {
     height: 18px;
 
     display: flex;
-
     align-items: center;
     justify-content: center;
 }
@@ -598,10 +547,8 @@ a {
 .google-icon svg {
     width: 18px;
     height: 18px;
-
     display: block;
 }
-
 
 /* =====================================================
    DIVIDER
@@ -609,17 +556,13 @@ a {
 
 .divider {
     display: flex;
-
     align-items: center;
-
     gap: 13px;
 
     margin: 19px 0;
 
     color: #98a2b3;
-
     font-size: 9px;
-
     white-space: nowrap;
 }
 
@@ -628,12 +571,9 @@ a {
     content: "";
 
     height: 1px;
-
     background: var(--border);
-
     flex: 1;
 }
-
 
 /* =====================================================
    FORM GROUP
@@ -647,14 +587,11 @@ a {
     display: block;
 
     font-size: 13px;
-
     font-weight: 600;
 
     color: var(--navy);
-
     margin-bottom: 7px;
 }
-
 
 /* =====================================================
    INPUT WRAPPER
@@ -662,36 +599,33 @@ a {
 
 .input-wrapper {
     width: 100%;
-
     height: 40px;
 
     border-radius: 9px;
-
     background: var(--primary-light);
-
     border: 1px solid transparent;
 
     display: flex;
-
     align-items: center;
 
     padding: 0 11px;
-
     gap: 8px;
+
+    transition:
+        border-color 0.15s ease,
+        box-shadow 0.15s ease,
+        background 0.15s ease;
 }
 
 .input-wrapper:focus-within {
-    background: #ffffff;
-
+    background: var(--white);
     border-color: #b7abf0;
 
-    box-shadow:
-        0 0 0 3px rgba(79, 53, 212, 0.06);
+    box-shadow: 0 0 0 3px rgba(79, 53, 212, 0.06);
 }
 
-
 /* =====================================================
-   RIGHT FORM ICONS → SOFT GREY
+   INPUT ICONS
 ===================================================== */
 
 .input-icon {
@@ -713,7 +647,6 @@ a {
     opacity: 1;
 }
 
-
 /* =====================================================
    INPUT
 ===================================================== */
@@ -727,7 +660,6 @@ a {
     background: transparent;
 
     font-family: inherit;
-
     font-size: 13px;
 
     color: #344054;
@@ -737,9 +669,45 @@ a {
     color: #98a2b3;
 }
 
+/* =====================================================
+   INLINE VALIDATION ERRORS
+===================================================== */
+
+.error-message {
+    display: block;
+
+    margin-top: 6px;
+
+    color: var(--error);
+    font-size: 12px;
+    line-height: 1.4;
+
+    overflow-wrap: anywhere;
+}
+
+/* Hide empty error messages to prevent unnecessary gaps */
+.error-message:empty {
+    display: none;
+}
+
+/* Highlight invalid input wrappers */
+.input-wrapper:has(input.invalid) {
+    border-color: var(--error);
+}
+
+/* Keep invalid border red while focused */
+.input-wrapper:has(input.invalid:focus) {
+    border-color: var(--error);
+    box-shadow: 0 0 0 3px rgba(217, 48, 37, 0.08);
+}
+
+/* Phone field error border */
+.phone-input:has(input.invalid) {
+    border-color: var(--error);
+}
 
 /* =====================================================
-   EYE ICON → SOFT GREY
+   EYE ICON
 ===================================================== */
 
 .eye-icon {
@@ -759,10 +727,8 @@ a {
         contrast(88%);
 
     opacity: 1;
-
     cursor: pointer;
 }
-
 
 /* =====================================================
    PHONE
@@ -770,7 +736,6 @@ a {
 
 .phone-wrapper {
     display: flex;
-
     gap: 7px;
 
     height: 40px;
@@ -778,58 +743,46 @@ a {
 
 .country-code {
     width: 82px;
-
     flex-shrink: 0;
 
     border-radius: 9px;
-
     background: var(--primary-light);
 
     display: flex;
-
     align-items: center;
     justify-content: center;
 
     gap: 6px;
 
     font-size: 12px;
-
     color: var(--navy);
 }
-
-
-/* COUNTRY ICON → ORIGINAL */
 
 .country-code img {
     width: 10px;
     height: 10px;
-
     opacity: 0.55;
 }
 
 .phone-input {
     flex: 1;
-
     min-width: 0;
 
     border-radius: 9px;
-
     background: var(--primary-light);
-
     border: 1px solid transparent;
 
     display: flex;
-
     align-items: center;
 
     padding: 0 11px;
-
     gap: 8px;
+
+    transition: border-color 0.15s ease;
 }
 
 .phone-input:focus-within {
-    background: #ffffff;
-
+    background: var(--white);
     border-color: #b7abf0;
 }
 
@@ -842,7 +795,6 @@ a {
     background: transparent;
 
     font-family: inherit;
-
     font-size: 13px;
 
     color: #344054;
@@ -852,14 +804,12 @@ a {
     color: #98a2b3;
 }
 
-
 /* =====================================================
    TERMS
 ===================================================== */
 
 .terms {
     display: flex;
-
     gap: 8px;
 
     align-items: flex-start;
@@ -867,8 +817,7 @@ a {
     margin: 16px 0;
 
     font-size: 11px;
-
-    color: #667085;
+    color: var(--muted);
 
     line-height: 1.5;
 }
@@ -877,16 +826,13 @@ a {
     margin-top: 2px;
 
     accent-color: var(--primary);
-
     flex-shrink: 0;
 }
 
 .terms a {
     color: var(--primary);
-
     font-weight: 500;
 }
-
 
 /* =====================================================
    SIGNUP BUTTON
@@ -894,11 +840,9 @@ a {
 
 .signup-btn {
     width: 100%;
-
     height: 44px;
 
     border: none;
-
     border-radius: 9px;
 
     background: linear-gradient(
@@ -907,24 +851,27 @@ a {
         #5035d9
     );
 
-    color: #ffffff;
+    color: var(--white);
 
     font-family: inherit;
-
     font-size: 14px;
-
     font-weight: 600;
 
     cursor: pointer;
 
-    box-shadow:
-        0 7px 16px rgba(79, 53, 212, 0.22);
+    box-shadow: 0 7px 16px rgba(79, 53, 212, 0.22);
+
+    transition: opacity 0.15s ease;
 }
 
 .signup-btn:hover {
     opacity: 0.94;
 }
 
+.signup-btn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
 
 /* =====================================================
    FOOTER
@@ -936,25 +883,19 @@ a {
     margin-top: 0;
 
     border-top: 1px solid var(--border);
-
-    background: #ffffff;
+    background: var(--white);
 
     display: flex;
-
     align-items: center;
-
     justify-content: space-between;
 
     font-size: 11px;
-
-    color: #667085;
+    color: var(--muted);
 }
 
 .auth-footer div {
     display: flex;
-
     align-items: center;
-
     gap: 22px;
 }
 
@@ -966,13 +907,11 @@ a {
     color: var(--primary);
 }
 
-
 /* =====================================================
    RESPONSIVE — TABLET
 ===================================================== */
 
 @media (max-width: 1100px) {
-
     .signup-container {
         width: 86%;
     }
@@ -994,13 +933,11 @@ a {
     }
 }
 
-
 /* =====================================================
    RESPONSIVE — MOBILE
 ===================================================== */
 
 @media (max-width: 850px) {
-
     .signup-container {
         width: 92%;
 
@@ -1015,26 +952,22 @@ a {
 
     .signup-right {
         padding: 30px 25px;
-
         border-radius: 20px;
     }
 
     .auth-footer {
         flex-direction: column;
-
         gap: 12px;
 
         text-align: center;
     }
 }
 
-
 /* =====================================================
    RESPONSIVE — SMALL MOBILE
 ===================================================== */
 
 @media (max-width: 500px) {
-
     .auth-header {
         padding: 0 5%;
     }
@@ -1066,5 +999,11 @@ a {
     .input-wrapper input,
     .phone-input input {
         font-size: 12px;
+    }
+
+    .auth-footer div {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 12px;
     }
 }

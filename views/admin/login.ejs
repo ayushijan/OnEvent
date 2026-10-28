@@ -1,73 +1,326 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
     <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>OnEvent - Admin Login</title>
+    <link rel="stylesheet" href="/css/user/login.css">
 
-    <link rel="stylesheet" href="/css/admin/login.css">
+    <style>
+        .login-error {
+            display: block;
+            color: #d93025;
+            font-size: 12px;
+            margin-top: 7px;
+            line-height: 1.5;
+        }
 
+        .login-error[hidden] {
+            display: none;
+        }
+
+        .input-wrapper.has-error {
+            border: 1px solid #d93025 !important;
+            box-shadow: 0 0 0 1px #d93025;
+            border-radius: 8px;
+        }
+
+        .input-wrapper.has-error input {
+            border-color: transparent !important;
+            outline: none;
+        }
+    </style>
 </head>
 
 <body>
+    <header class="auth-header">
+        <a href="/admin/login" class="logo" aria-label="OnEvent Admin Login">
+            <img src="/images/OnEvent%20LOGO.png" alt="OnEvent">
+        </a>
+    </header>
 
-    <main>
-
-        <h1>Admin Login</h1>
-
-        <form action="/admin/login" method="POST">
-
-            <div>
-
-                <label for="email">
-                    Email
-                </label>
-
-                <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    placeholder="Enter admin email"
-                    required
-                >
-
+    <main class="login-container">
+        <section class="login-left">
+            <div class="access-title">
+                <span class="access-icon">
+                    <img src="/icons/shield-check.svg" alt="">
+                </span>
+                <span>SECURE ADMIN ACCESS</span>
             </div>
 
-            <br>
+            <div class="track-card">
+                <div class="track-header">
+                    <span class="track-icon">
+                        <img src="/icons/zap.svg" alt="">
+                    </span>
 
-            <div>
+                    <div class="track-text">
+                        <strong>Administrator Portal</strong>
+                        <span>Manage your OnEvent platform</span>
+                    </div>
 
-                <label for="password">
-                    Password
-                </label>
+                    <span class="active-badge">SECURE</span>
+                </div>
 
-                <input
-                    type="password"
-                    id="password"
-                    name="password"
-                    placeholder="Enter password"
-                    required
-                >
-
+                <p>
+                    Access your administration dashboard to manage users,
+                    events, and platform activities.
+                </p>
             </div>
 
-            <br>
+            <h2>
+                Manage every event.<br>
+                Make it happen.
+            </h2>
 
-            <button type="submit">
-                Login
-            </button>
+            <p class="left-description">
+                Take control of the OnEvent platform, manage event
+                listings, oversee users, and keep everything organised.
+            </p>
 
-        </form>
+            <div class="feature">
+                <span class="feature-icon">
+                    <img src="/icons/ticket.svg" alt="">
+                </span>
+                <strong>Manage events and bookings</strong>
+            </div>
 
+            <div class="feature">
+                <span class="feature-icon">
+                    <img src="/icons/badge-check.svg" alt="">
+                </span>
+                <strong>Manage user accounts</strong>
+            </div>
+
+            <div class="feature">
+                <span class="feature-icon">
+                    <img src="/icons/lock-keyhole.svg" alt="">
+                </span>
+                <strong>Secure administration access</strong>
+            </div>
+
+            <div class="reviews">
+                <div class="review-avatars">
+                    <img src="/images/review-1.png" alt="">
+                    <img src="/images/review-2.png" alt="">
+                    <img src="/images/review-3.png" alt="">
+                </div>
+
+                <div class="review-content">
+                    <div>
+                        <img src="/icons/star.svg" alt="" class="rating-star">
+                        <strong>OnEvent Administration</strong>
+                    </div>
+                    <span>One platform. Complete control.</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="login-right">
+            <span class="form-badge">ADMINISTRATOR</span>
+            <h1>Admin Login</h1>
+
+            <p class="login-description">
+                Enter your administrator credentials to continue.
+            </p>
+
+            <form
+                action="/admin/login"
+                method="POST"
+                id="adminLoginForm"
+                autocomplete="on"
+                novalidate
+            >
+                <div class="form-group">
+                    <label for="email">
+                        Admin Email <span>*</span>
+                    </label>
+
+                    <div class="input-wrapper">
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            placeholder="Enter your admin email"
+                            autocomplete="username"
+                            value="<%= typeof email !== 'undefined' ? email : '' %>"
+                            required
+                        >
+                    </div>
+
+                    <small
+                        class="login-error client-login-error"
+                        id="emailClientError"
+                        hidden
+                    ></small>
+
+                    <% if (typeof emailError !== "undefined" && emailError) { %>
+                        <small class="login-error server-login-error" role="alert">
+                            <%= emailError %>
+                        </small>
+                    <% } %>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">
+                        Password <span>*</span>
+                    </label>
+
+                    <div class="input-wrapper">
+                        <input
+                            type="password"
+                            id="password"
+                            name="password"
+                            placeholder="Enter your password"
+                            autocomplete="current-password"
+                            required
+                        >
+                    </div>
+
+                    <small
+                        class="login-error client-login-error"
+                        id="passwordClientError"
+                        hidden
+                    ></small>
+
+                    <% if (typeof error !== "undefined" && error) { %>
+                        <small class="login-error server-login-error" role="alert">
+                            <%= error %>
+                        </small>
+                    <% } %>
+                </div>
+
+                <button type="submit" class="login-button" id="loginButton">
+                    Sign In to Admin Portal <span>→</span>
+                </button>
+            </form>
+        </section>
     </main>
 
-</body>
+    <footer class="auth-footer">
+        <span>
+            © <%= new Date().getFullYear() %> OnEvent Platform Inc. All rights reserved.
+        </span>
 
+        <div>
+            <a href="/privacy">Privacy Policy</a>
+            <a href="/terms">Terms of Service</a>
+            <a href="/contact">Help &amp; Support</a>
+        </div>
+    </footer>
+
+    <script>
+        const adminLoginForm = document.getElementById("adminLoginForm");
+        const emailInput = document.getElementById("email");
+        const passwordInput = document.getElementById("password");
+        const loginButton = document.getElementById("loginButton");
+
+        const emailClientError = document.getElementById("emailClientError");
+        const passwordClientError = document.getElementById("passwordClientError");
+
+        const serverLoginErrors = document.querySelectorAll(".server-login-error");
+
+        function showError(input, errorElement, message) {
+            errorElement.textContent = message;
+            errorElement.hidden = false;
+
+            const wrapper = input.closest(".input-wrapper");
+
+            if (wrapper) {
+                wrapper.classList.add("has-error");
+            }
+        }
+
+        function clearError(input, errorElement) {
+            errorElement.textContent = "";
+            errorElement.hidden = true;
+
+            const wrapper = input.closest(".input-wrapper");
+
+            if (wrapper) {
+                wrapper.classList.remove("has-error");
+            }
+        }
+
+        function clearServerErrors() {
+                serverLoginErrors.forEach(function (error) {
+                    error.remove();
+                });
+
+                clearError(emailInput, emailClientError);
+                clearError(passwordInput, passwordClientError);
+
+                document.querySelectorAll(".input-wrapper.has-error").forEach(function (wrapper) {
+                    wrapper.classList.remove("has-error");
+                });
+            }
+
+        // Show red borders when the server reports invalid credentials.
+        if (document.querySelector(".server-login-error")) {
+                passwordInput.closest(".input-wrapper").classList.add("has-error");
+            }
+
+        adminLoginForm.addEventListener("submit", function (event) {
+            let hasError = false;
+
+            clearError(emailInput, emailClientError);
+            clearError(passwordInput, passwordClientError);
+
+            const email = emailInput.value.trim();
+            const password = passwordInput.value;
+
+            if (!email) {
+                showError(
+                    emailInput,
+                    emailClientError,
+                    "Please enter your admin email."
+                );
+
+                hasError = true;
+            } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                showError(
+                    emailInput,
+                    emailClientError,
+                    "Please enter a valid email address."
+                );
+
+                hasError = true;
+            }
+
+            if (!password.trim()) {
+                showError(
+                    passwordInput,
+                    passwordClientError,
+                    "Please enter your password."
+                );
+
+                hasError = true;
+            }
+
+            if (hasError) {
+                event.preventDefault();
+                return;
+            }
+
+            loginButton.disabled = true;
+            loginButton.textContent = "Signing in...";
+        });
+
+        emailInput.addEventListener("input", function () {
+            clearError(emailInput, emailClientError);
+            clearServerErrors();
+        });
+
+        passwordInput.addEventListener("input", function () {
+                clearError(passwordInput, passwordClientError);
+                clearServerErrors();
+            });
+
+        window.addEventListener("pageshow", function () {
+            passwordInput.value = "";
+            loginButton.disabled = false;
+            loginButton.innerHTML = 'Sign In to Admin Portal <span>→</span>';
+        });
+    </script>
+</body>
 </html>

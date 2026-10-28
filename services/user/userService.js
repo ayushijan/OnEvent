@@ -1,146 +1,178 @@
 const User = require("../../models/User");
-
 const bcryptjs = require("bcryptjs");
-
 const Otp = require("../../models/otp");
-
 const crypto = require("crypto");
-
 const sendOtp = require("./emailService");
+
+const STATUS_CODES = require("../../constants/statusCodes");
+const RESPONSE_MESSAGES = require("../../constants/responseMessages");
 
 const signup = async (data) => {
 
-    if (!data.name || data.name.trim() === "") {
-
-        const error = new Error("Name is required");
-
-        error.statusCode = 400;
-
+    // Validate request data
+    if (!data || typeof data !== "object") {
+        const error = new Error("Invalid signup data");
+        error.statusCode = STATUS_CODES.BAD_REQUEST;
         throw error;
     }
 
-    if (!data.email || data.email.trim() === "") {
+    // Normalize name
+    const name = typeof data.name === "string"
+        ? data.name.trim().replace(/\s+/g, " ")
+        : "";
 
-        const error = new Error("Email is required");
-
-        error.statusCode = 400;
-
+    // Validate name
+    if (!name) {
+        const error = new Error(RESPONSE_MESSAGES.NAME_REQUIRED);
+        error.statusCode = STATUS_CODES.BAD_REQUEST;
         throw error;
     }
 
-    if (!data.email.includes("@") || !data.email.includes(".")) {
+    if (!/^[A-Za-z ]+$/.test(name)) {
+        const error = new Error(
+            "Name must contain only letters and spaces"
+        );
+        error.statusCode = STATUS_CODES.BAD_REQUEST;
+        throw error;
+    }
 
+    // Normalize email
+    const email = typeof data.email === "string"
+        ? data.email.trim().toLowerCase()
+        : "";
+
+    // Validate email
+    if (!email) {
+        const error = new Error(RESPONSE_MESSAGES.EMAIL_REQUIRED);
+        error.statusCode = STATUS_CODES.BAD_REQUEST;
+        throw error;
+    }
+
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!emailPattern.test(email)) {
         const error = new Error("Invalid email format");
-
-        error.statusCode = 400;
-
+        error.statusCode = STATUS_CODES.BAD_REQUEST;
         throw error;
     }
 
-    if (!data.phone || data.phone.trim() === "") {
+    // Validate phone number
+    const phone = typeof data.phone === "string"
+        ? data.phone.trim()
+        : "";
 
-        const error = new Error("Phone number is required");
-
-        error.statusCode = 400;
-
+    if (!phone) {
+        const error = new Error(RESPONSE_MESSAGES.PHONE_REQUIRED);
+        error.statusCode = STATUS_CODES.BAD_REQUEST;
         throw error;
     }
 
-    if (!/^[0-9]{10}$/.test(data.phone)) {
-
-        const error = new Error("Invalid phone number");
-
-        error.statusCode = 400;
-
+    if (!/^[0-9]{10}$/.test(phone)) {
+        const error = new Error(RESPONSE_MESSAGES.INVALID_PHONE);
+        error.statusCode = STATUS_CODES.BAD_REQUEST;
         throw error;
     }
 
-    if (data.password.length < 8) {
+    // Validate password
+    const password = typeof data.password === "string"
+        ? data.password
+        : "";
 
-        const error = new Error("Password must be at least 8 characters");
-
-        error.statusCode = 400;
-
+    if (password.length < 8) {
+        const error = new Error(
+            "Password must be at least 8 characters"
+        );
+        error.statusCode = STATUS_CODES.BAD_REQUEST;
         throw error;
     }
 
-    if (!/[A-Z]/.test(data.password)) {
-
-        const error = new Error("Password must contain at least one uppercase");
-
-        error.statusCode = 400;
-
+    if (!/[A-Z]/.test(password)) {
+        const error = new Error(
+            "Password must contain at least one uppercase letter"
+        );
+        error.statusCode = STATUS_CODES.BAD_REQUEST;
         throw error;
     }
 
-    if (!/[a-z]/.test(data.password)) {
-
-        const error = new Error("Password must contain at least one lowercase");
-
-        error.statusCode = 400;
-
+    if (!/[a-z]/.test(password)) {
+        const error = new Error(
+            "Password must contain at least one lowercase letter"
+        );
+        error.statusCode = STATUS_CODES.BAD_REQUEST;
         throw error;
     }
 
-    if (!/[0-9]/.test(data.password)) {
-
-        const error = new Error("Password must contain at least one number");
-
-        error.statusCode = 400;
-
+    if (!/[0-9]/.test(password)) {
+        const error = new Error(
+            "Password must contain at least one number"
+        );
+        error.statusCode = STATUS_CODES.BAD_REQUEST;
         throw error;
     }
 
-    if (!/[^A-Za-z0-9]/.test(data.password)) {
-
-        const error = new Error("Password must contain at least one special character");
-
-        error.statusCode = 400;
-
+    if (!/[^A-Za-z0-9]/.test(password)) {
+        const error = new Error(
+            "Password must contain at least one special character"
+        );
+        error.statusCode = STATUS_CODES.BAD_REQUEST;
         throw error;
     }
 
-    const existingUser = await User.findOne({
-
-        email: data.email
-
-    });
+    // Check whether the email is already registered
+    const existingUser = await User.findOne({ email });
 
     if (existingUser) {
-
         const error = new Error("Email already registered");
-
-        error.statusCode = 409;
-
+        error.statusCode = STATUS_CODES.CONFLICT;
         throw error;
     }
 
-    const hashedPassword = await bcryptjs.hash(data.password, 10);
+    // Hash password
+    const hashedPassword = await bcryptjs.hash(password, 10);
 
-    data.password = hashedPassword;
+    // Prepare user data without modifying the original object
+    const userData = {
+        ...data,
+        name,
+        email,
+        phone,
+        password: hashedPassword
+    };
 
-    const user = new User(data);
+    // Generate signup OTP
+    const otp = crypto.randomInt(100000, 1000000).toString();
 
+    const expiresAt = new Date(Date.now() + 5 * 60 * 1000);
+
+    // Send the OTP before creating the user.
+    // If email delivery fails, the user is not created.
+    await sendOtp(email, otp);
+
+    // Create user
+    const user = new User(userData);
     const result = await user.save();
 
-    const otp = crypto.randomInt(100000,1000000).toString();
-
-    const expiresAt = new Date(Date.now() + 300000);
-
-    const otpData = new Otp({
-        email: data.email,
-        otp: otp,
-        expiresAt: expiresAt,
+    // Remove any previous signup OTPs for this email
+    await Otp.deleteMany({
+        email,
         purpose: "signup"
-    })
+    });
+
+    // Save the new OTP
+    const otpData = new Otp({
+        email,
+        otp,
+        expiresAt,
+        purpose: "signup"
+    });
 
     await otpData.save();
 
-    await sendOtp(data.email,otp);
+    // Remove password from the returned result
+    const userResult = result.toObject();
+    delete userResult.password;
 
-    delete result.password;
-
-    return result;
+    return userResult;
 };
 
 module.exports = signup;

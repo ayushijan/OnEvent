@@ -2,218 +2,724 @@
 <html lang="en">
 
 <head>
-
     <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
-
-    <title>OnEvent - Admin Dashboard</title>
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OnEvent - User Management</title>
     <link rel="stylesheet" href="/css/admin/dashboard.css">
-
 </head>
 
 <body>
+    <div class="admin-layout">
 
-    <header>
-
-        <h1>OnEvent Admin Dashboard</h1>
-
-        <a href="/admin/logout">
-            Logout
-        </a>
-
-    </header>
-
-
-    <main>
-
-        <h2>User Management</h2>
-
-
-        <!-- Search -->
-
-        <form action="/admin/dashboard" method="GET">
-
-            <input
-                type="text"
-                name="search"
-                placeholder="Search by name or email"
-                value="<%= search || '' %>"
-            >
-
-            <button type="submit">
-                Search
-            </button>
-
-            <a href="/admin/dashboard">
-                Clear
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+            <a href="/admin/dashboard" class="brand">
+                <img src="/images/OnEvent%20LOGO.png" alt="OnEvent">
+                <span class="admin-badge">ADMIN</span>
             </a>
 
-        </form>
+            <nav class="sidebar-nav">
+                <a href="/admin/dashboard" class="nav-item">
+                    <span class="nav-icon">▦</span>
+                    <span>Dashboard</span>
+                </a>
 
+                <a href="#" class="nav-item">
+                    <span class="nav-icon">▣</span>
+                    <span>Events</span>
+                </a>
 
-        <br>
+                <a href="#" class="nav-item">
+                    <span class="nav-icon">◇</span>
+                    <span>Categories</span>
+                </a>
 
+                <a href="/admin/dashboard" class="nav-item active">
+                    <span class="nav-icon">♙</span>
+                    <span>Users</span>
+                    <span class="nav-count"><%= totalRegistered %></span>
+                </a>
 
-        <% if (users.length === 0) { %>
+                <a href="#" class="nav-item">
+                    <span class="nav-icon">▤</span>
+                    <span>Bookings</span>
+                </a>
 
-            <p>No users found.</p>
+                <a href="#" class="nav-item">
+                    <span class="nav-icon">▣</span>
+                    <span>Attendee Verification</span>
+                </a>
 
-        <% } else { %>
+                <a href="#" class="nav-item">
+                    <span class="nav-icon">▥</span>
+                    <span>Reports &amp; Revenue</span>
+                </a>
+            </nav>
 
-            <table border="1">
+            <!-- SIDEBAR BOTTOM -->
+            <div class="sidebar-bottom">
+                <div class="system-status">
+                    <span class="status-dot"></span>
+                    <div>
+                        <small>SYSTEM STATUS</small>
+                        <strong>Operational</strong>
+                    </div>
+                </div>
+            </div>
+        </aside>
 
-                <thead>
+        <!-- MAIN AREA -->
+        <div class="main-area">
 
-                    <tr>
+            <!-- TOPBAR -->
+            <header class="topbar">
+                <div class="breadcrumbs">
+                    <span>Home</span>
+                    <span class="breadcrumb-separator">/</span>
+                    <strong>Users</strong>
+                </div>
 
-                        <th>Name</th>
+                <div class="topbar-right">
 
-                        <th>Email</th>
+                    <div class="date-badge">
+                        <span class="date-icon">◷</span>
+                        Last 30 Days
+                    </div>
 
-                        <th>Phone</th>
+                    <!-- NOTIFICATIONS -->
+                    <button
+                        type="button"
+                        class="icon-button"
+                        aria-label="Notifications"
+                        title="Notifications"
+                    >
+                        <svg
+                            class="notification-icon"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                            aria-hidden="true"
+                        >
+                            <path
+                                d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"
+                                stroke="currentColor"
+                                stroke-width="1.7"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            />
+                            <path
+                                d="M10 21h4"
+                                stroke="currentColor"
+                                stroke-width="1.7"
+                                stroke-linecap="round"
+                            />
+                        </svg>
+                        <span class="notification-dot"></span>
+                    </button>
 
-                        <th>Status</th>
+                    <!-- ADMIN PROFILE -->
+                    <div class="admin-profile">
+                        <span class="admin-avatar">SA</span>
+                        <div class="admin-profile-info">
+                            <strong>Admin Console</strong>
+                            <small>Super Administrator</small>
+                        </div>
+                    </div>
 
-                        <th>Created At</th>
+                    <!-- LOGOUT -->
+                    <button
+                        type="button"
+                        class="topbar-logout"
+                        id="logoutButton"
+                        aria-label="Log out"
+                        title="Log out"
+                    >
+                        <svg
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                            aria-hidden="true"
+                        >
+                            <path
+                                d="M10 17l5-5-5-5"
+                                stroke="currentColor"
+                                stroke-width="1.8"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            />
+                            <path
+                                d="M15 12H3"
+                                stroke="currentColor"
+                                stroke-width="1.8"
+                                stroke-linecap="round"
+                            />
+                            <path
+                                d="M12 3h6a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-6"
+                                stroke="currentColor"
+                                stroke-width="1.8"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            />
+                        </svg>
+                        <span>Logout</span>
+                    </button>
 
-                        <th>Action</th>
+                </div>
+            </header>
 
-                    </tr>
+            <!-- PAGE CONTENT -->
+            <main class="page-content">
 
-                </thead>
+                <!-- PAGE HEADING -->
+                <section class="page-heading">
+                    <div class="heading-copy">
+                        <div class="eyebrow">
+                            <span>OPERATIONS SUITE</span>
+                            <span class="eyebrow-divider">•</span>
+                            <span class="eyebrow-muted">USER GOVERNANCE</span>
+                        </div>
 
+                        <h1>User Management</h1>
 
-                <tbody>
+                        <p>
+                            Manage, monitor, and enforce compliance across
+                            all registered accounts on OnEvent.
+                        </p>
+                    </div>
 
-                    <% users.forEach(user => { %>
+                    <div class="heading-actions">
+                        <a href="/admin/users/export?search=<%= encodeURIComponent(search || '') %>&status=<%= encodeURIComponent(status || 'all') %>&sort=<%= encodeURIComponent(sort || 'newest') %>"
+                            class="secondary-button" id="exportButton">
+                            <span class="button-icon">↓</span>
+                            Export Report
+                        </a>
+                    </div>
+                </section>
 
-                        <tr>
+                <!-- STATISTICS CARDS -->
+                <section class="stats-grid">
 
-                            <td>
-                                <%= user.name %>
-                            </td>
+                    <article class="stat-card">
+                        <div class="stat-top">
+                            <span>TOTAL REGISTERED</span>
+                            <span class="stat-icon purple">
+                                <svg viewBox="0 0 24 24" aria-hidden="true">
+                                    <circle cx="12" cy="8" r="3"></circle>
+                                    <path d="M5 20v-2a7 7 0 0 1 14 0v2"></path>
+                                </svg>
+                            </span>
+                        </div>
+                        <h2><%= totalRegistered %></h2>
+                        <p>Registered user accounts</p>
+                    </article>
 
-                            <td>
-                                <%= user.email %>
-                            </td>
+                    <article class="stat-card">
+                        <div class="stat-top">
+                            <span>ACTIVE ACCOUNTS</span>
+                            <span class="stat-icon green">
+                                <svg viewBox="0 0 24 24" aria-hidden="true">
+                                    <path d="m5 12 4 4L19 6"></path>
+                                </svg>
+                            </span>
+                        </div>
+                        <h2><%= activeAccounts %></h2>
+                        <p>Currently active users</p>
+                    </article>
 
-                            <td>
-                                <%= user.phone || "-" %>
-                            </td>
+                    <article class="stat-card">
+                        <div class="stat-top">
+                            <span>SUSPENDED / BLOCKED</span>
+                            <span class="stat-icon red">
+                                <svg viewBox="0 0 24 24" aria-hidden="true">
+                                    <path d="M12 8v5"></path>
+                                    <path d="M12 17h.01"></path>
+                                    <path d="M10.3 3.9 2.8 17a2 2 0 0 0 1.7 3h15a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"></path>
+                                </svg>
+                            </span>
+                        </div>
+                        <h2><%= blockedAccounts %></h2>
+                        <p>Blocked user accounts</p>
+                    </article>
 
-                            <td>
-                                <%= user.status %>
-                            </td>
+                    <article class="stat-card">
+                        <div class="stat-top">
+                            <span>TOTAL BOOKINGS</span>
+                            <span class="stat-icon violet">
+                                <svg viewBox="0 0 24 24" aria-hidden="true">
+                                    <rect x="4" y="3" width="16" height="18" rx="2"></rect>
+                                    <path d="M8 7h8M8 11h8M8 15h5"></path>
+                                </svg>
+                            </span>
+                        </div>
+                        <h2>
+                            <%= totalBookings === null ? "—" : totalBookings %>
+                        </h2>
+                        <p>
+                            <%= totalBookings === null
+                                ? "Booking data not configured"
+                                : "Total bookings across events" %>
+                        </p>
+                    </article>
 
-                            <td>
-                                <%= user.createdAt.toLocaleDateString() %>
-                            </td>
+                </section>
 
-                            <td>
+                <!-- SEARCH AND FILTERS -->
+                <form
+                    action="/admin/dashboard"
+                    method="GET"
+                    class="filter-panel"
+                >
+                    <label class="search-box">
+                        <img src="/icons/search.svg" alt="" class="search-icon">
+                        <input
+                            type="search"
+                            name="search"
+                            placeholder="Search users by name or email..."
+                            value="<%= search || '' %>"
+                            aria-label="Search users by name or email"
+                        >
+                    </label>
 
-                                <% if (user.status === "active") { %>
+                    <select name="status" aria-label="Filter users by status">
+                        <option value="all" <%= status === "all" ? "selected" : "" %>>
+                            All Status
+                        </option>
+                        <option value="active" <%= status === "active" ? "selected" : "" %>>
+                            Active
+                        </option>
+                        <option value="blocked" <%= status === "blocked" ? "selected" : "" %>>
+                            Blocked
+                        </option>
+                    </select>
 
-                                    <form
-                                        action="/admin/users/<%= user._id %>/status"
-                                        method="POST"
-                                        onsubmit="return confirm('Are you sure you want to block this user?');"
-                                    >
+                    <select name="sort" aria-label="Sort users">
+                        <option value="newest" <%= sort === "newest" ? "selected" : "" %>>
+                            Sort: Newest First
+                        </option>
+                        <option value="oldest" <%= sort === "oldest" ? "selected" : "" %>>
+                            Sort: Oldest First
+                        </option>
+                        <option value="az" <%= sort === "az" ? "selected" : "" %>>
+                            Sort: A - Z
+                        </option>
+                    </select>
 
-                                        <input
-                                            type="hidden"
-                                            name="status"
-                                            value="blocked"
-                                        >
+                    <button type="submit" class="filter-button" aria-label="Apply filters">
+                        <img src="/icons/search.svg" alt="">
+                    </button>
 
-                                        <button type="submit">
-                                            Block
-                                        </button>
+                    <a href="/admin/dashboard" class="clear-filters">Clear</a>
+                </form>
 
-                                    </form>
+                <!-- USER TABLE -->
+                <section class="table-card">
+                    <div class="table-scroll">
+                        <table class="users-table">
+                            <thead>
+                                <tr>
+                                    <th>USER</th>
+                                    <th>EMAIL</th>
+                                    <th>JOINED DATE</th>
+                                    <th>BOOKINGS</th>
+                                    <th>STATUS</th>
+                                    <th class="actions-heading">ACTIONS</th>
+                                </tr>
+                            </thead>
 
+                            <tbody>
+                                <% if (users.length === 0) { %>
+                                    <tr>
+                                        <td colspan="6" class="empty-state">
+                                            <div class="empty-icon">
+                                                <img src="/icons/search.svg" alt="">
+                                            </div>
+                                            <strong>No users found</strong>
+                                            <p>Try changing your search or filters.</p>
+                                        </td>
+                                    </tr>
                                 <% } else { %>
 
-                                    <form
-                                        action="/admin/users/<%= user._id %>/status"
-                                        method="POST"
-                                        onsubmit="return confirm('Are you sure you want to unblock this user?');"
-                                    >
+                                    <% users.forEach((user, index) => { %>
+                                        <tr>
+                                            <td>
+                                                <div class="user-cell">
+                                                    <div class="user-avatar avatar-<%= index % 6 %>">
+                                                        <%= user.name
+                                                            ? user.name.trim().charAt(0).toUpperCase()
+                                                            : "U" %>
+                                                    </div>
 
-                                        <input
-                                            type="hidden"
-                                            name="status"
-                                            value="active"
-                                        >
+                                                    <div class="user-info">
+                                                        <strong>
+                                                            <%= user.name || "Unnamed User" %>
+                                                        </strong>
+                                                        <small>
+                                                            ID: <%= String(user._id).slice(-6).toUpperCase() %>
+                                                        </small>
+                                                    </div>
+                                                </div>
+                                            </td>
 
-                                        <button type="submit">
-                                            Unblock
-                                        </button>
+                                            <td>
+                                                <span class="user-email">
+                                                    <%= user.email || "" %>
+                                                </span>
+                                            </td>
 
-                                    </form>
+                                            <td>
+                                                <span class="joined-date">
+                                                    <%= user.createdAt
+                                                        ? new Date(user.createdAt).toLocaleDateString(
+                                                            "en-GB",
+                                                            {
+                                                                day: "2-digit",
+                                                                month: "short",
+                                                                year: "numeric"
+                                                            }
+                                                        )
+                                                        : "-" %>
+                                                </span>
+                                            </td>
+
+                                            <td>
+                                                <span class="booking-count">— Bookings</span>
+                                            </td>
+
+                                            <td>
+                                                <% if (user.status === "active") { %>
+                                                    <span class="status-badge active-status">
+                                                        <span></span>
+                                                        Active
+                                                    </span>
+                                                <% } else { %>
+                                                    <span class="status-badge blocked-status">
+                                                        <span></span>
+                                                        Blocked
+                                                    </span>
+                                                <% } %>
+                                            </td>
+
+                                            <td>
+                                                <div class="action-buttons">
+                                                    <% if (user.status === "active") { %>
+                                                        <form
+                                                            action="/admin/users/<%= user._id %>/status"
+                                                            method="POST"
+                                                            class="status-form"
+                                                            data-action="block"
+                                                        >
+                                                            <input type="hidden" name="status" value="blocked">
+                                                            <button type="submit" class="action-button block-btn">
+                                                                Block
+                                                            </button>
+                                                        </form>
+                                                    <% } else { %>
+                                                        <form
+                                                            action="/admin/users/<%= user._id %>/status"
+                                                            method="POST"
+                                                            class="status-form"
+                                                            data-action="unblock"
+                                                        >
+                                                            <input type="hidden" name="status" value="active">
+                                                            <button type="submit" class="action-button unblock-btn">
+                                                                Unblock
+                                                            </button>
+                                                        </form>
+                                                    <% } %>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    <% }) %>
 
                                 <% } %>
+                            </tbody>
+                        </table>
+                    </div>
 
-                            </td>
+                    <!-- TABLE FOOTER -->
+                    <div class="table-footer">
+                        <div class="table-summary">
+                            Showing
+                            <strong>
+                                <%= users.length > 0
+                                    ? ((currentPage - 1) * 5) + 1
+                                    : 0 %>–<%= ((currentPage - 1) * 5) + users.length %>
+                            </strong>
+                            users on this page
 
-                        </tr>
+                            <% if (typeof totalUsers !== "undefined") { %>
+                                <span>of <%= totalUsers %></span>
+                            <% } %>
+                        </div>
 
-                    <% }) %>
+                        <!-- PAGINATION -->
+                        <div class="pagination">
+                            <% if (currentPage > 1) { %>
+                                <a
+                                    class="page-button"
+                                    href="/admin/dashboard?page=<%= currentPage - 1 %>&search=<%= encodeURIComponent(search || '') %>&status=<%= encodeURIComponent(status || 'all') %>&sort=<%= encodeURIComponent(sort || 'newest') %>"
+                                >
+                                    Previous
+                                </a>
+                            <% } else { %>
+                                <button type="button" class="page-button" disabled>
+                                    Previous
+                                </button>
+                            <% } %>
 
-                </tbody>
+                            <% for (let p = 1; p <= totalPages; p++) { %>
+                                <a
+                                    class="page-number <%= p === currentPage ? 'current-page' : '' %>"
+                                    href="/admin/dashboard?page=<%= p %>&search=<%= encodeURIComponent(search || '') %>&status=<%= encodeURIComponent(status || 'all') %>&sort=<%= encodeURIComponent(sort || 'newest') %>"
+                                    <%= p === currentPage ? 'aria-current="page"' : '' %>
+                                >
+                                    <%= p %>
+                                </a>
+                            <% } %>
 
-            </table>
+                            <% if (currentPage < totalPages) { %>
+                                <a
+                                    class="page-button"
+                                    href="/admin/dashboard?page=<%= currentPage + 1 %>&search=<%= encodeURIComponent(search || '') %>&status=<%= encodeURIComponent(status || 'all') %>&sort=<%= encodeURIComponent(sort || 'newest') %>"
+                                >
+                                    Next
+                                </a>
+                            <% } else { %>
+                                <button type="button" class="page-button" disabled>
+                                    Next
+                                </button>
+                            <% } %>
+                        </div>
+                    </div>
+                </section>
 
+                <!-- FOOTER -->
+                <footer class="page-footer">
+                    <span>OnEvent Administration</span>
+                    <span>User Management</span>
+                </footer>
 
-            <br>
+            </main>
+        </div>
+    </div>
 
+    <!-- CONFIRMATION MODAL -->
+    <div
+        class="confirmation-overlay"
+        id="confirmationModal"
+        aria-hidden="true"
+    >
+        <div
+            class="confirmation-box"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="confirmationTitle"
+            aria-describedby="confirmationMessage"
+        >
+            <div class="confirmation-icon" id="confirmationIcon">!</div>
+            <h3 id="confirmationTitle">Confirm Action</h3>
+            <p id="confirmationMessage">Are you sure?</p>
 
-            <!-- Pagination -->
-
-            <div>
-
-                <% if (currentPage > 1) { %>
-
-                    <a
-                        href="/admin/dashboard?page=<%= currentPage - 1 %>&search=<%= encodeURIComponent(search || '') %>"
-                    >
-                        <button type="button">
-                            Previous
-                        </button>
-                    </a>
-
-                <% } %>
-
-
-                <span>
-
-                    Page <%= currentPage %> of <%= totalPages %>
-
-                </span>
-
-
-                <% if (currentPage < totalPages) { %>
-
-                    <a
-                        href="/admin/dashboard?page=<%= currentPage + 1 %>&search=<%= encodeURIComponent(search || '') %>"
-                    >
-                        <button type="button">
-                            Next
-                        </button>
-                    </a>
-
-                <% } %>
-
+            <div class="confirmation-actions">
+                <button type="button" class="cancel-btn" id="cancelConfirmation">
+                    Cancel
+                </button>
+                <button type="button" class="confirm-btn" id="confirmAction">
+                    Confirm
+                </button>
             </div>
+        </div>
+    </div>
 
-        <% } %>
+    <!-- EXPORT DATA -->
+    <script type="application/json" id="users-export-data"><%- JSON.stringify(
+        users.map(user => ({
+            name: user.name || "",
+            email: user.email || "",
+            phone: user.phone || "",
+            createdAt: user.createdAt
+                ? new Date(user.createdAt).toLocaleDateString("en-GB")
+                : "",
+            status: user.status || ""
+        }))
+    ).replace(/</g, "\\u003c") %></script>
 
-    </main>
+    <!-- JAVASCRIPT -->
+    <script>
+        const modal = document.getElementById("confirmationModal");
+        const confirmationBox = document.querySelector(".confirmation-box");
+        const title = document.getElementById("confirmationTitle");
+        const message = document.getElementById("confirmationMessage");
+        const confirmButton = document.getElementById("confirmAction");
+        const cancelButton = document.getElementById("cancelConfirmation");
+        const logoutButton = document.getElementById("logoutButton");
 
+        let selectedForm = null;
+        let logoutSelected = false;
+
+        function openModal() {
+            modal.classList.add("show");
+            modal.setAttribute("aria-hidden", "false");
+            cancelButton.focus();
+        }
+
+        function closeModal() {
+            modal.classList.remove("show");
+            modal.setAttribute("aria-hidden", "true");
+            selectedForm = null;
+            logoutSelected = false;
+        }
+
+        // BLOCK / UNBLOCK CONFIRMATION
+        document.querySelectorAll(".status-form").forEach(form => {
+            form.addEventListener("submit", function (event) {
+                event.preventDefault();
+
+                selectedForm = this;
+                logoutSelected = false;
+
+                const action = this.dataset.action;
+
+                confirmationBox.classList.remove(
+                    "block-alert",
+                    "unblock-alert"
+                );
+
+                if (action === "block") {
+                    confirmationBox.classList.add("block-alert");
+                    title.textContent = "Block User?";
+                    message.textContent =
+                        "Are you sure you want to block this user?";
+                    confirmButton.textContent = "Block User";
+                } else {
+                    confirmationBox.classList.add("unblock-alert");
+                    title.textContent = "Unblock User?";
+                    message.textContent =
+                        "Are you sure you want to unblock this user?";
+                    confirmButton.textContent = "Unblock User";
+                }
+
+                openModal();
+            });
+        });
+
+        // LOGOUT CONFIRMATION
+        if (logoutButton) {
+            logoutButton.addEventListener("click", function () {
+                selectedForm = null;
+                logoutSelected = true;
+
+                confirmationBox.classList.remove("unblock-alert");
+                confirmationBox.classList.add("block-alert");
+
+                title.textContent = "Logout?";
+                message.textContent =
+                    "Are you sure you want to logout?";
+                confirmButton.textContent = "Logout";
+
+                openModal();
+            });
+        }
+
+        // CONFIRM ACTION
+        confirmButton.addEventListener("click", function () {
+            if (logoutSelected) {
+                const form = document.createElement("form");
+                form.method = "POST";
+                form.action = "/admin/logout";
+
+                document.body.appendChild(form);
+                form.submit();
+                return;
+            }
+
+            if (selectedForm) {
+                selectedForm.submit();
+            }
+        });
+
+        // CANCEL ACTION
+        cancelButton.addEventListener("click", closeModal);
+
+        // CLICK OUTSIDE MODAL
+        modal.addEventListener("click", function (event) {
+            if (event.target === modal) {
+                closeModal();
+            }
+        });
+
+        // ESCAPE KEY
+        document.addEventListener("keydown", function (event) {
+            if (
+                event.key === "Escape" &&
+                modal.classList.contains("show")
+            ) {
+                closeModal();
+            }
+        });
+
+    // Handle browser Back/Forward cache restoration
+        window.addEventListener("pageshow", function (event) {
+            closeModal();
+
+            if (event.persisted) {
+                document.documentElement.style.visibility = "hidden";
+                window.location.replace("/admin/dashboard");
+            }
+
+        });
+
+
+
+
+        // EXPORT CURRENT PAGE USERS AS CSV
+        const exportButton = document.getElementById("exportButton");
+        const exportDataElement = document.getElementById("users-export-data");
+
+        if (exportButton && exportDataElement) {
+            exportButton.addEventListener("click", function () {
+                const usersForExport = JSON.parse(
+                    exportDataElement.textContent || "[]"
+                );
+
+                const rows = [
+                    ["Name", "Email", "Phone", "Joined Date", "Status"],
+                    ...usersForExport.map(user => [
+                        user.name,
+                        user.email,
+                        user.phone,
+                        user.createdAt,
+                        user.status
+                    ])
+                ];
+
+                const csv = rows
+                    .map(row =>
+                        row.map(value =>
+                            '"' + String(value ?? "").replace(/"/g, '""') + '"'
+                        ).join(",")
+                    )
+                    .join("\r\n");
+
+                const blob = new Blob(
+                    ["\uFEFF" + csv],
+                    { type: "text/csv;charset=utf-8;" }
+                );
+
+                const url = URL.createObjectURL(blob);
+                const link = document.createElement("a");
+
+                link.href = url;
+                link.download = "onevent-users.csv";
+
+                document.body.appendChild(link);
+                link.click();
+                link.remove();
+
+                setTimeout(() => URL.revokeObjectURL(url), 1000);
+            });
+        }
+    </script>
 </body>
 
 </html>

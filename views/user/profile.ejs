@@ -2,72 +2,446 @@
 <html lang="en">
 
 <head>
-
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>OnEvent - Profile</title>
+    <title>OnEvent - My Profile</title>
 
     <link rel="stylesheet" href="/css/user/profile.css">
-
+    <link rel="stylesheet" href="/css/user/navbar.css">
+    <link rel="stylesheet" href="/css/user/footer.css">
 </head>
 
 <body>
 
-    <header>
+    <!-- Shared Navbar -->
+    <%- include("../partials/navbar") %>
 
-        <h2>OnEvent</h2>
+    <main class="profile-page">
 
-        <%- include("../partials/navbar") %>
+        <!-- Page Heading -->
+        <section class="profile-heading">
 
-    </header>
+            <div class="heading-content">
 
-    <main>
+                <nav class="breadcrumb" aria-label="Breadcrumb">
 
-        <h1>My Profile</h1>
+                    <a href="/">⌂ Home</a>
 
-        <% if (user.profileImage) { %>
+                    <span class="breadcrumb-separator">›</span>
 
-            <img
-                src="<%= user.profileImage %>"
-                alt="Profile Image"
-                width="120"
-                height="120"
-            >
+                    <strong>My Profile</strong>
 
-        <% } else { %>
+                </nav>
 
-            <p>No profile image</p>
+                <h1>
+                    My Profile
 
-        <% } %>
+                    <span class="verified-badge">
+                        <span class="status-dot"></span>
+                        Active
+                    </span>
+                </h1>
 
-        <h3>Personal Details</h3>
+                <p>
+                    Manage your personal details, login credentials,
+                    and account settings.
+                </p>
 
-        <p>
-            <strong>Name:</strong>
-            <%= user.name %>
-        </p>
+            </div>
 
-        <p>
-            <strong>Email:</strong>
-            <%= user.email %>
-        </p>
+            <div class="account-badge">
 
-        <p>
-            <strong>Phone:</strong>
-            <%= user.phone || "Not provided" %>
-        </p>
+                <span class="account-icon">♙</span>
 
-        <a href="/profile/edit">Edit Profile</a>
+                Attendee Account
 
-        <br><br>
+            </div>
 
-        <a href="/profile/change-password">
-            Change Password
-        </a>
+        </section>
+
+
+        <!-- Main Profile Layout -->
+        <section class="profile-layout">
+
+            <!-- Left Sidebar -->
+            <aside class="profile-sidebar">
+
+                <!-- Profile Card -->
+                <section class="profile-card">
+
+                    <div class="profile-cover"></div>
+
+                    <div class="profile-avatar-wrapper">
+
+                        <% if (user.profileImage) { %>
+
+                            <img
+                                src="<%= user.profileImage %>"
+                                alt="Profile picture"
+                                class="profile-avatar"
+                            >
+
+                        <% } else { %>
+
+                            <div class="profile-avatar profile-avatar-placeholder">
+
+                                <%= user.name
+                                    ? user.name.charAt(0).toUpperCase()
+                                    : "U" %>
+
+                            </div>
+
+                        <% } %>
+
+                    </div>
+
+                    <div class="profile-identity">
+
+                        <h2>
+                            <%= user.name || "User" %>
+                        </h2>
+
+                        <p class="profile-role">
+                            Attendee · OnEvent Member
+                        </p>
+
+                        <div class="profile-contact">
+
+                            <!-- Email -->
+                            <div class="contact-item">
+
+                                <span class="contact-icon">✉</span>
+
+                                <span class="contact-text">
+                                    <%= user.email || "Email not provided" %>
+                                </span>
+
+                            </div>
+
+                            <!-- Phone -->
+                            <div class="contact-item">
+
+                                <span class="contact-icon">☎</span>
+
+                                <span class="contact-text">
+                                    <%= user.phone || "Phone not provided" %>
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+                <!-- Profile Navigation -->
+                <nav class="profile-menu" aria-label="Profile navigation">
+
+                    <!-- Profile Overview -->
+                    <a
+                        href="/profile"
+                        class="profile-menu-item active"
+                        aria-current="page"
+                    >
+
+                        <span class="menu-icon">▣</span>
+
+                        <span>Profile Overview</span>
+
+                        <span class="menu-arrow">→</span>
+
+                    </a>
+
+
+                    <!-- Edit Profile -->
+                    <a
+                        href="/profile/edit"
+                        class="profile-menu-item"
+                    >
+
+                        <span class="menu-icon">✎</span>
+
+                        <span>Edit Profile</span>
+
+                    </a>
+
+
+                    <!-- Change Password: Local Accounts Only -->
+                    <% if (user.authProvider === "local") { %>
+
+                        <a
+                            href="/profile/change-password"
+                            class="profile-menu-item"
+                        >
+
+                            <span class="menu-icon">◉</span>
+
+                            <span>Change Password</span>
+
+                        </a>
+
+                    <% } %>
+
+
+                    <!-- Wallet -->
+                    <a
+                        href="/profile/wallet"
+                        class="profile-menu-item"
+                    >
+
+                        <span class="menu-icon">▣</span>
+
+                        <span>Wallet</span>
+
+                    </a>
+
+                </nav>
+
+
+                <!-- Account Engagement -->
+                <section class="profile-engagement-card">
+
+                    <div class="profile-engagement-heading">
+
+                        <h3>ACCOUNT ENGAGEMENT</h3>
+
+                        <span aria-hidden="true">↗</span>
+
+                    </div>
+
+                    <div class="profile-engagement-stats">
+
+                        <div class="profile-engagement-stat">
+
+                            <strong>02</strong>
+
+                            <span>Booked Events</span>
+
+                        </div>
+
+                        <div class="profile-engagement-stat">
+
+                            <strong>02</strong>
+
+                            <span>Verified Passes</span>
+
+                        </div>
+
+                    </div>
+
+                    <div class="profile-verified-attendee">
+
+                        <div class="profile-verified-icon">
+                            ✓
+                        </div>
+
+                        <div>
+
+                            <strong>100% Verified Attendee</strong>
+
+                            <p>
+                                Digital KYC &amp; ticketing integrity ready
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+            </aside>
+
+
+            <!-- Right Side: Personal Information -->
+            <section class="profile-details-card">
+
+                <div class="details-heading">
+
+                    <div>
+
+                        <h2>Personal Information</h2>
+
+                        <p>
+                            Your personal details associated with your account.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Personal Information Grid -->
+                <div class="details-grid">
+
+                    <!-- Full Name -->
+                    <div class="detail-item">
+
+                        <span class="detail-label">
+                            FULL NAME
+                        </span>
+
+                        <span class="detail-value">
+                            <%= user.name || "Not provided" %>
+                        </span>
+
+                    </div>
+
+
+                    <!-- Account Type -->
+                    <div class="detail-item">
+
+                        <span class="detail-label">
+                            ACCOUNT TYPE
+                        </span>
+
+                        <span class="detail-value">
+                            Attendee
+                        </span>
+
+                    </div>
+
+
+                    <!-- Email Address -->
+                    <div class="detail-item">
+
+                        <span class="detail-label">
+                            EMAIL ADDRESS
+                        </span>
+
+                        <span class="detail-value">
+                            <%= user.email || "Not provided" %>
+                        </span>
+
+                    </div>
+
+
+                    <!-- Mobile Number -->
+                    <div class="detail-item">
+
+                        <span class="detail-label">
+                            MOBILE NUMBER
+                        </span>
+
+                        <span class="detail-value">
+                            <%= user.phone || "Not provided" %>
+                        </span>
+
+                    </div>
+
+
+                    <!-- Preferred Location -->
+                    <div class="detail-item">
+
+                        <span class="detail-label">
+                            PREFERRED LOCATION
+                        </span>
+
+                        <span class="detail-value">
+                            <%= user.preferredLocation || "Not provided" %>
+                        </span>
+
+                    </div>
+
+
+                    <!-- Login Method -->
+                    <div class="detail-item">
+
+                        <span class="detail-label">
+                            LOGIN METHOD
+                        </span>
+
+                        <span class="detail-value">
+
+                            <%= user.authProvider === "google"
+                                ? "Google Account"
+                                : "Email and Password" %>
+
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+        </section>
+
+
+        <!-- Profile Feature Cards -->
+        <section class="profile-feature-grid">
+
+            <!-- Instant Pass Delivery -->
+            <article class="profile-feature-card">
+
+                <div class="profile-feature-icon" aria-hidden="true">
+                    ▣
+                </div>
+
+                <div class="profile-feature-content">
+
+                    <h3>Instant Pass Delivery</h3>
+
+                    <p>
+                        Your verified tickets are tied directly to your
+                        authenticated email and mobile number.
+                    </p>
+
+                </div>
+
+            </article>
+
+
+            <!-- Encrypted Credentials -->
+            <article class="profile-feature-card">
+
+                <div class="profile-feature-icon" aria-hidden="true">
+                    ♙
+                </div>
+
+                <div class="profile-feature-content">
+
+                    <h3>Encrypted Credentials</h3>
+
+                    <p>
+                        Your account information should be protected
+                        and handled securely.
+                    </p>
+
+                </div>
+
+            </article>
+
+
+            <!-- Attendee Helpdesk -->
+            <article class="profile-feature-card">
+
+                <div class="profile-feature-icon" aria-hidden="true">
+                    ◷
+                </div>
+
+                <div class="profile-feature-content">
+
+                    <h3>24/7 Attendee Helpdesk</h3>
+
+                    <p>
+                        Need help updating your verified email or mobile
+                        number? Contact our support team.
+                    </p>
+
+                </div>
+
+            </article>
+
+        </section>
 
     </main>
+
+
+    <!-- Shared Footer -->
+    <%- include("../partials/footer.ejs") %>
 
 </body>
 

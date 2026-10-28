@@ -1,51 +1,49 @@
 const express = require("express");
+
 const router = express.Router();
 
 const userController = require("../controllers/user/userController");
-
 const otpController = require("../controllers/user/otpController");
-
 const isAuthenticated = require("../middleware/auth");
-
 const loginController = require("../controllers/user/loginController");
-
 const forgotPasswordController = require("../controllers/user/forgotPasswordController");
-
 const resetPasswordController = require("../controllers/user/resetPasswordController");
-
 const profileController = require("../controllers/user/profileController");
-
 const profileService = require("../services/user/profileService");
-
 const emailChangeController = require("../controllers/user/emailChangeController");
-
 const emailChangeVerifyController = require("../controllers/user/emailChangeVerifyController");
-
+const emailChangeResendOtpController = require("../controllers/user/emailChangeResendOtpController");
 const changePasswordController = require("../controllers/user/changePasswordController");
-
 const upload = require("../middleware/upload");
-
 const passport = require("../config/passport");
 
+// ==================== PREVENT CACHE ====================
 
-// Signup
+const preventCache = (req, res, next) => {
+    res.set({
+        "Cache-Control": "no-store, no-cache, must-revalidate, private",
+        "Pragma": "no-cache",
+        "Expires": "0"
+    });
+
+    next();
+};
+
+// ==================== SIGNUP ====================
 
 router.post("/signup", userController);
 
-
-// Signup OTP
+// ==================== OTP ====================
 
 router.post("/resend-otp", otpController.resendOtp);
 
 router.post("/verify-otp", otpController.verifyOtp);
 
-
-// Login
+// ==================== LOGIN ====================
 
 router.post("/login", loginController);
 
-
-// Forgot Password
+// ==================== FORGOT PASSWORD ====================
 
 router.post("/forgot-password", forgotPasswordController);
 
@@ -56,73 +54,72 @@ router.post(
 
 router.post("/reset-password", resetPasswordController);
 
-
-// Email Change
-
-router.post(
-    "/profile/change-email",
-    isAuthenticated,
-    emailChangeController
-);
-
-router.post(
-    "/profile/change-email/verify",
-    isAuthenticated,
-    emailChangeVerifyController
-);
-
-
-// Home
+// ==================== HOME ====================
 
 router.get("/", isAuthenticated, async (req, res) => {
-
     try {
-
         const user = await profileService(req.session.userId);
 
-        res.render("user/home", {
+        if (!user) {
+            return req.session.destroy((error) => {
+                if (error) {
+                    return res.status(500).send("Unable to end session.");
+                }
+
+                res.clearCookie("onevent.sid", {
+                    path: "/",
+                    httpOnly: true,
+                    secure: process.env.NODE_ENV === "production",
+                    sameSite: "lax"
+                });
+
+                return res.redirect(303, "/login");
+            });
+        }
+
+        return res.render("user/home", {
             user: user
         });
-
     } catch (error) {
+        console.error("Error loading home page:", error);
 
-        res.status(error.statusCode || 500).send(error.message);
+        return res.status(error.statusCode || 500)
+            .send(error.message || "Unable to load the home page.");
+    }
+});
 
+// ==================== SIGNUP PAGE ====================
+
+router.get("/signup", preventCache, (req, res) => {
+    if (req.session && req.session.userId) {
+        return res.redirect(303, "/");
     }
 
+    return res.render("user/signup");
 });
 
+// ==================== LOGIN PAGE ====================
 
-// Signup Page
+router.get("/login", preventCache, (req, res) => {
+    if (req.session && req.session.userId) {
+        return res.redirect(303, "/");
+    }
 
-router.get("/signup", (req, res) => {
-
-    res.render("user/signup");
-
-});
-
-
-// Login Page
-
-router.get("/login", (req, res) => {
-
-    res.render("user/login", {
-        blocked: req.query.blocked === "true"
+    return res.render("user/login", {
+        blocked: req.query.blocked === "true",
+        error: null,
+        email: "",
+        emailError: null
     });
-
 });
 
+// ==================== FORGOT PASSWORD PAGE ====================
 
-// Forgot Password Page
-
-router.get("/forgot-password", (req, res) => {
-
-    res.render("user/forgotPassword");
-
+router.get("/forgot-password", preventCache, (req, res) => {
+    return res.render("user/forgotPassword");
 });
 
-
-// Profile
+// ==================== PROFILE ====================
 
 router.get(
     "/profile",
@@ -130,8 +127,7 @@ router.get(
     profileController.getProfile
 );
 
-
-// Edit Profile
+// ==================== EDIT PROFILE ====================
 
 router.get(
     "/profile/edit",
@@ -145,8 +141,7 @@ router.post(
     profileController.editProfile
 );
 
-
-// Profile Image Upload
+// ==================== PROFILE IMAGE ====================
 
 router.post(
     "/profile/upload-image",
@@ -155,36 +150,53 @@ router.post(
     profileController.uploadProfileImage
 );
 
+router.post(
+    "/profile/remove-image",
+    isAuthenticated,
+    profileController.removeProfileImage
+);
 
-// Change Password Page
+// ==================== CHANGE PASSWORD ====================
+
+// Display the Change Password page.
 
 router.get(
     "/profile/change-password",
     isAuthenticated,
     async (req, res) => {
-
         try {
+            const user = await profileService(req.session.userId);
 
-            const user = await profileService(
-                req.session.userId
-            );
+            if (!user) {
+                return res.redirect(303, "/login");
+            }
 
-            res.render("user/changePassword", {
-                user: user
+            // Google users cannot change passwords here.
+            if (user.authProvider === "google") {
+                return res.redirect(303, "/profile");
+            }
+
+            res.set({
+                "Cache-Control": "no-store, no-cache, must-revalidate, private",
+                "Pragma": "no-cache",
+                "Expires": "0"
             });
 
+            return res.render("user/changePassword", {
+                user: user,
+                successMessage: "",
+                errorMessage: ""
+            });
         } catch (error) {
+            console.error("Error loading Change Password page:", error);
 
-            res.status(error.statusCode || 500)
-                .send(error.message);
-
+            return res.status(error.statusCode || 500)
+                .send(error.message || "Unable to load Change Password page.");
         }
-
     }
 );
 
-
-// Change Password
+// Process password change.
 
 router.post(
     "/profile/change-password",
@@ -192,20 +204,110 @@ router.post(
     changePasswordController
 );
 
+// ==================== CHANGE EMAIL ====================
 
-// Logout
+// Send OTP to the new email address.
 
-router.get("/logout", (req, res) => {
+router.post(
+    "/profile/change-email",
+    isAuthenticated,
+    emailChangeController
+);
 
-    req.session.userId = null;
-    req.session.role = null;
+// Display the email-change OTP verification page.
 
-    res.redirect("/login");
+router.get(
+    "/profile/change-email/verify",
+    isAuthenticated,
+    async (req, res, next) => {
+        try {
+            const user = await profileService(req.session.userId);
 
+            if (!user) {
+                return res.redirect(303, "/login");
+            }
+
+            const email = String(req.query.email || "")
+                .trim()
+                .toLowerCase();
+
+            if (!email) {
+                return res.redirect(303, "/profile/edit");
+            }
+
+            res.set({
+                "Cache-Control": "no-store, no-cache, must-revalidate, private",
+                "Pragma": "no-cache",
+                "Expires": "0"
+            });
+
+            return res.render("user/verifyEmailChangeOtp", {
+                email: email,
+                errorMessage: "",
+                successMessage: ""
+            });
+        } catch (error) {
+            console.error("Error loading email-change OTP page:", error);
+
+            return next(error);
+        }
+    }
+);
+
+// Verify the OTP submitted by the user.
+
+router.post(
+    "/profile/change-email/verify",
+    isAuthenticated,
+    emailChangeVerifyController
+);
+
+// Resend email-change OTP.
+
+router.post(
+    "/profile/change-email/resend-otp",
+    isAuthenticated,
+    emailChangeResendOtpController
+);
+
+// ==================== LOGOUT ====================
+
+router.post("/logout", preventCache, (req, res, next) => {
+    const clearSessionCookie = () => {
+        res.clearCookie("onevent.sid", {
+            path: "/",
+            httpOnly: true,
+            secure: process.env.NODE_ENV === "production",
+            sameSite: "lax"
+        });
+    };
+
+    if (!req.session) {
+        clearSessionCookie();
+        return res.redirect(303, "/login");
+    }
+
+    req.session.destroy((error) => {
+        if (error) {
+            return next(error);
+        }
+
+        clearSessionCookie();
+
+        res.set({
+            "Cache-Control": "no-store, no-cache, must-revalidate, private, max-age=0",
+            "Pragma": "no-cache",
+            "Expires": "0"
+        });
+
+        return res.redirect(303, "/login");
+    });
 });
 
 
-// Google Login
+// ==================== GOOGLE AUTHENTICATION ====================
+
+// Start Google authentication.
 
 router.get(
     "/auth/google",
@@ -214,40 +316,57 @@ router.get(
     })
 );
 
-
-// Google Callback
+// Handle Google's authentication callback.
 
 router.get(
     "/auth/google/callback",
     (req, res, next) => {
-
         passport.authenticate(
             "google",
-            { session: false },
+            {
+                session: false
+            },
             (error, user, info) => {
-
                 if (error) {
                     return next(error);
                 }
 
                 if (!user) {
-
                     if (info && info.message === "blocked") {
-                        return res.redirect("/login?blocked=true");
+                        return res.redirect(303, "/login?blocked=true");
                     }
 
-                    return res.redirect("/login");
+                    return res.redirect(303, "/login");
                 }
 
-                req.session.userId = user._id;
-                req.session.role = user.role;
+                // Regenerate the session after successful authentication.
+                req.session.regenerate((sessionError) => {
+                    if (sessionError) {
+                        return next(sessionError);
+                    }
 
-                res.redirect("/");
+                    req.session.userId = user._id;
+                    req.session.role = user.role;
+
+                    req.session.save((saveError) => {
+                        if (saveError) {
+                            return next(saveError);
+                        }
+
+                        res.set({
+                            "Cache-Control": "no-store, no-cache, must-revalidate, private",
+                            "Pragma": "no-cache",
+                            "Expires": "0"
+                        });
+
+                        return res.redirect(303, "/");
+                    });
+                });
             }
         )(req, res, next);
-
     }
 );
 
+// ==================== EXPORT ROUTER ====================
 
 module.exports = router;

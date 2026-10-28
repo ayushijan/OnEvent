@@ -1,0 +1,723 @@
+/* =========================================
+   ON EVENT - VERIFY NEW EMAIL
+========================================= */
+
+:root {
+    --primary: #5546e8;
+    --primary-dark: #4435d4;
+    --primary-light: #eeecff;
+
+    --background: #f8f9ff;
+    --surface: #ffffff;
+
+    --text: #18213b;
+    --muted: #77778d;
+
+    --border: #e9e7ff;
+
+    --success: #15966a;
+    --danger: #e5484d;
+
+    --shadow: 0 12px 35px rgba(45, 35, 120, 0.07);
+}
+
+/* =========================================
+   RESET
+========================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    min-height: 100%;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+
+    font-family: Arial, Helvetica, sans-serif;
+
+    background: var(--background);
+    color: var(--text);
+
+    -webkit-font-smoothing: antialiased;
+}
+
+button,
+input {
+    font: inherit;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+/* =========================================
+   PAGE
+========================================= */
+
+.verify-email-page {
+    flex: 1;
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 45px 20px;
+}
+
+.verify-email-container {
+    width: 100%;
+    max-width: 470px;
+}
+
+/* =========================================
+   BACK LINK
+========================================= */
+
+.back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+
+    margin-bottom: 20px;
+
+    color: var(--muted);
+
+    font-size: 13px;
+    font-weight: 600;
+
+    transition: color 0.2s ease;
+}
+
+.back-link:hover {
+    color: var(--primary);
+}
+
+/* =========================================
+   CARD
+========================================= */
+
+.verify-email-card {
+    position: relative;
+    overflow: hidden;
+
+    width: 100%;
+    padding: 36px;
+
+    background: var(--surface);
+
+    border: 1px solid var(--border);
+    border-radius: 17px;
+
+    box-shadow: var(--shadow);
+}
+
+.verify-email-card::before {
+    content: "";
+
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 5px;
+
+    background: linear-gradient(
+        90deg,
+        var(--primary),
+        #a69bff,
+        #f2c7d5
+    );
+}
+
+/* =========================================
+   ICON
+========================================= */
+
+.verify-email-icon {
+    width: 62px;
+    height: 62px;
+
+    margin-bottom: 20px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 17px;
+
+    background: var(--primary-light);
+    color: var(--primary);
+
+    font-size: 27px;
+}
+
+/* =========================================
+   SECURITY BADGE
+========================================= */
+
+.security-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+
+    padding: 7px 10px;
+    margin-bottom: 16px;
+
+    background: #f1efff;
+    border-radius: 6px;
+
+    color: var(--primary);
+
+    font-size: 9px;
+    font-weight: 750;
+    letter-spacing: 0.7px;
+}
+
+.security-dot {
+    width: 6px;
+    height: 6px;
+
+    border-radius: 50%;
+    background: var(--primary);
+}
+
+/* =========================================
+   HEADING
+========================================= */
+
+.verify-email-card h1 {
+    margin-bottom: 12px;
+
+    color: var(--text);
+
+    font-size: 27px;
+    font-weight: 750;
+    line-height: 1.3;
+
+    letter-spacing: -0.6px;
+}
+
+.verify-email-description {
+    margin-bottom: 24px;
+
+    color: var(--muted);
+
+    font-size: 13px;
+    line-height: 1.8;
+}
+
+/* =========================================
+   EMAIL ADDRESS
+========================================= */
+
+.verify-email-address {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    min-width: 0;
+
+    padding: 14px;
+    margin-bottom: 25px;
+
+    background: #f8f7ff;
+
+    border: 1px solid var(--border);
+    border-radius: 11px;
+}
+
+.verify-email-address-icon {
+    flex-shrink: 0;
+
+    width: 40px;
+    height: 40px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 10px;
+
+    background: var(--primary-light);
+    color: var(--primary);
+
+    font-size: 18px;
+}
+
+.verify-email-address-content {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+
+    min-width: 0;
+}
+
+.verify-email-address-content span {
+    color: var(--muted);
+    font-size: 11px;
+}
+
+.verify-email-address-content strong {
+    color: var(--text);
+
+    font-size: 13px;
+    font-weight: 650;
+
+    overflow-wrap: anywhere;
+}
+
+/* =========================================
+   ERROR AND SUCCESS MESSAGES
+========================================= */
+
+.error-message,
+.success-message {
+    padding: 12px 14px;
+    margin-bottom: 18px;
+
+    border-radius: 9px;
+
+    font-size: 12px;
+    line-height: 1.6;
+
+    overflow-wrap: anywhere;
+}
+
+/* Error message */
+
+.error-message {
+    color: var(--danger);
+
+    background: #fff5f5;
+
+    border: 1px solid #ffd6d6;
+}
+
+/* Success message */
+
+.success-message {
+    color: var(--success);
+
+    background: #effbf5;
+
+    border: 1px solid #ccefe0;
+}
+
+/*
+   IMPORTANT:
+   The hidden attribute must override the display
+   styling above. This allows JavaScript to hide
+   an old error when the user edits the OTP.
+*/
+
+.error-message[hidden],
+.success-message[hidden] {
+    display: none !important;
+}
+
+/* =========================================
+   OTP FORM
+========================================= */
+
+#verifyEmailChangeForm {
+    width: 100%;
+}
+
+.otp-label {
+    display: block;
+
+    margin-bottom: 11px;
+
+    color: var(--text);
+
+    font-size: 11px;
+    font-weight: 750;
+
+    letter-spacing: 0.8px;
+}
+
+.otp-input {
+    display: block;
+
+    width: 100%;
+    height: 54px;
+
+    padding: 0 16px;
+
+    border: 1px solid #dedbf7;
+    border-radius: 9px;
+
+    outline: none;
+
+    background: #ffffff;
+    color: var(--text);
+
+    font-size: 18px;
+    font-weight: 650;
+
+    letter-spacing: 5px;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.otp-input::placeholder {
+    color: #aaa8bb;
+
+    font-size: 13px;
+    font-weight: 400;
+
+    letter-spacing: 0;
+}
+
+.otp-input:hover {
+    border-color: #b8b0ff;
+}
+
+.otp-input:focus {
+    border-color: var(--primary);
+
+    box-shadow: 0 0 0 4px rgba(85, 70, 232, 0.1);
+}
+
+/* =========================================
+   OTP HELP TEXT
+========================================= */
+
+.otp-help {
+    margin-top: 10px;
+
+    color: var(--muted);
+
+    font-size: 11px;
+    line-height: 1.8;
+}
+
+/* =========================================
+   VERIFY BUTTON
+========================================= */
+
+.verify-otp-button {
+    width: 100%;
+    min-height: 49px;
+
+    margin-top: 23px;
+    padding: 13px 18px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+
+    border: 1px solid var(--primary);
+    border-radius: 9px;
+
+    background: var(--primary);
+    color: #ffffff;
+
+    font-size: 13px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        box-shadow 0.2s ease,
+        opacity 0.2s ease;
+}
+
+.verify-otp-button:hover:not(:disabled) {
+    background: var(--primary-dark);
+
+    box-shadow: 0 5px 14px rgba(85, 70, 232, 0.2);
+}
+
+.verify-otp-button:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
+.button-arrow {
+    font-size: 17px;
+}
+
+/* =========================================
+   RESEND SECTION
+========================================= */
+
+.resend-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+
+    gap: 12px;
+
+    margin-top: 23px;
+    padding-top: 19px;
+
+    border-top: 1px solid var(--border);
+}
+
+.resend-timer-info {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+
+    gap: 7px;
+
+    color: var(--muted);
+
+    font-size: 11px;
+}
+
+.resend-icon {
+    color: var(--primary);
+    font-size: 17px;
+}
+
+.timer {
+    color: var(--primary);
+
+    font-size: 12px;
+    font-weight: 750;
+
+    font-variant-numeric: tabular-nums;
+}
+
+/* =========================================
+   RESEND BUTTON
+========================================= */
+
+.resend-btn {
+    padding: 8px 11px;
+
+    border: 1px solid var(--primary);
+    border-radius: 7px;
+
+    background: var(--primary-light);
+    color: var(--primary);
+
+    font-size: 11px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        color 0.2s ease,
+        opacity 0.2s ease;
+}
+
+.resend-btn:hover:not(:disabled) {
+    background: var(--primary);
+    color: #ffffff;
+}
+
+.resend-btn:disabled {
+    border-color: #e7e5f7;
+
+    background: #f5f4fb;
+    color: #aaa8bb;
+
+    cursor: not-allowed;
+}
+
+/* =========================================
+   RESEND STATUS MESSAGE
+========================================= */
+
+.resend-message {
+    min-height: 0;
+
+    margin-top: 10px;
+
+    font-size: 11px;
+    line-height: 1.6;
+
+    overflow-wrap: anywhere;
+}
+
+.resend-message:empty {
+    display: none;
+}
+
+.resend-message.error {
+    color: var(--danger);
+}
+
+.resend-message.success {
+    color: var(--success);
+}
+
+/* =========================================
+   SECURITY NOTICE
+========================================= */
+
+.verify-email-security {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+
+    padding: 14px;
+    margin-top: 22px;
+
+    background: #faf9ff;
+
+    border: 1px solid var(--border);
+    border-radius: 10px;
+}
+
+.verify-email-security-icon {
+    flex-shrink: 0;
+
+    color: var(--success);
+
+    font-size: 15px;
+    line-height: 1.5;
+}
+
+.verify-email-security p {
+    color: var(--muted);
+
+    font-size: 11px;
+    line-height: 1.8;
+}
+
+/* =========================================
+   BOTTOM LINK
+========================================= */
+
+.bottom-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+
+    gap: 5px;
+
+    margin-top: 24px;
+
+    font-size: 11px;
+}
+
+.bottom-link span {
+    color: var(--muted);
+}
+
+.bottom-link a {
+    color: var(--primary);
+    font-weight: 700;
+}
+
+.bottom-link a:hover {
+    text-decoration: underline;
+}
+
+/* =========================================
+   FOOTER
+========================================= */
+
+.verify-email-footer {
+    padding: 20px 15px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+
+    gap: 15px;
+
+    background: #ffffff;
+
+    border-top: 1px solid var(--border);
+}
+
+.verify-email-footer p {
+    color: var(--muted);
+
+    font-size: 11px;
+    text-align: center;
+}
+
+.footer-links {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.footer-links a {
+    color: var(--muted);
+    font-size: 11px;
+
+    transition: color 0.2s ease;
+}
+
+.footer-links a:hover {
+    color: var(--primary);
+}
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 600px) {
+
+    .verify-email-page {
+        align-items: flex-start;
+        padding: 30px 15px;
+    }
+
+    .verify-email-card {
+        padding: 27px 21px;
+        border-radius: 14px;
+    }
+
+    .verify-email-card h1 {
+        font-size: 24px;
+    }
+
+    .verify-email-icon {
+        width: 55px;
+        height: 55px;
+        font-size: 24px;
+    }
+
+    .resend-container {
+        align-items: flex-start;
+    }
+
+    .verify-email-footer {
+        padding: 18px 12px;
+    }
+
+    .footer-links {
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+}
+
+/* =========================================
+   ACCESSIBILITY
+========================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        transition: none !important;
+    }
+}

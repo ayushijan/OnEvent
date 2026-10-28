@@ -6,186 +6,1274 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>OnEvent - Edit Profile</title>
+
+    <link rel="stylesheet" href="/css/user/navbar.css">
+    <link rel="stylesheet" href="/css/user/editProfile.css">
+    <link rel="stylesheet" href="/css/user/footer.css">
 </head>
 
 <body>
 
-    <header>
+    <!-- Shared Navbar -->
+    <%- include("../partials/navbar") %>
 
-        <h2>OnEvent</h2>
+    <main class="edit-profile-page">
 
-        <%- include("../partials/navbar") %>
+        <!-- Page Heading -->
+        <section class="edit-page-heading">
 
-        <link rel="stylesheet" href="/css/user/editProfile.css">
+            <div class="edit-heading-content">
 
-    </header>
+                <div class="edit-breadcrumb">
+                    <a href="/">⌂ Home</a>
+                    <span>›</span>
+                    <a href="/profile">My Profile</a>
+                    <span>›</span>
+                    <strong>Edit Profile</strong>
+                </div>
 
+                <h1>
+                    Edit Profile
 
-    <main>
+                    <span class="verification-badge">
+                        <span class="verification-dot"></span>
+                        Active Verified
+                    </span>
+                </h1>
 
-        <h1>Edit Profile</h1>
-
-
-        <!-- Profile Image -->
-
-        <h2>Profile Image</h2>
-
-        <% if (user.profileImage) { %>
-
-            <img
-                src="<%= user.profileImage %>"
-                alt="Profile Image"
-                width="120"
-                height="120"
-            >
-
-        <% } else { %>
-
-            <p>No profile image uploaded.</p>
-
-        <% } %>
-
-
-        <form
-            action="/profile/upload-image"
-            method="POST"
-            enctype="multipart/form-data"
-        >
-
-            <input
-                type="file"
-                name="profileImage"
-                accept="image/jpeg,image/png,image/webp"
-                required
-            >
-
-            <button type="submit">
-                Upload Image
-            </button>
-
-        </form>
-
-
-        <br>
-        <hr>
-        <br>
-
-
-        <!-- Edit Profile -->
-
-        <form action="/profile/edit" method="POST">
-
-
-            <!-- Name -->
-
-            <div>
-
-                <label for="name">
-                    Name
-                </label>
-
-                <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    value="<%= user.name %>"
-                    required
-                >
+                <p>
+                    Update your personal details, profile picture,
+                    and contact credentials.
+                </p>
 
             </div>
 
-
-            <br>
-
-
-            <!-- Current Email -->
-
-            <div>
-
-                <label for="currentEmail">
-                    Current Email
-                </label>
-
-                <input
-                    type="email"
-                    id="currentEmail"
-                    value="<%= user.email %>"
-                    disabled
-                >
-
+            <div class="edit-account-badge">
+                <span>♙</span>
+                Attendee Account
             </div>
 
+        </section>
 
-            <br>
+
+        <!-- Main Layout -->
+        <section class="edit-profile-layout">
+
+            <!-- Left Sidebar -->
+            <aside class="edit-profile-sidebar">
+
+                <!-- Profile Card -->
+                <div class="edit-profile-card">
+
+                    <div class="edit-profile-cover"></div>
+
+                    <div class="edit-avatar-wrapper">
+
+                        <% if (user && user.profileImage) { %>
+
+                            <img
+                                src="<%= user.profileImage %>"
+                                alt="Profile Image"
+                                class="edit-profile-avatar"
+                            >
+
+                        <% } else { %>
+
+                            <div class="edit-profile-avatar avatar-placeholder">
+                                <%= user && user.name
+                                    ? user.name.charAt(0).toUpperCase()
+                                    : "U" %>
+                            </div>
+
+                        <% } %>
+
+                        <span class="avatar-camera">▣</span>
+
+                    </div>
+
+                    <div class="edit-profile-identity">
+
+                        <h2>
+                            <%= user && user.name ? user.name : "User" %>
+                        </h2>
+
+                        <p>
+                            Attendee · OnEvent Member
+                            <span class="identity-verified">✓</span>
+                        </p>
+
+                        <div class="edit-contact-box">
+
+                            <div class="edit-contact-item">
+                                <span class="edit-contact-icon">✉</span>
+
+                                <span>
+                                    <%= user && user.email
+                                        ? user.email
+                                        : "Email not provided" %>
+                                </span>
+                            </div>
+
+                            <div class="edit-contact-item">
+                                <span class="edit-contact-icon">☎</span>
+
+                                <span>
+                                    <%= user && user.phone
+                                        ? user.phone
+                                        : "Phone not provided" %>
+                                </span>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
 
 
-            <!-- New Email -->
+                <!-- Sidebar Navigation -->
+                <nav class="edit-profile-menu">
 
-            <div>
+                    <a href="/profile" class="edit-menu-item">
+                        <span class="edit-menu-icon">▣</span>
+                        <span>Profile Overview</span>
+                    </a>
 
-                <label for="newEmail">
-                    New Email
-                </label>
+                    <a
+                        href="/profile/edit"
+                        class="edit-menu-item active"
+                        aria-current="page"
+                    >
+                        <span class="edit-menu-icon">✎</span>
+                        <span>Edit Profile</span>
+                        <span class="edit-menu-arrow">→</span>
+                    </a>
 
-                <input
-                    type="email"
-                    id="newEmail"
-                    name="email"
-                    placeholder="Enter new email"
+                    <% if (user && user.authProvider === "local") { %>
+
+                        <a
+                            href="/profile/change-password"
+                            class="edit-menu-item"
+                        >
+                            <span class="edit-menu-icon">◉</span>
+                            <span>Change Password</span>
+                        </a>
+
+                    <% } %>
+
+                    <a href="/wallet" class="edit-menu-item">
+                        <span class="edit-menu-icon">▣</span>
+                        <span>Wallet</span>
+                    </a>
+
+                </nav>
+
+
+                <!-- Account Engagement -->
+                <div class="engagement-card">
+
+                    <div class="engagement-heading">
+                        <h3>ACCOUNT ENGAGEMENT</h3>
+                        <span>↗</span>
+                    </div>
+
+                    <div class="engagement-stats">
+
+                        <div class="engagement-stat">
+                            <strong>02</strong>
+                            <span>Booked Events</span>
+                        </div>
+
+                        <div class="engagement-stat">
+                            <strong>02</strong>
+                            <span>Verified Passes</span>
+                        </div>
+
+                    </div>
+
+                    <div class="verified-attendee">
+
+                        <span class="verified-attendee-icon">✓</span>
+
+                        <div>
+                            <strong>100% Verified Attendee</strong>
+
+                            <p>
+                                Digital KYC &amp; ticketing integrity ready
+                            </p>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </aside>
+
+
+            <!-- Right Side: Edit Details -->
+            <section class="edit-details-card">
+
+                <!-- Details Heading -->
+                <div class="edit-details-heading">
+
+                    <div>
+                        <h2>Edit Personal Details</h2>
+
+                        <p>
+                            Update your attendee identity and verified
+                            communication channels.
+                        </p>
+                    </div>
+
+                    <span class="identity-confirmed">
+                        ✓ Identity Confirmed
+                    </span>
+
+                </div>
+
+
+                <!-- PROFILE PHOTO UPLOAD -->
+                <div class="photo-upload-form">
+
+                    <div class="photo-preview">
+
+                        <% if (user && user.profileImage) { %>
+
+                            <img
+                                src="<%= user.profileImage %>"
+                                alt="Current Profile Image"
+                                id="profileImagePreview"
+                                class="edit-profile-avatar"
+                            >
+
+                        <% } else { %>
+
+                            <div
+                                class="photo-placeholder"
+                                id="profileImagePlaceholder"
+                            >
+                                <%= user && user.name
+                                    ? user.name.charAt(0).toUpperCase()
+                                    : "U" %>
+                            </div>
+
+                        <% } %>
+
+                    </div>
+
+
+                    <div class="photo-upload-content">
+
+                        <div class="photo-upload-actions">
+
+                            <!-- Change Photo -->
+                            <form
+                                action="/profile/upload-image"
+                                method="POST"
+                                enctype="multipart/form-data"
+                                id="uploadProfileImageForm"
+                            >
+
+                                <label
+                                    for="profileImage"
+                                    class="change-photo-button"
+                                >
+                                    <span class="upload-photo-icon">▣</span>
+                                    Change Photo
+                                </label>
+
+                                <input
+                                    type="file"
+                                    id="profileImage"
+                                    name="profileImage"
+                                    accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp"
+                                >
+
+                            </form>
+
+
+                            <!-- Remove Photo -->
+                            <% if (user && user.profileImage) { %>
+
+                                <form
+                                    action="/profile/remove-image"
+                                    method="POST"
+                                    id="removeProfileImageForm"
+                                >
+
+                                    <button
+                                        type="submit"
+                                        class="remove-photo-button"
+                                    >
+                                        Remove Photo
+                                    </button>
+
+                                </form>
+
+                            <% } %>
+
+                        </div>
+
+                        <small class="photo-upload-help">
+                            JPG, JPEG, PNG or WebP. Maximum 5MB.
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+                <!-- REMOVE PHOTO CONFIRMATION MODAL -->
+                <div
+                    class="confirmation-modal"
+                    id="removePhotoModal"
+                    aria-hidden="true"
                 >
 
-                <button
-                    type="submit"
-                    formaction="/profile/change-email"
-                    formmethod="POST"
+                    <div
+                        class="confirmation-modal-backdrop"
+                        data-close-modal
+                    ></div>
+
+                    <div
+                        class="confirmation-modal-content"
+                        role="dialog"
+                        aria-modal="true"
+                        aria-labelledby="removePhotoTitle"
+                        aria-describedby="removePhotoDescription"
+                    >
+
+                        <div class="confirmation-modal-icon">
+                            !
+                        </div>
+
+                        <h2 id="removePhotoTitle">
+                            Remove Profile Photo?
+                        </h2>
+
+                        <p id="removePhotoDescription">
+                            Are you sure you want to remove your profile
+                            photo? You can upload another image anytime.
+                        </p>
+
+                        <div class="confirmation-modal-actions">
+
+                            <button
+                                type="button"
+                                class="confirmation-cancel-button"
+                                id="cancelRemovePhoto"
+                            >
+                                Cancel
+                            </button>
+
+                            <button
+                                type="button"
+                                class="confirmation-delete-button"
+                                id="confirmRemovePhoto"
+                            >
+                                Yes, Remove
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- EDIT PROFILE FORM -->
+                <form
+                    action="/profile/edit"
+                    method="POST"
+                    class="edit-details-form"
+                    novalidate
                 >
-                    Change Email
-                </button>
 
-            </div>
+                    <!-- Full Name -->
+                    <div class="form-field full-width-field">
 
+                        <label for="name">
+                            Full Name
+                            <span class="required-mark">*</span>
+                        </label>
 
-            <br>
+                        <div class="input-wrapper">
 
+                            <span class="input-icon">♙</span>
 
-            <!-- Phone -->
+                            <input
+                                type="text"
+                                id="name"
+                                name="name"
+                                value="<%= user && user.name ? user.name : '' %>"
+                                placeholder="Enter your full name"
+                                required
+                            >
 
-            <div>
+                        </div>
 
-                <label for="phone">
-                    Phone
-                </label>
+                        <p
+                            class="field-error"
+                            id="nameError"
+                            role="alert"
+                            aria-live="polite"
+                        ><%= typeof nameError !== "undefined" ? nameError : "" %></p>
 
-                <input
-                    type="text"
-                    id="phone"
-                    name="phone"
-                    value="<%= user.phone || '' %>"
-                    maxlength="10"
-                    required
-                >
-
-            </div>
-
-
-            <br>
-
-
-            <!-- Save Changes -->
-
-            <button type="submit">
-                Save Changes
-            </button>
+                    </div>
 
 
-            <a href="/profile">
-                Cancel
-            </a>
+                    <!-- EMAIL ADDRESS -->
+                    <div class="form-field">
+
+                        <div class="label-row">
+
+                            <label for="currentEmail">
+                                Email Address
+                                <span class="required-mark">*</span>
+                            </label>
+
+                            <% if (user && user.isVerified) { %>
+                                <span class="field-verified">
+                                    ✓ Verified
+                                </span>
+                            <% } %>
+
+                        </div>
+
+                        <div class="input-wrapper">
+
+                            <span class="input-icon">✉</span>
+
+                            <input
+                                type="email"
+                                id="currentEmail"
+                                value="<%= user && user.email ? user.email : '' %>"
+                                disabled
+                            >
+
+                        </div>
+
+                        <p class="field-help">
+                            Used for ticket delivery and booking confirmations.
+                        </p>
 
 
-        </form>
+                        <!-- CHANGE EMAIL: HIDDEN FOR GOOGLE ACCOUNTS -->
+                        <% if (user && user.authProvider !== "google") { %>
+
+                            <div class="new-email-section">
+
+                                <label for="newEmail">
+                                    Change Email Address
+                                </label>
+
+                                <div class="change-email-input-group">
+
+                                    <div class="input-wrapper change-email-input-wrapper">
+
+                                        <span class="input-icon">✉</span>
+
+                                        <input
+                                            type="email"
+                                            id="newEmail"
+                                            name="newEmail"
+                                            placeholder="Enter your new email address"
+                                            autocomplete="email"
+                                            aria-describedby="newEmailHelp newEmailError"
+                                        >
+
+                                    </div>
+
+                                    <button
+                                        type="button"
+                                        id="changeEmailBtn"
+                                        class="change-email-button"
+                                    >
+                                        Send OTP
+                                    </button>
+
+                                </div>
+
+                                <p class="field-help" id="newEmailHelp">
+                                    We'll send a verification code to your new email address.
+                                </p>
+
+                                <p
+                                    class="field-error"
+                                    id="newEmailError"
+                                    role="alert"
+                                    aria-live="polite"
+                                ></p>
+
+                            </div>
+
+                        <% } %>
+
+                    </div>
+
+
+                    <!-- Mobile Number -->
+                    <div class="form-field">
+
+                        <div class="label-row">
+
+                            <label for="phone">
+                                Mobile Number
+                                <span class="required-mark">*</span>
+                            </label>
+
+                            <% if (user && user.isVerified) { %>
+                                <span class="field-verified">
+                                    ✓ Verified
+                                </span>
+                            <% } %>
+
+                        </div>
+
+                        <div class="input-wrapper">
+
+                            <span class="input-icon">☎</span>
+
+                            <input
+                                type="tel"
+                                id="phone"
+                                name="phone"
+                                value="<%= user && user.phone ? user.phone : '' %>"
+                                placeholder="Enter your mobile number"
+                                maxlength="10"
+                                pattern="[0-9]{10}"
+                                title="Enter a valid 10-digit mobile number"
+                                required
+                            >
+
+                        </div>
+
+                        <p
+                            class="field-error"
+                            id="phoneError"
+                            role="alert"
+                            aria-live="polite"
+                        ><%= typeof phoneError !== "undefined" ? phoneError : "" %></p>
+
+                    </div>
+
+
+                    <!-- Preferred City / Location -->
+                    <div class="form-field full-width-field">
+
+                        <label for="preferredLocation">
+                            Preferred City / Location
+                        </label>
+
+                        <div class="input-wrapper">
+
+                            <span class="input-icon">⌖</span>
+
+                            <select
+                                id="preferredLocation"
+                                name="preferredLocation"
+                                aria-label="Select your preferred city"
+                            >
+
+                                <option
+                                    value=""
+                                    <%= !user || !user.preferredLocation ? "selected" : "" %>
+                                >
+                                    Select your preferred city
+                                </option>
+
+                                <%
+                                    const cities = [
+                                        "Mumbai",
+                                        "Delhi-NCR",
+                                        "Bengaluru",
+                                        "Hyderabad",
+                                        "Chandigarh",
+                                        "Ahmedabad",
+                                        "Pune",
+                                        "Chennai",
+                                        "Kolkata",
+                                        "Kochi"
+                                    ];
+
+                                    const selectedCity =
+                                        user && user.preferredLocation
+                                            ? user.preferredLocation
+                                            : "";
+                                %>
+
+                                <% cities.forEach(city => { %>
+
+                                    <option
+                                        value="<%= city %>"
+                                        <%= selectedCity === city ? "selected" : "" %>
+                                    >
+                                        <%= city %>
+                                    </option>
+
+                                <% }); %>
+
+                                <% if (
+                                    selectedCity &&
+                                    !cities.includes(selectedCity)
+                                ) { %>
+
+                                    <option
+                                        value="<%= selectedCity %>"
+                                        selected
+                                    >
+                                        <%= selectedCity %>
+                                    </option>
+
+                                <% } %>
+
+                            </select>
+
+                        </div>
+
+                        <p class="field-help">
+                            Helps us recommend nearby concerts, festivals,
+                            and cultural events.
+                        </p>
+
+                    </div>
+
+
+                    <!-- Form Actions -->
+                    <div class="edit-form-actions">
+
+                        <button
+                            type="submit"
+                            class="save-changes-button"
+                        >
+                            ▣ Save Changes
+                        </button>
+
+                        <a
+                            href="/profile"
+                            class="cancel-edit-button"
+                        >
+                            Cancel
+                        </a>
+
+                    </div>
+
+                </form>
+
+            </section>
+
+        </section>
+
+
+        <!-- FEATURE CARDS -->
+        <section class="edit-feature-grid">
+
+            <article class="edit-feature-card">
+
+                <div class="edit-feature-icon">▣</div>
+
+                <div>
+                    <h3>Instant Pass Delivery</h3>
+
+                    <p>
+                        Your verified tickets are tied directly to your
+                        authenticated email and mobile number.
+                    </p>
+                </div>
+
+            </article>
+
+
+            <article class="edit-feature-card">
+
+                <div class="edit-feature-icon">♙</div>
+
+                <div>
+                    <h3>Encrypted Credentials</h3>
+
+                    <p>
+                        Your account information should be protected
+                        and handled securely.
+                    </p>
+                </div>
+
+            </article>
+
+
+            <article class="edit-feature-card">
+
+                <div class="edit-feature-icon">◷</div>
+
+                <div>
+                    <h3>24/7 Attendee Helpdesk</h3>
+
+                    <p>
+                        Need help updating your verified email or mobile
+                        number? Contact our support team.
+                    </p>
+                </div>
+
+            </article>
+
+        </section>
 
     </main>
+
+
+    <!-- Shared Footer -->
+    <%- include("../partials/footer") %>
+
+
+    <!-- EDIT PROFILE JAVASCRIPT -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+
+            // =====================================
+            // ELEMENTS
+            // =====================================
+
+            const nameInput = document.getElementById("name");
+            const nameError = document.getElementById("nameError");
+
+            const phoneInput = document.getElementById("phone");
+            const phoneError = document.getElementById("phoneError");
+
+            const editProfileForm =
+                document.querySelector(".edit-details-form");
+
+            const namePattern = /^[A-Za-z ]+$/;
+            const phonePattern = /^[0-9]{10}$/;
+
+
+            // =====================================
+            // DISPLAY SERVER VALIDATION ERRORS
+            // =====================================
+
+            if (nameError && nameError.textContent.trim()) {
+                nameError.style.display = "block";
+            }
+
+            if (phoneError && phoneError.textContent.trim()) {
+                phoneError.style.display = "block";
+            }
+
+
+            // =====================================
+            // NAME VALIDATION
+            // =====================================
+
+            if (nameInput && nameError) {
+
+                nameInput.addEventListener("input", function () {
+
+                    const name = nameInput.value.trim();
+
+                    if (!namePattern.test(name)) {
+                        nameError.textContent =
+                            "Name must contain only letters and spaces.";
+
+                        nameError.style.display = "block";
+                    } else {
+                        nameError.textContent = "";
+                        nameError.style.display = "none";
+                    }
+
+                });
+
+            }
+
+
+            // =====================================
+            // PHONE VALIDATION
+            // =====================================
+
+            if (phoneInput && phoneError) {
+
+                phoneInput.addEventListener("input", function () {
+
+                    this.value = this.value.replace(/\D/g, "").slice(0, 10);
+
+                    if (!phonePattern.test(this.value)) {
+                        phoneError.textContent =
+                            "Enter a valid 10-digit mobile number.";
+
+                        phoneError.style.display = "block";
+                    } else {
+                        phoneError.textContent = "";
+                        phoneError.style.display = "none";
+                    }
+
+                });
+
+            }
+
+
+            // =====================================
+            // EDIT PROFILE FORM VALIDATION
+            // =====================================
+
+            if (editProfileForm) {
+
+                editProfileForm.addEventListener("submit", function (event) {
+
+                    let isValid = true;
+
+                    const name = nameInput.value.trim();
+
+                    if (!namePattern.test(name)) {
+                        nameError.textContent =
+                            "Name must contain only letters and spaces.";
+
+                        nameError.style.display = "block";
+
+                        isValid = false;
+                    } else {
+                        nameError.textContent = "";
+                        nameError.style.display = "none";
+                    }
+
+
+                    if (!phonePattern.test(phoneInput.value)) {
+                        phoneError.textContent =
+                            "Enter a valid 10-digit mobile number.";
+
+                        phoneError.style.display = "block";
+
+                        isValid = false;
+                    } else {
+                        phoneError.textContent = "";
+                        phoneError.style.display = "none";
+                    }
+
+
+                    if (!isValid) {
+                        event.preventDefault();
+                    }
+
+                });
+
+            }
+
+
+            // =====================================
+            // CHANGE EMAIL AND SEND OTP
+            // Only runs when the email-change form exists.
+            // =====================================
+
+            const newEmailInput =
+                document.getElementById("newEmail");
+
+            const newEmailError =
+                document.getElementById("newEmailError");
+
+            const changeEmailBtn =
+                document.getElementById("changeEmailBtn");
+
+            const currentEmailInput =
+                document.getElementById("currentEmail");
+
+
+            if (
+                newEmailInput &&
+                newEmailError &&
+                changeEmailBtn &&
+                currentEmailInput
+            ) {
+
+                newEmailInput.addEventListener("input", function () {
+                    newEmailError.textContent = "";
+                });
+
+                changeEmailBtn.addEventListener("click", async function () {
+
+                    const newEmail =
+                        newEmailInput.value.trim().toLowerCase();
+
+                    const currentEmail =
+                        currentEmailInput.value.trim().toLowerCase();
+
+                    const emailPattern =
+                        /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+                    newEmailError.textContent = "";
+
+
+                    if (!newEmail) {
+                        newEmailError.textContent =
+                            "Please enter your new email address.";
+
+                        newEmailInput.focus();
+                        return;
+                    }
+
+
+                    if (!emailPattern.test(newEmail)) {
+                        newEmailError.textContent =
+                            "Please enter a valid email address.";
+
+                        newEmailInput.focus();
+                        return;
+                    }
+
+
+                    if (newEmail === currentEmail) {
+                        newEmailError.textContent =
+                            "Your new email must be different from your current email.";
+
+                        newEmailInput.focus();
+                        return;
+                    }
+
+
+                    changeEmailBtn.disabled = true;
+                    changeEmailBtn.textContent = "Sending OTP...";
+
+
+                    try {
+
+                        const response = await fetch(
+                            "/profile/change-email",
+                            {
+                                method: "POST",
+
+                                headers: {
+                                    "Content-Type": "application/json",
+                                    "Accept": "application/json"
+                                },
+
+                                credentials: "same-origin",
+
+                                body: JSON.stringify({
+                                    email: newEmail
+                                })
+                            }
+                        );
+
+
+                        const contentType =
+                            response.headers.get("content-type") || "";
+
+                        if (!contentType.includes("application/json")) {
+                            throw new Error(
+                                "The server response was unexpected. Please check the email-change controller."
+                            );
+                        }
+
+                        const result = await response.json();
+
+
+                        if (!response.ok || !result.success) {
+                            newEmailError.textContent =
+                                result.message ||
+                                "Unable to send OTP. Please try again.";
+
+                            return;
+                        }
+
+
+                        window.location.href =
+                            "/profile/change-email/verify?email=" +
+                            encodeURIComponent(result.email || newEmail);
+
+                    } catch (error) {
+
+                        console.error("Change email error:", error);
+
+                        newEmailError.textContent =
+                            error.message ||
+                            "Unable to connect to the server. Please try again.";
+
+                    } finally {
+
+                        changeEmailBtn.disabled = false;
+                        changeEmailBtn.textContent = "Send OTP";
+
+                    }
+
+                });
+
+            }
+
+
+            // =====================================
+            // PROFILE PHOTO UPLOAD
+            // =====================================
+
+            const profileImageInput =
+                document.getElementById("profileImage");
+
+            const uploadProfileImageForm =
+                document.getElementById("uploadProfileImageForm");
+
+
+            if (profileImageInput && uploadProfileImageForm) {
+
+                profileImageInput.addEventListener("change", function () {
+
+                    const file = this.files[0];
+
+                    if (!file) {
+                        return;
+                    }
+
+                    const allowedTypes = [
+                        "image/jpeg",
+                        "image/png",
+                        "image/webp"
+                    ];
+
+
+                    if (!allowedTypes.includes(file.type)) {
+                        showPhotoMessage(
+                            "Please select a JPG, PNG, or WebP image."
+                        );
+
+                        this.value = "";
+                        return;
+                    }
+
+
+                    if (file.size > 5 * 1024 * 1024) {
+                        showPhotoMessage(
+                            "Image size must not exceed 5MB."
+                        );
+
+                        this.value = "";
+                        return;
+                    }
+
+
+                    const reader = new FileReader();
+
+                    reader.onload = function (event) {
+
+                        const preview =
+                            document.getElementById("profileImagePreview");
+
+                        const placeholder =
+                            document.getElementById("profileImagePlaceholder");
+
+
+                        if (preview) {
+                            preview.src = event.target.result;
+                        } else if (placeholder) {
+
+                            const image = document.createElement("img");
+
+                            image.src = event.target.result;
+                            image.id = "profileImagePreview";
+                            image.alt = "Current Profile Image";
+                            image.className = "edit-profile-avatar";
+
+                            placeholder.replaceWith(image);
+                        }
+
+
+                        uploadProfileImageForm.requestSubmit();
+
+                    };
+
+
+                    reader.onerror = function () {
+
+                        showPhotoMessage(
+                            "Unable to read the selected image. Please try again."
+                        );
+
+                        profileImageInput.value = "";
+
+                    };
+
+
+                    reader.readAsDataURL(file);
+
+                });
+
+            }
+
+
+            // =====================================
+            // REMOVE PHOTO CONFIRMATION MODAL
+            // =====================================
+
+            const removePhotoModal =
+                document.getElementById("removePhotoModal");
+
+            const removePhotoForm =
+                document.getElementById("removeProfileImageForm");
+
+            const cancelRemovePhoto =
+                document.getElementById("cancelRemovePhoto");
+
+            const confirmRemovePhoto =
+                document.getElementById("confirmRemovePhoto");
+
+            let removalConfirmed = false;
+
+
+            function openRemovePhotoModal() {
+
+                if (!removePhotoModal) {
+                    return;
+                }
+
+                removePhotoModal.classList.add("show");
+
+                removePhotoModal.setAttribute(
+                    "aria-hidden",
+                    "false"
+                );
+
+                document.body.classList.add("modal-open");
+
+                if (cancelRemovePhoto) {
+                    cancelRemovePhoto.focus();
+                }
+
+            }
+
+
+            function closeRemovePhotoModal() {
+
+                if (!removePhotoModal) {
+                    return;
+                }
+
+                removePhotoModal.classList.remove("show");
+
+                removePhotoModal.setAttribute(
+                    "aria-hidden",
+                    "true"
+                );
+
+                document.body.classList.remove("modal-open");
+
+            }
+
+
+            if (removePhotoForm) {
+
+                removePhotoForm.addEventListener(
+                    "submit",
+                    function (event) {
+
+                        if (!removalConfirmed) {
+                            event.preventDefault();
+                            openRemovePhotoModal();
+                        }
+
+                    }
+                );
+
+            }
+
+
+            if (cancelRemovePhoto) {
+
+                cancelRemovePhoto.addEventListener(
+                    "click",
+                    function () {
+                        closeRemovePhotoModal();
+                    }
+                );
+
+            }
+
+
+            if (confirmRemovePhoto && removePhotoForm) {
+
+                confirmRemovePhoto.addEventListener(
+                    "click",
+                    function () {
+
+                        if (removalConfirmed) {
+                            return;
+                        }
+
+                        removalConfirmed = true;
+
+                        confirmRemovePhoto.disabled = true;
+                        confirmRemovePhoto.textContent = "Removing...";
+
+                        removePhotoForm.requestSubmit();
+
+                    }
+                );
+
+            }
+
+
+            if (removePhotoModal) {
+
+                removePhotoModal
+                    .querySelectorAll("[data-close-modal]")
+                    .forEach(function (element) {
+
+                        element.addEventListener(
+                            "click",
+                            function () {
+                                closeRemovePhotoModal();
+                            });
+
+                    });
+
+            }
+
+
+            document.addEventListener("keydown", function (event) {
+
+                if (
+                    event.key === "Escape" &&
+                    removePhotoModal &&
+                    removePhotoModal.classList.contains("show")
+                ) {
+                    closeRemovePhotoModal();
+                }
+
+            });
+
+
+            // =====================================
+            // PHOTO VALIDATION MESSAGE
+            // =====================================
+
+            function showPhotoMessage(message) {
+
+                const existingMessage =
+                    document.getElementById("photoValidationMessage");
+
+                if (existingMessage) {
+                    existingMessage.remove();
+                }
+
+                const messageBox = document.createElement("div");
+
+                messageBox.id = "photoValidationMessage";
+                messageBox.className = "photo-validation-message";
+                messageBox.textContent = message;
+
+                messageBox.setAttribute("role", "alert");
+
+                const uploadSection =
+                    document.querySelector(".photo-upload-form");
+
+                if (uploadSection) {
+
+                    uploadSection.insertAdjacentElement(
+                        "afterend",
+                        messageBox
+                    );
+
+                    setTimeout(function () {
+                        messageBox.remove();
+                    }, 4000);
+
+                }
+
+            }
+
+        });
+    </script>
 
 </body>
 

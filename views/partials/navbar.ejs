@@ -1,16 +1,270 @@
-<nav>
+<!-- ========================================
+     ONEVENT NAVBAR
+======================================== -->
 
-    <% if (typeof user !== "undefined" && user) { %>
+<header class="user-navbar">
 
-        <a href="/">Home</a>
-        <a href="/profile">Profile</a>
-        <a href="/logout">Logout</a>
+    <!-- Logo -->
+    <a href="/" class="navbar-brand">
+        <img src="/images/OnEvent Logo.png" alt="OnEvent Logo">
+    </a>
 
-    <% } else { %>
+    <!-- Navigation -->
+    <nav class="navbar-navigation">
 
-        <a href="/signup">Sign Up</a>
-        <a href="/login">Login</a>
+        <a href="/" class="navbar-link">Home</a>
+        <a href="/events" class="navbar-link">Events</a>
+        <a href="/categories" class="navbar-link">Categories</a>
+        <a href="/my-events" class="navbar-link">My Events</a>
+        <a href="/calendar" class="navbar-link">Calendar</a>
 
-    <% } %>
+    </nav>
 
-</nav>
+    <!-- Right Side Actions -->
+    <div class="navbar-actions">
+
+        <% if (typeof user !== "undefined" && user) { %>
+
+            <!-- Notifications -->
+            <a href="/notifications"
+               class="navbar-notification"
+               aria-label="Notifications">
+
+                <svg xmlns="http://www.w3.org/2000/svg"
+                     width="16"
+                     height="16"
+                     viewBox="0 0 24 24"
+                     fill="none"
+                     stroke="currentColor"
+                     stroke-width="1.8"
+                     stroke-linecap="round"
+                     stroke-linejoin="round">
+
+                    <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"></path>
+                    <path d="M10 21h4"></path>
+
+                </svg>
+
+                <span class="notification-badge">3</span>
+
+            </a>
+
+            <!-- My Tickets -->
+            <a href="/my-tickets" class="navbar-tickets">
+
+                <svg xmlns="http://www.w3.org/2000/svg"
+                     width="14"
+                     height="14"
+                     viewBox="0 0 24 24"
+                     fill="none"
+                     stroke="currentColor"
+                     stroke-width="1.8"
+                     stroke-linecap="round"
+                     stroke-linejoin="round">
+
+                    <path d="M4 7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v2a3 3 0 0 0 0 6v2a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-2a3 3 0 0 0 0-6z"></path>
+                    <path d="M12 7v2"></path>
+                    <path d="M12 11v2"></path>
+                    <path d="M12 15v2"></path>
+
+                </svg>
+
+                <span>My Tickets</span>
+
+            </a>
+
+            <!-- User Profile -->
+            <a href="/profile" class="navbar-user">
+
+                <span class="navbar-avatar">
+                    <%= user.name ? user.name.trim().charAt(0).toUpperCase() : "U" %>
+                </span>
+
+                <span class="navbar-user-details">
+
+                    <span class="navbar-user-name">
+                        <%= user.name %>
+                    </span>
+
+                    <span class="navbar-user-role">
+                        ATTENDEE
+                    </span>
+
+                </span>
+
+            </a>
+
+            <!-- Logout -->
+            <a href="/logout"
+               class="navbar-logout"
+               id="userLogoutButton"
+               aria-label="Logout"
+               title="Logout">
+
+                <svg xmlns="http://www.w3.org/2000/svg"
+                     width="15"
+                     height="15"
+                     viewBox="0 0 24 24"
+                     fill="none"
+                     stroke="currentColor"
+                     stroke-width="1.8"
+                     stroke-linecap="round"
+                     stroke-linejoin="round">
+
+                    <path d="M10 17l5-5-5-5"></path>
+                    <path d="M15 12H3"></path>
+                    <path d="M12 3h6a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-6"></path>
+
+                </svg>
+
+            </a>
+
+        <% } else { %>
+
+            <a href="/signup" class="navbar-signup">Sign Up</a>
+            <a href="/login" class="navbar-login">Login</a>
+
+        <% } %>
+
+    </div>
+
+</header>
+
+
+<!-- ========================================
+     LOGOUT CONFIRMATION MODAL
+======================================== -->
+
+<div
+    class="confirmation-overlay"
+    id="userLogoutModal"
+    aria-hidden="true"
+    style="display: none;"
+>
+
+    <div class="confirmation-box block-alert">
+
+        <div class="confirmation-icon">!</div>
+
+        <h3>Logout?</h3>
+
+        <p>Are you sure you want to logout?</p>
+
+        <div class="confirmation-actions">
+
+            <button
+                type="button"
+                class="cancel-btn"
+                id="cancelUserLogout"
+            >
+                Cancel
+            </button>
+
+            <button
+                type="button"
+                class="confirm-btn"
+                id="confirmUserLogout"
+            >
+                Logout
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ========================================
+     LOGOUT MODAL SCRIPT
+======================================== -->
+
+<script>
+    (() => {
+
+        const userLogoutButton =
+            document.getElementById("userLogoutButton");
+
+        const userLogoutModal =
+            document.getElementById("userLogoutModal");
+
+        const cancelUserLogout =
+            document.getElementById("cancelUserLogout");
+
+        const confirmUserLogout =
+            document.getElementById("confirmUserLogout");
+
+        if (!userLogoutModal) return;
+
+        function closeLogoutModal() {
+
+            userLogoutModal.classList.remove("show");
+            userLogoutModal.setAttribute("aria-hidden", "true");
+            userLogoutModal.style.display = "none";
+
+        }
+
+        function openLogoutModal() {
+
+            userLogoutModal.style.display = "flex";
+            userLogoutModal.classList.add("show");
+            userLogoutModal.setAttribute("aria-hidden", "false");
+
+        }
+
+        closeLogoutModal();
+
+        if (userLogoutButton) {
+
+            userLogoutButton.addEventListener("click", function (event) {
+
+                event.preventDefault();
+                openLogoutModal();
+
+            });
+
+        }
+
+        if (cancelUserLogout) {
+
+            cancelUserLogout.addEventListener(
+                "click",
+                closeLogoutModal
+            );
+
+        }
+
+        if (confirmUserLogout) {
+            confirmUserLogout.addEventListener("click", function () {
+                const logoutForm = document.createElement("form");
+
+                logoutForm.method = "POST";
+                logoutForm.action = "/logout";
+
+                document.body.appendChild(logoutForm);
+                logoutForm.submit();
+            });
+        }
+
+
+        userLogoutModal.addEventListener("click", function (event) {
+
+            if (event.target === userLogoutModal) {
+                closeLogoutModal();
+            }
+
+        });
+
+        document.addEventListener("keydown", function (event) {
+
+            if (
+                event.key === "Escape" &&
+                userLogoutModal.classList.contains("show")
+            ) {
+                closeLogoutModal();
+            }
+
+        });
+
+    })();
+</script>

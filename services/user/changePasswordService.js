@@ -1,167 +1,155 @@
 const User = require("../../models/User");
-
 const bcrypt = require("bcryptjs");
 
+const STATUS_CODES = require("../../constants/statusCodes");
+const RESPONSE_MESSAGES = require("../../constants/responseMessages");
 
 const changePassword = async (userId, data) => {
 
-    if (!data.currentPassword) {
-
-        const error = new Error("Current password is required");
-        error.statusCode = 400;
-        throw error;
-
-    }
-
-
-    if (!data.newPassword) {
-
-        const error = new Error("New password is required");
-        error.statusCode = 400;
-        throw error;
-
-    }
-
-
-    if (!data.confirmPassword) {
-
-        const error = new Error("Confirm password is required");
-        error.statusCode = 400;
-        throw error;
-
-    }
-
-
-    if (data.newPassword.length < 8) {
-
-        const error = new Error(
-            "Password must be at least 8 characters"
-        );
-
-        error.statusCode = 400;
-        throw error;
-
-    }
-
-
-    if (!/[A-Z]/.test(data.newPassword)) {
-
-        const error = new Error(
-            "Password must contain an uppercase letter"
-        );
-
-        error.statusCode = 400;
-        throw error;
-
-    }
-
-
-    if (!/[a-z]/.test(data.newPassword)) {
-
-        const error = new Error(
-            "Password must contain a lowercase letter"
-        );
-
-        error.statusCode = 400;
-        throw error;
-
-    }
-
-
-    if (!/[0-9]/.test(data.newPassword)) {
-
-        const error = new Error(
-            "Password must contain a number"
-        );
-
-        error.statusCode = 400;
-        throw error;
-
-    }
-
-
-    if (!/[^A-Za-z0-9]/.test(data.newPassword)) {
-
-        const error = new Error(
-            "Password must contain a special character"
-        );
-
-        error.statusCode = 400;
-        throw error;
-
-    }
-
-
-    if (data.newPassword !== data.confirmPassword) {
-
-        const error = new Error(
-            "New password and confirm password do not match"
-        );
-
-        error.statusCode = 400;
-        throw error;
-
-    }
-
-
+    // Find the user
     const user = await User.findById(userId);
 
     if (!user) {
-
-        const error = new Error("User not found");
-        error.statusCode = 404;
+        const error = new Error(RESPONSE_MESSAGES.USER_NOT_FOUND);
+        error.statusCode = STATUS_CODES.NOT_FOUND;
         throw error;
-
     }
 
-
-    const passwordMatch = await bcrypt.compare(
-        data.currentPassword,
-        user.password
-    );
-
-
-    if (!passwordMatch) {
-
-        const error = new Error("Current password is incorrect");
-        error.statusCode = 400;
-        throw error;
-
-    }
-
-
-    const samePassword = await bcrypt.compare(
-        data.newPassword,
-        user.password
-    );
-
-
-    if (samePassword) {
-
+    // Prevent Google users from changing their password here
+    if (user.authProvider === "google") {
         const error = new Error(
-            "New password must be different from current password"
+            "Google users cannot change their password here. Please manage your password through your Google Account."
         );
 
-        error.statusCode = 400;
+        error.statusCode = STATUS_CODES.FORBIDDEN;
         throw error;
-
     }
 
+    // Validate that the submitted values are strings
+    const { currentPassword, newPassword, confirmPassword } = data || {};
 
-    user.password = await bcrypt.hash(
-        data.newPassword,
-        10
+    if (
+        typeof currentPassword !== "string" ||
+        currentPassword.length === 0
+    ) {
+        const error = new Error("Current password is required");
+        error.statusCode = STATUS_CODES.BAD_REQUEST;
+        throw error;
+    }
+
+    if (
+        typeof newPassword !== "string" ||
+        newPassword.length === 0
+    ) {
+        const error = new Error("Please enter a new password.");
+        error.statusCode = STATUS_CODES.BAD_REQUEST;
+        throw error;
+    }
+
+    if (
+        typeof confirmPassword !== "string" ||
+        confirmPassword.length === 0
+    ) {
+        const error = new Error("Please confirm your new password.");
+        error.statusCode = STATUS_CODES.BAD_REQUEST;
+        throw error;
+    }
+
+    // Validate minimum password length
+    if (newPassword.length < 8) {
+        const error = new Error(
+            "Password must be at least 8 characters."
+        );
+
+        error.statusCode = STATUS_CODES.BAD_REQUEST;
+        throw error;
+    }
+
+    // Validate uppercase letter
+    if (!/[A-Z]/.test(newPassword)) {
+        const error = new Error(
+            "Password must contain an uppercase letter."
+        );
+
+        error.statusCode = STATUS_CODES.BAD_REQUEST;
+        throw error;
+    }
+
+    // Validate lowercase letter
+    if (!/[a-z]/.test(newPassword)) {
+        const error = new Error(
+            "Password must contain a lowercase letter."
+        );
+
+        error.statusCode = STATUS_CODES.BAD_REQUEST;
+        throw error;
+    }
+
+    // Validate number
+    if (!/[0-9]/.test(newPassword)) {
+        const error = new Error(
+            "Password must contain a number."
+        );
+
+        error.statusCode = STATUS_CODES.BAD_REQUEST;
+        throw error;
+    }
+
+    // Validate special character
+    if (!/[^A-Za-z0-9]/.test(newPassword)) {
+        const error = new Error(
+            "Password must contain a special character."
+        );
+
+        error.statusCode = STATUS_CODES.BAD_REQUEST;
+        throw error;
+    }
+
+    // Validate password confirmation
+    if (newPassword !== confirmPassword) {
+        const error = new Error(
+            "New password and confirm password do not match."
+        );
+
+        error.statusCode = STATUS_CODES.BAD_REQUEST;
+        throw error;
+    }
+
+    // Verify current password
+    const passwordMatch = await bcrypt.compare(
+        currentPassword,
+        user.password
     );
 
+    if (!passwordMatch) {
+        const error = new Error(RESPONSE_MESSAGES.INVALID_PASSWORD);
+        error.statusCode = STATUS_CODES.BAD_REQUEST;
+        throw error;
+    }
+
+    // Prevent reusing the current password
+    const samePassword = await bcrypt.compare(
+        newPassword,
+        user.password
+    );
+
+    if (samePassword) {
+        const error = new Error(
+            "New password must be different from current password."
+        );
+
+        error.statusCode = STATUS_CODES.BAD_REQUEST;
+        throw error;
+    }
+
+    // Hash and save the new password
+    user.password = await bcrypt.hash(newPassword, 10);
 
     await user.save();
 
-
     return {
-        message: "Password changed successfully"
+        message: "Password changed successfully."
     };
-
 };
-
 
 module.exports = changePassword;

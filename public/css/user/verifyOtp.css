@@ -1,392 +1,420 @@
+/* =========================================
+   ONEVENT — OTP VERIFICATION
+   Purple / Lavender Figma Design
+========================================= */
+
+:root {
+    --primary: #5546e8;
+    --primary-dark: #4032c9;
+    --primary-light: #eeecff;
+    --primary-soft: #f5f3ff;
+
+    --background: #f8f7ff;
+    --white: #ffffff;
+
+    --text-primary: #18213b;
+    --text-secondary: #77778d;
+    --text-light: #a0a0b5;
+
+    --border: #f0edff;
+    --border-strong: #ded9ff;
+
+    --success: #22a06b;
+
+    --shadow: 0 15px 45px rgba(57, 45, 140, 0.08);
+
+    --radius-small: 8px;
+    --radius-medium: 12px;
+    --radius-large: 20px;
+}
+
+/* =========================================
+   RESET
+========================================= */
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-
-/* =====================================================
-   ROOT
-===================================================== */
-
-:root {
-    --primary: #4f35d4;
-    --primary-dark: #3422b8;
-    --primary-light: #f2efff;
-    --accent: #ff8a1f;
-
-    --navy: #172033;
-    --text: #344054;
-    --muted: #667085;
-
-    --page-bg: #f8f7ff;
-    --white: #ffffff;
-    --border: #e6e3ef;
-}
-
-
-/* =====================================================
-   BASE
-===================================================== */
-
-html,
-body {
-    min-height: 100%;
+html {
+    scroll-behavior: smooth;
 }
 
 body {
-    font-family: "Inter", "Segoe UI", Arial, sans-serif;
-
-    background: var(--page-bg);
-    color: var(--text);
-
     min-height: 100vh;
-
     display: flex;
     flex-direction: column;
+
+    font-family: Arial, Helvetica, sans-serif;
+
+    background: var(--background);
+    color: var(--text-primary);
 
     -webkit-font-smoothing: antialiased;
 }
 
 a {
-    text-decoration: none;
     color: inherit;
+    text-decoration: none;
 }
 
+button,
+input {
+    font: inherit;
+}
 
-/* =====================================================
+button {
+    cursor: pointer;
+}
+
+img {
+    display: block;
+    max-width: 100%;
+}
+
+/* =========================================
    HEADER
-===================================================== */
+========================================= */
 
 .auth-header {
-    height: 68px;
-
-    padding: 0 6.5%;
+    width: 100%;
+    min-height: 64px;
 
     display: flex;
     align-items: center;
     justify-content: space-between;
 
-    background: #ffffff;
+    padding: 12px 7%;
 
-    border-bottom: 1px solid var(--border);
+    background: var(--white);
+    border-bottom: 1px solid #efedf8;
+}
+
+.logo {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
 }
 
 .logo img {
     width: 125px;
     height: auto;
-
-    display: block;
+    object-fit: contain;
 }
 
 .login-link {
     display: flex;
     align-items: center;
+    gap: 9px;
 
-    gap: 8px;
-
-    font-size: 13px;
-    color: #667085;
+    color: var(--text-secondary);
+    font-size: 12px;
 }
 
 .login-link a {
-    color: var(--navy);
-
-    font-weight: 600;
+    color: var(--primary);
+    font-weight: 700;
+    transition: color 0.2s ease;
 }
 
 .login-link a:hover {
-    color: var(--primary);
+    color: var(--primary-dark);
 }
 
-
-/* =====================================================
-   MAIN
-===================================================== */
+/* =========================================
+   MAIN CONTENT
+========================================= */
 
 .page-content {
-    min-height: calc(100vh - 132px);
+    flex: 1;
+    width: 100%;
 
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
 
-    padding: 45px 30px;
+    padding: 40px 24px;
 }
 
-
-/* =====================================================
-   OTP CARD
-===================================================== */
+/* =========================================
+   MAIN CARD
+========================================= */
 
 .otp-card-wrapper {
-    width: 78%;
-    max-width: 1100px;
+    width: 100%;
+    max-width: 1000px;
+    min-height: 500px;
 
     display: grid;
-
-    grid-template-columns: 40% 60%;
-
-    background: #ffffff;
-
-    border-radius: 20px;
+    grid-template-columns: 1fr 1fr;
 
     overflow: hidden;
 
-    box-shadow:
-        0 18px 45px rgba(48, 32, 168, 0.10),
-        0 3px 10px rgba(20, 20, 40, 0.04);
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-large);
+
+    box-shadow: var(--shadow);
 }
 
-
-/* =====================================================
+/* =========================================
    LEFT PANEL
-===================================================== */
+========================================= */
 
 .otp-left {
-    padding: 38px 32px;
-
-    background: linear-gradient(
-        145deg,
-        #3524bd 0%,
-        #4f35d4 60%,
-        #5337d8 100%
-    );
-
-    color: #ffffff;
+    position: relative;
 
     display: flex;
     flex-direction: column;
 
-    border-radius: 20px 0 0 20px;
+    min-width: 0;
+    padding: 36px 32px;
+
+    color: var(--white);
+
+    background: linear-gradient(
+        145deg,
+        #4030bf 0%,
+        #5035d8 54%,
+        #35268d 100%
+    );
 }
 
-
-/* =====================================================
+/* =========================================
    INSTANT VERIFICATION
-===================================================== */
+========================================= */
 
 .instant-title {
     display: flex;
     align-items: center;
+    gap: 9px;
 
-    gap: 8px;
+    margin-bottom: 25px;
 
-    margin-bottom: 28px;
+    color: #ffffff;
 
-    font-size: 12px;
-
-    font-weight: 700;
-
-    letter-spacing: 0.8px;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 1px;
 }
 
 .instant-icon {
-    width: 25px;
-    height: 25px;
-
-    border-radius: 50%;
-
-    background: rgba(255, 255, 255, 0.18);
+    width: 23px;
+    height: 23px;
 
     display: flex;
     align-items: center;
     justify-content: center;
 
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.17);
+
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 50%;
+
     font-size: 13px;
+    font-weight: 700;
 }
 
-
-/* =====================================================
-   VERIFICATION INFO
-===================================================== */
+/* =========================================
+   VERIFICATION INFORMATION
+========================================= */
 
 .verification-info {
-    margin-bottom: 40px;
+    padding: 18px;
+
+    margin-bottom: 26px;
+
+    background: rgba(255, 255, 255, 0.12);
+
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: var(--radius-medium);
 }
 
 .verification-heading {
     display: flex;
     align-items: center;
+    gap: 11px;
 
-    gap: 12px;
-
-    margin-bottom: 15px;
+    margin-bottom: 12px;
 }
 
 .mail-icon {
-    width: 42px;
-    height: 42px;
+    width: 38px;
+    height: 38px;
+
+    flex-shrink: 0;
 
     display: flex;
     align-items: center;
     justify-content: center;
 
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.17);
+
     border-radius: 10px;
 
-    background: rgba(255, 255, 255, 0.14);
+    font-size: 19px;
+}
 
-    font-size: 20px;
+.verification-heading > div:nth-child(2) {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+
+    min-width: 0;
 }
 
 .verification-heading strong {
-    display: block;
-
-    margin-bottom: 4px;
-
-    font-size: 15px;
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: 700;
 }
 
 .verification-heading span:not(.fast-badge) {
-    display: block;
-
-    font-size: 12px;
-
-    color: rgba(255, 255, 255, 0.75);
+    color: rgba(255, 255, 255, 0.78);
+    font-size: 10px;
 }
 
 .fast-badge {
     margin-left: auto;
+    padding: 5px 7px;
 
-    padding: 5px 8px;
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.15);
 
-    border: 1px solid rgba(255, 255, 255, 0.25);
-
+    border: 1px solid rgba(255, 255, 255, 0.12);
     border-radius: 5px;
 
-    font-size: 9px;
-
-    font-weight: 700;
-
+    font-size: 8px;
+    font-weight: 800;
     white-space: nowrap;
 }
 
-.verification-info > p {
-    color: rgba(255, 255, 255, 0.82);
+.verification-info p {
+    color: rgba(255, 255, 255, 0.84);
 
-    font-size: 13px;
-
-    line-height: 1.7;
+    font-size: 11px;
+    line-height: 1.8;
 }
 
-
-/* =====================================================
+/* =========================================
    LEFT HEADING
-===================================================== */
+========================================= */
 
 .otp-left h2 {
-    margin-bottom: 15px;
+    margin-bottom: 14px;
 
-    font-size: 30px;
+    color: #ffffff;
 
-    line-height: 1.18;
+    font-size: 29px;
+    font-weight: 800;
+    line-height: 1.3;
 
-    font-weight: 700;
-
-    letter-spacing: -0.5px;
+    letter-spacing: -0.6px;
 }
 
 .left-description {
-    max-width: 430px;
+    max-width: 380px;
 
-    margin-bottom: 25px;
+    margin-bottom: 23px;
 
-    color: rgba(255, 255, 255, 0.78);
+    color: rgba(255, 255, 255, 0.82);
 
-    font-size: 13px;
-
-    line-height: 1.6;
+    font-size: 12px;
+    line-height: 1.85;
 }
 
-
-/* =====================================================
+/* =========================================
    FEATURE BOXES
-===================================================== */
+========================================= */
 
 .feature-box {
     display: flex;
     align-items: center;
-
     gap: 12px;
 
-    margin-bottom: 12px;
+    padding: 12px 13px;
 
-    padding: 11px;
+    margin-bottom: 10px;
 
-    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.11);
 
-    background: rgba(255, 255, 255, 0.095);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 9px;
 
-    border: 1px solid rgba(255, 255, 255, 0.09);
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease;
+}
+
+.feature-box:hover {
+    background: rgba(255, 255, 255, 0.17);
+    transform: translateY(-1px);
 }
 
 .feature-icon {
     width: 30px;
     height: 30px;
 
-    min-width: 30px;
+    flex-shrink: 0;
 
     display: flex;
     align-items: center;
     justify-content: center;
 
-    border-radius: 50%;
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.17);
 
-    background: rgba(255, 255, 255, 0.14);
+    border-radius: 8px;
 
-    font-size: 13px;
+    font-size: 14px;
+    font-weight: 700;
 }
 
 .feature-box strong {
-    font-size: 11px;
-
-    font-weight: 600;
-
     color: #ffffff;
+
+    font-size: 10px;
+    font-weight: 600;
+    line-height: 1.6;
 }
 
-
-/* =====================================================
+/* =========================================
    RATING
-===================================================== */
+========================================= */
 
 .rating {
     display: flex;
     align-items: center;
-
-    gap: 8px;
+    flex-wrap: wrap;
+    gap: 6px;
 
     margin-top: auto;
-
-    padding-top: 22px;
-
-    font-size: 11px;
-
-    color: rgba(255, 255, 255, 0.88);
+    padding-top: 23px;
 }
 
 .review-avatars {
     display: flex;
     align-items: center;
 
-    flex-shrink: 0;
-
-    padding-left: 5px;
+    padding-left: 3px;
+    margin-right: 4px;
 }
 
 .review-avatars img {
-    width: 31px;
-    height: 31px;
+    width: 27px;
+    height: 27px;
 
     object-fit: cover;
 
+    border: 2px solid #ffffff;
     border-radius: 50%;
 
-    border: 2px solid #4f35d4;
-
-    margin-left: -8px;
-
-    display: block;
+    margin-left: -5px;
 }
 
 .review-avatars img:first-child {
@@ -394,498 +422,573 @@ a {
 }
 
 .star {
-    color: #ffb020;
-
+    color: #ffbe36;
     font-size: 15px;
 }
 
 .rating strong {
     color: #ffffff;
-
-    font-size: 13px;
+    font-size: 11px;
+    font-weight: 800;
 }
 
+.rating > span:last-child {
+    color: rgba(255, 255, 255, 0.82);
+    font-size: 9px;
+}
 
-/* =====================================================
+/* =========================================
    RIGHT PANEL
-===================================================== */
+========================================= */
 
 .otp-right {
-    padding: 38px 42px 32px;
+    display: flex;
+    flex-direction: column;
 
-    background: #ffffff;
+    min-width: 0;
+    padding: 40px 34px;
 
-    border-radius: 0 20px 20px 0;
+    background: var(--white);
 }
 
-
-/* =====================================================
+/* =========================================
    SECURITY BADGE
-===================================================== */
+========================================= */
 
 .security-badge {
     display: inline-flex;
-
     align-items: center;
+    align-self: flex-start;
+    gap: 7px;
 
-    padding: 6px 10px;
+    padding: 7px 10px;
 
-    border-radius: 20px;
-
-    background: var(--primary-light);
+    margin-bottom: 21px;
 
     color: var(--primary);
 
-    font-size: 10px;
+    background: var(--primary-soft);
 
-    font-weight: 700;
+    border: 1px solid #e9e5ff;
+    border-radius: 6px;
 
-    letter-spacing: 0.4px;
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 0.5px;
 }
 
+.security-badge span {
+    color: var(--success);
+    font-size: 13px;
+    line-height: 10px;
+}
 
-/* =====================================================
+/* =========================================
    RIGHT HEADING
-===================================================== */
+========================================= */
 
 .otp-right h1 {
-    margin-top: 18px;
+    margin-bottom: 11px;
 
-    margin-bottom: 8px;
+    color: var(--text-primary);
 
-    font-size: 30px;
+    font-size: 27px;
+    font-weight: 800;
 
-    line-height: 1.15;
-
-    color: var(--navy);
-
-    font-weight: 700;
-
-    letter-spacing: -0.5px;
+    letter-spacing: -0.6px;
+    line-height: 1.3;
 }
 
 .description {
-    margin-bottom: 21px;
+    margin-bottom: 23px;
 
-    color: var(--muted);
+    color: var(--text-secondary);
 
-    font-size: 13px;
-
-    line-height: 1.5;
+    font-size: 12px;
+    line-height: 1.8;
 }
 
-
-/* =====================================================
+/* =========================================
    EMAIL BOX
-===================================================== */
+========================================= */
 
 .email-box {
     display: flex;
     align-items: center;
+    gap: 11px;
 
-    gap: 12px;
+    width: 100%;
 
-    padding: 13px;
+    padding: 12px;
 
-    margin-bottom: 24px;
+    margin-bottom: 25px;
 
-    background: #fbfaff;
+    background: #faf9ff;
 
-    border: 1px solid #eeeaf8;
-
-    border-radius: 9px;
+    border: 1px solid var(--border-strong);
+    border-radius: 10px;
 }
 
 .email-icon {
     width: 35px;
     height: 35px;
 
+    flex-shrink: 0;
+
     display: flex;
     align-items: center;
     justify-content: center;
 
-    border-radius: 7px;
-
+    color: var(--primary);
     background: var(--primary-light);
 
-    color: var(--primary);
-
-    font-size: 16px;
-}
-
-.email-content {
-    flex: 1;
-
-    min-width: 0;
-}
-
-.email-content span {
-    display: block;
-
-    margin-bottom: 3px;
-
-    color: #98a2b3;
-
-    font-size: 10px;
-}
-
-.email-content strong {
-    display: block;
-
-    color: var(--navy);
-
-    font-size: 12px;
-
-    word-break: break-all;
-}
-
-.email-box a {
-    color: var(--primary);
-
-    font-size: 11px;
-
-    font-weight: 600;
-
-    text-decoration: none;
-
-    white-space: nowrap;
-}
-
-.email-box a:hover {
-    text-decoration: underline;
-}
-
-
-/* =====================================================
-   OTP LABEL
-===================================================== */
-
-.otp-label {
-    display: block;
-
-    margin-bottom: 10px;
-
-    color: var(--navy);
-
-    font-size: 10px;
-
-    font-weight: 700;
-
-    letter-spacing: 0.8px;
-}
-
-
-/* =====================================================
-   OTP INPUTS
-===================================================== */
-
-.otp-inputs {
-    display: flex;
-
-    gap: 9px;
-}
-
-.otp-box {
-    width: 45px;
-    height: 50px;
-
-    border: 1px solid #d9d5e8;
-
-    border-radius: 8px;
-
-    background: #ffffff;
-
-    outline: none;
-
-    text-align: center;
-
-    font-size: 20px;
-
-    font-weight: 600;
-
-    color: var(--navy);
-}
-
-.otp-box:focus {
-    border-color: var(--primary);
-
-    box-shadow:
-        0 0 0 3px rgba(79, 53, 212, 0.10);
-}
-
-
-/* =====================================================
-   OTP HELPER
-===================================================== */
-
-.otp-helper {
-    margin-top: 9px;
-
-    color: #98a2b3;
-
-    font-size: 10px;
-}
-
-
-/* =====================================================
-   VERIFY BUTTON
-===================================================== */
-
-.verify-button {
-    width: 100%;
-
-    margin-top: 21px;
-
-    padding: 13px 18px;
-
-    border: none;
-
     border-radius: 9px;
-
-    background: linear-gradient(
-        90deg,
-        #3824c9,
-        #5035d9
-    );
-
-    color: #ffffff;
-
-    font-family: inherit;
-
-    font-size: 13px;
-
-    font-weight: 600;
-
-    cursor: pointer;
-
-    box-shadow:
-        0 7px 16px rgba(79, 53, 212, 0.22);
-}
-
-.verify-button span {
-    float: right;
 
     font-size: 17px;
 }
 
-.verify-button:hover {
-    opacity: 0.94;
+.email-content {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+
+    flex: 1;
+    min-width: 0;
 }
 
+.email-content span {
+    color: var(--text-secondary);
+    font-size: 9px;
+}
 
-/* =====================================================
-   RESEND
-===================================================== */
+.email-content strong {
+    overflow-wrap: anywhere;
+
+    color: var(--text-primary);
+
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.change-email-link {
+    flex-shrink: 0;
+
+    color: var(--primary);
+
+    font-size: 10px;
+    font-weight: 700;
+    white-space: nowrap;
+
+    transition: color 0.2s ease;
+}
+
+.change-email-link:hover {
+    color: var(--primary-dark);
+    text-decoration: underline;
+}
+
+.change-email-link:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 3px;
+}
+
+/* =========================================
+   OTP LABEL
+========================================= */
+
+.otp-label {
+    display: block;
+
+    margin-bottom: 12px;
+
+    color: var(--text-primary);
+
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.6px;
+}
+
+/* =========================================
+   OTP FORM
+========================================= */
+
+#otpForm {
+    width: 100%;
+}
+
+/* =========================================
+   OTP INPUTS
+========================================= */
+
+.otp-inputs {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: 8px;
+
+    width: 100%;
+
+    margin-bottom: 11px;
+}
+
+.otp-box {
+    width: 100%;
+    min-width: 0;
+    height: 50px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: var(--text-primary);
+    background: var(--white);
+
+    border: 1.5px solid #e3ddff;
+    border-radius: 9px;
+
+    outline: none;
+    text-align: center;
+
+    font-size: 21px;
+    font-weight: 700;
+
+    transition:
+        border-color 0.2s ease,
+        background 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.otp-box:focus {
+    background: #faf9ff;
+    border-color: var(--primary);
+
+    box-shadow: 0 0 0 3px rgba(85, 70, 232, 0.1);
+}
+
+/* =========================================
+   OTP HELPER
+========================================= */
+
+.otp-helper {
+    margin-bottom: 19px;
+
+    color: var(--text-light);
+
+    font-size: 10px;
+    line-height: 1.7;
+}
+
+/* =========================================
+   VERIFY BUTTON
+========================================= */
+
+.verify-button {
+    width: 100%;
+    min-height: 47px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+
+    padding: 12px 18px;
+
+    color: #ffffff;
+    background: var(--primary);
+
+    border: none;
+    border-radius: 9px;
+
+    font-size: 12px;
+    font-weight: 700;
+
+    box-shadow: 0 5px 13px rgba(85, 70, 232, 0.18);
+
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.verify-button:hover {
+    background: var(--primary-dark);
+    transform: translateY(-1px);
+
+    box-shadow: 0 7px 17px rgba(85, 70, 232, 0.22);
+}
+
+.verify-button:active {
+    transform: translateY(0);
+}
+
+.verify-button:focus-visible {
+    outline: 3px solid rgba(85, 70, 232, 0.25);
+    outline-offset: 3px;
+}
+
+.verify-button span {
+    font-size: 17px;
+    font-weight: 400;
+}
+
+/* =========================================
+   RESEND OTP
+========================================= */
 
 .resend-container {
     display: flex;
-
     align-items: center;
-
     justify-content: center;
+    flex-wrap: wrap;
+    gap: 6px;
 
-    gap: 7px;
+    margin-top: 22px;
 
-    margin-top: 21px;
-
-    font-size: 11px;
-
-    color: #667085;
+    color: var(--text-secondary);
+    font-size: 10px;
 }
 
 .resend-icon {
     color: var(--primary);
-
     font-size: 14px;
 }
 
 .timer {
     color: var(--primary);
 
-    font-weight: 700;
+    font-size: 11px;
+    font-weight: 800;
+
+    font-variant-numeric: tabular-nums;
 }
 
 .divider {
-    color: #d1d5db;
+    color: #d6d2e8;
+    margin: 0 2px;
 }
 
 .resend-btn {
+    padding: 3px 0;
+
+    color: var(--primary);
+    background: transparent;
+
     border: none;
 
-    background: none;
+    font-size: 10px;
+    font-weight: 700;
 
-    color: #98a2b3;
-
-    font-family: inherit;
-
-    font-size: 11px;
-
-    font-weight: 600;
-
-    cursor: pointer;
-}
-
-.resend-btn:not(:disabled) {
-    color: var(--primary);
+    transition: color 0.2s ease;
 }
 
 .resend-btn:not(:disabled):hover {
+    color: var(--primary-dark);
     text-decoration: underline;
 }
 
-.resend-helper {
-    margin-top: 9px;
-
-    text-align: center;
-
-    color: #98a2b3;
-
-    font-size: 10px;
+.resend-btn:disabled {
+    color: #aaa6c3;
+    cursor: not-allowed;
 }
 
+/* =========================================
+   RESEND HELPER
+========================================= */
 
-/* =====================================================
+.resend-helper {
+    margin-top: 11px;
+
+    color: var(--text-light);
+
+    font-size: 9px;
+    line-height: 1.8;
+
+    text-align: center;
+}
+
+/* =========================================
    BOTTOM LINKS
-===================================================== */
+========================================= */
 
 .otp-bottom-links {
     display: flex;
-
+    align-items: center;
     justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
 
-    margin-top: 31px;
+    margin-top: 29px;
+    padding-top: 17px;
 
-    padding-top: 19px;
-
-    border-top: 1px solid var(--border);
+    border-top: 1px solid #f0edfa;
 }
 
 .otp-bottom-links a {
-    color: #667085;
+    color: var(--text-secondary);
 
-    font-size: 11px;
+    font-size: 10px;
+    font-weight: 600;
 
-    text-decoration: none;
+    transition: color 0.2s ease;
 }
 
 .otp-bottom-links a:hover {
     color: var(--primary);
 }
 
-.otp-bottom-links span {
+.otp-bottom-links a span {
     color: var(--primary);
-
-    font-weight: 600;
+    font-weight: 700;
 }
 
-
-/* =====================================================
+/* =========================================
    FOOTER
-===================================================== */
+========================================= */
 
 .auth-footer {
-    min-height: 60px;
-
-    padding: 15px 6%;
-
-    background: #ffffff;
-
-    border-top: 1px solid var(--border);
+    width: 100%;
 
     display: flex;
-
     align-items: center;
-
     justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 15px;
 
-    color: #98a2b3;
+    padding: 18px 7%;
 
-    font-size: 10px;
+    background: var(--white);
+
+    border-top: 1px solid #efedf8;
 }
 
-.auth-footer div {
-    display: flex;
+.auth-footer > span {
+    color: var(--text-light);
 
-    gap: 20px;
+    font-size: 9px;
+    line-height: 1.7;
+}
+
+.auth-footer > div {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 21px;
 }
 
 .auth-footer a {
-    color: #667085;
+    color: var(--text-secondary);
+    font-size: 9px;
 
-    text-decoration: none;
+    transition: color 0.2s ease;
 }
 
 .auth-footer a:hover {
     color: var(--primary);
 }
 
+/* =========================================
+   RESPONSIVE: TABLETS
+========================================= */
 
-/* =====================================================
-   RESPONSIVE — TABLET
-===================================================== */
-
-@media (max-width: 1100px) {
+@media (max-width: 1000px) {
 
     .otp-card-wrapper {
-        width: 86%;
-    }
-
-    .otp-right {
-        padding: 34px 35px 30px;
+        max-width: 900px;
     }
 
     .otp-left {
-        padding: 34px 28px;
+        padding: 32px 26px;
+    }
+
+    .otp-right {
+        padding: 34px 26px;
+    }
+
+    .otp-left h2 {
+        font-size: 26px;
+    }
+
+    .otp-right h1 {
+        font-size: 24px;
+    }
+
+    .otp-inputs {
+        gap: 7px;
+    }
+
+    .otp-box {
+        height: 46px;
+        font-size: 19px;
+    }
+}
+
+/* =========================================
+   RESPONSIVE: SMALL TABLETS
+========================================= */
+
+@media (max-width: 760px) {
+
+    .auth-header {
+        padding-right: 5%;
+        padding-left: 5%;
+    }
+
+    .page-content {
+        padding: 30px 18px;
+    }
+
+    .otp-card-wrapper {
+        max-width: 540px;
+        grid-template-columns: 1fr;
+    }
+
+    .otp-left {
+        padding: 30px;
+    }
+
+    .otp-right {
+        padding: 32px 30px;
+    }
+
+    .instant-title {
+        margin-bottom: 22px;
+    }
+
+    .verification-info {
+        margin-bottom: 24px;
     }
 
     .otp-left h2 {
         font-size: 27px;
     }
-}
 
-
-/* =====================================================
-   RESPONSIVE — MOBILE
-===================================================== */
-
-@media (max-width: 850px) {
-
-    .otp-card-wrapper {
-        width: 92%;
-
-        grid-template-columns: 1fr;
-
-        margin: 25px auto;
+    .left-description {
+        max-width: 100%;
     }
 
-    .otp-left {
-        display: none;
-    }
-
-    .otp-right {
-        padding: 30px 25px;
-
-        border-radius: 20px;
+    .rating {
+        margin-top: 10px;
+        padding-top: 20px;
     }
 
     .auth-footer {
-        flex-direction: column;
-
-        gap: 12px;
-
+        justify-content: center;
         text-align: center;
+    }
+
+    .auth-footer > div {
+        justify-content: center;
     }
 }
 
+/* =========================================
+   RESPONSIVE: MOBILE
+========================================= */
 
-/* =====================================================
-   RESPONSIVE — SMALL MOBILE
-===================================================== */
-
-@media (max-width: 500px) {
+@media (max-width: 480px) {
 
     .auth-header {
-        padding: 0 5%;
+        min-height: 60px;
+        padding: 12px 15px;
     }
 
     .logo img {
@@ -893,32 +996,223 @@ a {
     }
 
     .login-link {
+        gap: 5px;
         font-size: 10px;
     }
 
+    .page-content {
+        padding: 20px 12px 25px;
+    }
+
+    .otp-card-wrapper {
+        border-radius: 15px;
+    }
+
+    .otp-left {
+        padding: 24px 20px;
+    }
+
     .otp-right {
-        padding: 25px 20px;
+        padding: 27px 20px;
+    }
+
+    .instant-title {
+        font-size: 9px;
+    }
+
+    .verification-info {
+        padding: 14px;
+    }
+
+    .verification-heading {
+        gap: 8px;
+    }
+
+    .verification-heading strong {
+        font-size: 10px;
+    }
+
+    .verification-heading span:not(.fast-badge) {
+        font-size: 8px;
+    }
+
+    .fast-badge {
+        font-size: 7px;
+        padding: 4px 5px;
+    }
+
+    .verification-info p {
+        font-size: 10px;
+    }
+
+    .otp-left h2 {
+        font-size: 24px;
+    }
+
+    .left-description {
+        font-size: 11px;
+    }
+
+    .feature-box {
+        padding: 10px;
+    }
+
+    .feature-box strong {
+        font-size: 9px;
+    }
+
+    .security-badge {
+        margin-bottom: 17px;
+        font-size: 8px;
     }
 
     .otp-right h1 {
-        font-size: 27px;
+        font-size: 23px;
     }
 
     .description {
-        font-size: 12px;
+        font-size: 11px;
+    }
+
+    .email-box {
+        gap: 8px;
+        padding: 10px;
+    }
+
+    .email-icon {
+        width: 31px;
+        height: 31px;
+        font-size: 15px;
+    }
+
+    .email-content strong {
+        font-size: 9px;
+    }
+
+    .change-email-link {
+        font-size: 9px;
     }
 
     .otp-inputs {
-        gap: 6px;
+        gap: 5px;
     }
 
     .otp-box {
-        width: 40px;
-        height: 46px;
+        height: 43px;
+        border-radius: 7px;
+        font-size: 18px;
+    }
+
+    .verify-button {
+        min-height: 44px;
+    }
+
+    .resend-container {
+        gap: 5px;
+        font-size: 9px;
+    }
+
+    .resend-btn {
+        font-size: 9px;
+    }
+
+    .otp-bottom-links {
+        gap: 12px;
+        margin-top: 25px;
+    }
+
+    .otp-bottom-links a {
+        font-size: 9px;
     }
 
     .auth-footer {
-        padding: 15px 5%;
+        padding: 17px 12px;
     }
 
+    .auth-footer > div {
+        gap: 14px;
+    }
+
+    .auth-footer > span,
+    .auth-footer a {
+        font-size: 8px;
+    }
+}
+
+/* =========================================
+   RESPONSIVE: VERY SMALL MOBILE
+========================================= */
+
+@media (max-width: 350px) {
+
+    .login-link span {
+        display: none;
+    }
+
+    .otp-left {
+        padding: 21px 15px;
+    }
+
+    .otp-right {
+        padding: 23px 15px;
+    }
+
+    .otp-left h2 {
+        font-size: 22px;
+    }
+
+    .otp-right h1 {
+        font-size: 21px;
+    }
+
+    .verification-heading {
+        align-items: flex-start;
+    }
+
+    .fast-badge {
+        font-size: 6px;
+        padding: 3px 4px;
+    }
+
+    .email-box {
+        flex-wrap: wrap;
+    }
+
+    .email-content {
+        flex-basis: calc(100% - 45px);
+    }
+
+    .change-email-link {
+        margin-left: 39px;
+    }
+
+    .otp-inputs {
+        gap: 4px;
+    }
+
+    .otp-box {
+        height: 38px;
+        font-size: 16px;
+    }
+
+    .otp-bottom-links {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+
+/* =========================================
+   ACCESSIBILITY
+========================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+    }
 }

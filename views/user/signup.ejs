@@ -2,234 +2,189 @@
 <html lang="en">
 
 <head>
-
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
-
-    <title>OnEvent - Signup</title>
-
-    <!-- Inter Font -->
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
-        rel="stylesheet"
-    >
+    <title>OnEvent - Sign Up</title>
 
     <link rel="stylesheet" href="/css/user/signup.css">
 
+    <style>
+        .server-error-message,
+        .server-success-message {
+            margin: 16px 0;
+            padding: 12px 14px;
+            border-radius: 8px;
+            font-size: 13px;
+            line-height: 1.6;
+            overflow-wrap: anywhere;
+        }
+
+        .server-error-message {
+            color: #b42332;
+            background: #fff0f0;
+            border: 1px solid #ffd8d8;
+        }
+
+        .server-success-message {
+            color: #207747;
+            background: #edfaf2;
+            border: 1px solid #ccefd9;
+        }
+
+        .error-message {
+            display: block;
+            color: #b42332;
+            font-size: 12px;
+            margin-top: 5px;
+        }
+
+        .input-wrapper input.invalid,
+        .phone-input input.invalid {
+            border-color: #d93025;
+        }
+
+        .signup-btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+    </style>
 </head>
 
 <body>
 
-    <!-- ================= HEADER ================= -->
-
+    <!-- HEADER -->
     <header class="auth-header">
 
-        <div class="logo">
-
-            <a href="/">
-
-                <img
-                    src="/images/OnEvent%20LOGO.png"
-                    alt="OnEvent"
-                >
-
-            </a>
-
-        </div>
+        <a href="/" class="logo" aria-label="OnEvent home">
+            <img
+                src="/images/OnEvent%20LOGO.png"
+                alt="OnEvent"
+            >
+        </a>
 
         <div class="login-link">
-
-            <span>
-                Already have an account?
-            </span>
-
-            <a href="/login">
-                Log In
-            </a>
-
+            <span>Already have an account?</span>
+            <a href="/login">Log In</a>
         </div>
 
     </header>
 
-
-    <!-- ================= MAIN ================= -->
-
+    <!-- SIGNUP CONTAINER -->
     <main class="signup-container">
 
-        <!-- ================= LEFT PANEL ================= -->
-
+        <!-- LEFT PANEL -->
         <section class="signup-left">
 
-            <!-- Attendee Pass -->
-
+            <!-- ATTENDEE PASS -->
             <div class="pass-title">
 
                 <span class="pass-icon">
-
-                    <img
-                        src="/icons/ticket.svg"
-                        alt=""
-                    >
-
+                    <img src="/icons/ticket.svg" alt="">
                 </span>
 
-                <span>
-                    ATTENDEE PASS
-                </span>
+                <span>ATTENDEE PASS</span>
 
             </div>
 
-
-            <!-- Event Image -->
-
+            <!-- EVENT IMAGE -->
             <div class="event-image">
 
                 <img
                     src="/images/Signup%20event.webp"
-                    alt="Live Event"
+                    alt="Live concert and event gathering"
                 >
 
                 <div class="event-overlay">
 
                     <span>
-
-                        <img
-                            src="/icons/zap.svg"
-                            alt=""
-                        >
-
-                        Live Concerts & Gatherings
-
+                        <img src="/icons/zap.svg" alt="">
+                        Live Concerts &amp; Gatherings
                     </span>
 
-                    <strong>
-                        TRENDING
-                    </strong>
+                    <strong>TRENDING</strong>
 
                 </div>
 
             </div>
 
-
-            <!-- Left Heading -->
-
-            <h2>
-                Your Ticket to Endless Moments
-            </h2>
+            <!-- LEFT HEADING -->
+            <h2>Your Ticket to Endless Moments</h2>
 
             <p>
-                Join millions of festival-goers, tech conference
-                attendees, and live event enthusiasts worldwide.
+                Join millions of festival-goers, tech conference attendees,
+                and live event enthusiasts worldwide.
             </p>
 
-
-            <!-- Feature 1 -->
-
+            <!-- FEATURE 1 -->
             <div class="feature">
 
-                <div class="feature-icon">
-
-                    <img
-                        src="/icons/badge-check.svg"
-                        alt=""
-                    >
-
-                </div>
+                <span class="feature-icon">
+                    <img src="/icons/badge-check.svg" alt="">
+                </span>
 
                 <div>
-
-                    <strong>
-                        10,000+ Verified Experiences
-                    </strong>
+                    <strong>10,000+ Verified Experiences</strong>
 
                     <span>
                         From indie gigs to stadium tours and masterclasses.
                     </span>
-
                 </div>
 
             </div>
 
-
-            <!-- Feature 2 -->
-
+            <!-- FEATURE 2 -->
             <div class="feature">
 
-                <div class="feature-icon">
-
-                    <img
-                        src="/icons/qr-code.svg"
-                        alt=""
-                    >
-
-                </div>
+                <span class="feature-icon">
+                    <img src="/icons/qr-code.svg" alt="">
+                </span>
 
                 <div>
-
-                    <strong>
-                        Instant QR Phone Entry
-                    </strong>
+                    <strong>Instant QR Phone Entry</strong>
 
                     <span>
-                        Tap & go directly from your mobile lock screen.
+                        Tap &amp; go directly from your mobile lock screen.
                     </span>
-
                 </div>
 
             </div>
 
-
-            <!-- Feature 3 -->
-
+            <!-- FEATURE 3 -->
             <div class="feature">
 
-                <div class="feature-icon">
-
-                    <img
-                        src="/icons/shield-check.svg"
-                        alt=""
-                    >
-
-                </div>
+                <span class="feature-icon">
+                    <img src="/icons/shield-check.svg" alt="">
+                </span>
 
                 <div>
-
-                    <strong>
-                        Zero Hidden Fees Guaranteed
-                    </strong>
+                    <strong>Zero Hidden Fees Guaranteed</strong>
 
                     <span>
                         Transparent pricing upfront on every ticket.
                     </span>
-
                 </div>
 
             </div>
 
-
-            <!-- Rating -->
-
+            <!-- RATINGS AND REVIEWS -->
             <div class="rating">
 
                 <div class="review-avatars">
 
                     <img
                         src="/images/review-1.png"
-                        alt="Reviewer 1"
+                        alt="Event attendee"
                     >
 
                     <img
                         src="/images/review-2.png"
-                        alt="Reviewer 2"
+                        alt="Event attendee"
                     >
 
                     <img
                         src="/images/review-3.png"
-                        alt="Reviewer 3"
+                        alt="Event attendee"
                     >
 
                 </div>
@@ -242,13 +197,9 @@
                         class="rating-star"
                     >
 
-                    <strong>
-                        4.9 / 5
-                    </strong>
+                    <strong>4.9 / 5</strong>
 
-                    <span>
-                        rating from 450k+ reviews
-                    </span>
+                    <span>rating from 450k+ reviews</span>
 
                 </div>
 
@@ -256,58 +207,64 @@
 
         </section>
 
-
-        <!-- ================= RIGHT PANEL ================= -->
-
+        <!-- RIGHT PANEL -->
         <section class="signup-right">
 
             <span class="form-badge">
                 ● ATTENDEE REGISTRATION
             </span>
 
-            <h1>
-                Create Your Account
-            </h1>
+            <h1>Create Your Account</h1>
 
             <p>
                 Join OnEvent and discover your next experience.
             </p>
 
+            <!-- SERVER-SIDE GENERAL ERROR MESSAGE -->
+            <% if (typeof errorMessage !=="undefined" && errorMessage) { %>
+                <div class="server-error-message" role="alert">
+                    <%= errorMessage %>
+                </div>
+                <% } %>
 
-            <!-- Google -->
+            <!-- SERVER-SIDE SUCCESS MESSAGE -->
+            <% if (typeof successMessage !== "undefined" && successMessage) { %>
 
-            <a
-                href="/auth/google"
-                class="google-btn"
-            >
+                <div class="server-success-message" role="status">
+                    <%= successMessage %>
+                </div>
+
+            <% } %>
+
+            <!-- GOOGLE SIGNUP -->
+            <a href="/auth/google" class="google-btn">
 
                 <span class="google-icon">
 
                     <svg
-                        width="18"
-                        height="18"
-                        viewBox="0 0 18 18"
                         xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 48 48"
+                        aria-hidden="true"
                     >
 
                         <path
-                            fill="#4285F4"
-                            d="M17.64 9.205c0-.638-.057-1.252-.164-1.841H9v3.481h4.844a4.14 4.14 0 0 1-1.796 2.716v2.258h2.908c1.702-1.567 2.684-3.874 2.684-6.614z"
+                            fill="#EA4335"
+                            d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"
                         />
 
                         <path
-                            fill="#34A853"
-                            d="M9 18c2.43 0 4.467-.806 5.956-2.181l-2.908-2.258c-.806.54-1.835.859-3.048.859-2.344 0-4.329-1.584-5.039-3.714H.955v2.332A9 9 0 0 0 9 18z"
+                            fill="#4285F4"
+                            d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.76 7.18l7.73 6C44.42 37.91 46.98 31.77 46.98 24.55z"
                         />
 
                         <path
                             fill="#FBBC05"
-                            d="M3.961 10.706A5.41 5.41 0 0 1 3.68 9c0-.593.102-1.17.281-1.706V4.962H.955A9 9 0 0 0 0 9c0 1.451.347 2.824.955 4.038l3.006-2.332z"
+                            d="M10.53 28.59A14.4 14.4 0 0 1 9.75 24c0-1.59.27-3.13.76-4.59l-7.98-6.19A23.9 23.9 0 0 0 0 24c0 3.87.93 7.52 2.56 10.78l7.97-6.19z"
                         />
 
                         <path
-                            fill="#EA4335"
-                            d="M9 3.58c1.321 0 2.507.454 3.44 1.345l2.582-2.582C13.463.891 11.426 0 9 0A9 9 0 0 0 .955 4.962l3.006 2.332C4.671 5.164 6.656 3.58 9 3.58z"
+                            fill="#34A853"
+                            d="M24 48c6.48 0 11.93-2.13 15.91-5.8l-7.73-6c-2.15 1.45-4.92 2.3-8.18 2.3-6.26 0-11.57-4.22-13.46-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"
                         />
 
                     </svg>
@@ -318,124 +275,116 @@
 
             </a>
 
-
-            <!-- Divider -->
-
+            <!-- DIVIDER -->
             <div class="divider">
-
-                <span>
-                    OR CONTINUE WITH
-                </span>
-
+                <span></span>
+                OR CONTINUE WITH
+                <span></span>
             </div>
 
-
-            <!-- ================= FORM ================= -->
-
+            <!-- SIGNUP FORM -->
             <form
-                method="POST"
                 action="/signup"
+                method="POST"
                 id="signupForm"
+                novalidate
             >
 
-                <!-- Full Name -->
-
+                <!-- NAME -->
                 <div class="form-group">
 
-                    <label for="name">
-                        Full Name
-                    </label>
+                    <label for="name">Full Name</label>
 
                     <div class="input-wrapper">
 
                         <img
                             src="/icons/user-round.svg"
-                            class="input-icon"
                             alt=""
+                            class="input-icon"
                         >
 
                         <input
                             type="text"
                             id="name"
                             name="name"
+                            autocomplete="name"
                             placeholder="Enter your full name"
+                            value="<%= typeof formData !== 'undefined' && formData.name ? formData.name : '' %>"
                             required
                         >
 
                     </div>
 
+                    <small
+                        id="nameError"
+                        class="error-message"
+                        aria-live="polite"
+                    ></small>
+
                 </div>
 
+                    <!-- EMAIL -->
+                    <div class="form-group">
 
-                <!-- Email -->
+                        <label for="email">Email Address</label>
 
-                <div class="form-group">
+                        <div class="input-wrapper">
 
-                    <label for="email">
-                        Email Address
-                    </label>
+                            <img src="/icons/mail.svg" alt="" class="input-icon">
 
-                    <div class="input-wrapper">
+                            <input type="email" id="email" name="email" autocomplete="email" placeholder="Enter your email address"
+                                value="<%= typeof formData !== 'undefined' && formData.email ? formData.email : '' %>"
+                                class="<%= typeof emailError !== 'undefined' && emailError ? 'invalid' : '' %>"
+                                aria-describedby="emailError"
+                                aria-invalid="<%= typeof emailError !== 'undefined' && emailError ? 'true' : 'false' %>" required>
 
-                        <img
-                            src="/icons/mail.svg"
-                            class="input-icon"
-                            alt=""
-                        >
+                        </div>
 
-                        <input
-                            type="email"
-                            id="email"
-                            name="email"
-                            placeholder="Enter your email"
-                            required
-                        >
+                        <small id="emailError" class="error-message" aria-live="polite" <%=typeof emailError !=='undefined' && emailError
+                            ? 'style="display:block"' : 'style="display:none"' %>
+                            ><%= typeof emailError !=='undefined' ? emailError : '' %></small>
 
                     </div>
 
+
+
+                    <small
+                        id="emailError"
+                        class="error-message"
+                        aria-live="polite"
+                    ></small>
+
                 </div>
 
-
-                <!-- Mobile -->
-
+                <!-- PHONE -->
                 <div class="form-group">
 
-                    <label for="phone">
-                        Mobile Number
-                    </label>
+                    <label for="phone">Mobile Number</label>
 
                     <div class="phone-wrapper">
 
                         <div class="country-code">
-
-                            <span>
-                                🇮🇳
-                            </span>
-
-                            <span>
-                                +91
-                            </span>
-
-                            <img
-                                src="/icons/chevron-down.svg"
-                                alt=""
-                            >
-
+                            <span>IN&nbsp; +91</span>
+                            <span>⌄</span>
                         </div>
 
                         <div class="phone-input">
 
                             <img
                                 src="/icons/smartphone.svg"
-                                class="input-icon"
                                 alt=""
+                                class="input-icon"
                             >
 
                             <input
                                 type="tel"
                                 id="phone"
                                 name="phone"
+                                autocomplete="tel"
                                 placeholder="Enter your mobile number"
+                                value="<%= typeof formData !== 'undefined' && formData.phone ? formData.phone : '' %>"
+                                maxlength="10"
+                                inputmode="numeric"
                                 required
                             >
 
@@ -443,121 +392,129 @@
 
                     </div>
 
+                    <small
+                        id="phoneError"
+                        class="error-message"
+                        aria-live="polite"
+                    ></small>
+
                 </div>
 
-
-                <!-- Password -->
-
+                <!-- PASSWORD -->
                 <div class="form-group">
 
-                    <label for="password">
-                        Password
-                    </label>
+                    <label for="password">Password</label>
 
                     <div class="input-wrapper">
 
                         <img
                             src="/icons/lock-keyhole.svg"
-                            class="input-icon"
                             alt=""
+                            class="input-icon"
                         >
 
                         <input
                             type="password"
                             id="password"
                             name="password"
-                            placeholder="Create a strong password"
+                            autocomplete="new-password"
+                            placeholder="Create a password"
                             required
                         >
 
                         <img
                             src="/icons/eye-off.svg"
+                            alt="Show or hide password"
                             class="eye-icon"
-                            alt="Show password"
-                            id="passwordEye"
+                            id="togglePassword"
+                            role="button"
+                            tabindex="0"
                         >
 
                     </div>
 
+                    <small
+                        id="passwordError"
+                        class="error-message"
+                        aria-live="polite"
+                    ></small>
+
                 </div>
 
-
-                <!-- Confirm Password -->
-
+                <!-- CONFIRM PASSWORD -->
                 <div class="form-group">
 
-                    <label for="confirmPassword">
-                        Confirm Password
-                    </label>
+                    <label for="confirmPassword">Confirm Password</label>
 
                     <div class="input-wrapper">
 
                         <img
                             src="/icons/rotate-ccw.svg"
-                            class="input-icon"
                             alt=""
+                            class="input-icon"
                         >
 
                         <input
                             type="password"
                             id="confirmPassword"
                             name="confirmPassword"
-                            placeholder="Re-enter your password"
+                            autocomplete="new-password"
+                            placeholder="Confirm your password"
                             required
                         >
 
                         <img
                             src="/icons/eye-off.svg"
+                            alt="Show or hide password"
                             class="eye-icon"
-                            alt="Show password"
-                            id="confirmpasswordEye"
+                            id="toggleConfirmPassword"
+                            role="button"
+                            tabindex="0"
                         >
 
                     </div>
 
+                    <small
+                        id="confirmPasswordError"
+                        class="error-message"
+                        aria-live="polite"
+                    ></small>
+
                 </div>
 
-
-                <!-- Terms -->
-
+                <!-- TERMS -->
                 <div class="terms">
 
                     <input
                         type="checkbox"
                         id="terms"
+                        name="terms"
                         required
                     >
 
                     <label for="terms">
-
                         I agree to the
-
-                        <a href="/terms">
-                            Terms & Conditions
+                        <a href="/terms" target="_blank" rel="noopener noreferrer">
+                            Terms &amp; Conditions
                         </a>
-
                         and
-
-                        <a href="/privacy">
+                        <a href="/privacy" target="_blank" rel="noopener noreferrer">
                             Privacy Policy
                         </a>
-
                         of OnEvent.
-
                     </label>
 
                 </div>
 
+                <small
+                    id="termsError"
+                    class="error-message"
+                    aria-live="polite"
+                ></small>
 
-                <!-- Create Account -->
-
-                <button
-                    type="submit"
-                    class="signup-btn"
-                >
-
+                <!-- SUBMIT -->
+                <button type="submit" class="signup-btn" id="signupButton">
                     Create Account →
-
                 </button>
 
             </form>
@@ -566,34 +523,475 @@
 
     </main>
 
-
-    <!-- ================= FOOTER ================= -->
-
+    <!-- FOOTER -->
     <footer class="auth-footer">
 
         <span>
-            © 2026 OnEvent Platform Inc. All rights reserved.
+            © <%= new Date().getFullYear() %> OnEvent Platform Inc.
+            All rights reserved.
         </span>
 
         <div>
 
-            <a href="/privacy">
-                Privacy Policy
-            </a>
+            <a href="/privacy">Privacy Policy</a>
 
-            <a href="/terms">
-                Terms of Service
-            </a>
+            <a href="/terms">Terms of Service</a>
 
-            <a href="/contact">
-                Help & Support
-            </a>
+            <a href="/contact">Help &amp; Support</a>
 
         </div>
 
     </footer>
 
+    <!-- EXISTING SIGNUP JAVASCRIPT -->
     <script src="/js/signup.js"></script>
+
+    <!-- SIGNUP PAGE JAVASCRIPT -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+
+            const form = document.getElementById("signupForm");
+
+            const nameInput = document.getElementById("name");
+            const emailInput = document.getElementById("email");
+            const phoneInput = document.getElementById("phone");
+            const passwordInput = document.getElementById("password");
+            const confirmPasswordInput =
+                document.getElementById("confirmPassword");
+            const termsInput = document.getElementById("terms");
+
+            const nameError = document.getElementById("nameError");
+            const emailError = document.getElementById("emailError");
+            const phoneError = document.getElementById("phoneError");
+            const passwordError = document.getElementById("passwordError");
+            const confirmPasswordError =
+                document.getElementById("confirmPasswordError");
+            const termsError = document.getElementById("termsError");
+
+            const signupButton = document.getElementById("signupButton");
+
+            /*
+             * Full Name:
+             * Allow only English letters and spaces.
+             * Remove invalid characters as the user types.
+             */
+            nameInput.addEventListener("input", function () {
+
+                const cursorPosition = this.selectionStart;
+
+                const originalValue = this.value;
+
+                this.value = this.value
+                    .replace(/[^A-Za-z ]/g, "")
+                    .replace(/\s{2,}/g, " ");
+
+                if (this.value !== originalValue) {
+                    const newPosition = Math.min(
+                        cursorPosition,
+                        this.value.length
+                    );
+
+                    this.setSelectionRange(newPosition, newPosition);
+                }
+
+                const name = this.value.trim();
+
+                if (!name) {
+                    nameError.textContent = "";
+                } else if (!/^[A-Za-z ]+$/.test(name)) {
+                    nameError.textContent =
+                        "Name must contain only letters and spaces.";
+                } else {
+                    nameError.textContent = "";
+                }
+
+                nameInput.classList.remove("invalid");
+
+            });
+
+            /*
+             * Validate email format.
+             */
+            emailInput.addEventListener("input", function () {
+
+                const email = this.value.trim();
+
+                if (!email) {
+                    emailError.textContent = "";
+                } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                    emailError.textContent =
+                        "Please enter a valid email address.";
+                } else {
+                    emailError.textContent = "";
+                }
+
+                emailInput.classList.remove("invalid");
+
+            });
+
+            /*
+             * Allow only digits in the phone field.
+             */
+            phoneInput.addEventListener("input", function () {
+
+                this.value = this.value
+                    .replace(/\D/g, "")
+                    .slice(0, 10);
+
+                if (!this.value) {
+                    phoneError.textContent = "";
+                } else if (!/^[0-9]{10}$/.test(this.value)) {
+                    phoneError.textContent =
+                        "Mobile number must contain exactly 10 digits.";
+                } else {
+                    phoneError.textContent = "";
+                }
+
+                phoneInput.classList.remove("invalid");
+
+            });
+
+            /*
+             * Validate password requirements.
+             */
+            passwordInput.addEventListener("input", function () {
+
+                const password = this.value;
+
+                if (!password) {
+                    passwordError.textContent = "";
+                } else if (password.length < 8) {
+                    passwordError.textContent =
+                        "Password must contain at least 8 characters.";
+                } else if (!/[A-Z]/.test(password)) {
+                    passwordError.textContent =
+                        "Password must contain an uppercase letter.";
+                } else if (!/[a-z]/.test(password)) {
+                    passwordError.textContent =
+                        "Password must contain a lowercase letter.";
+                } else if (!/[0-9]/.test(password)) {
+                    passwordError.textContent =
+                        "Password must contain a number.";
+                } else if (!/[^A-Za-z0-9]/.test(password)) {
+                    passwordError.textContent =
+                        "Password must contain a special character.";
+                } else {
+                    passwordError.textContent = "";
+                }
+
+                passwordInput.classList.remove("invalid");
+
+                validatePasswordMatch();
+
+            });
+
+            /*
+             * Check whether both passwords match.
+             */
+            function validatePasswordMatch() {
+
+                if (!confirmPasswordInput.value) {
+                    confirmPasswordError.textContent = "";
+                    return false;
+                }
+
+                if (
+                    passwordInput.value !== confirmPasswordInput.value
+                ) {
+                    confirmPasswordError.textContent =
+                        "Passwords do not match.";
+
+                    return false;
+                }
+
+                confirmPasswordError.textContent = "";
+
+                return true;
+            }
+
+            confirmPasswordInput.addEventListener("input", function () {
+
+                validatePasswordMatch();
+
+                confirmPasswordInput.classList.remove("invalid");
+
+            });
+
+            /*
+             * Clear the Terms error when checked.
+             */
+            termsInput.addEventListener("change", function () {
+
+                termsError.textContent = "";
+
+            });
+
+            /*
+             * Show or hide password fields.
+             */
+            function setupPasswordToggle(toggleId, inputId) {
+
+                const toggle = document.getElementById(toggleId);
+                const input = document.getElementById(inputId);
+
+                if (!toggle || !input) {
+                    return;
+                }
+
+                function toggleVisibility() {
+
+                    const isPassword = input.type === "password";
+
+                    input.type = isPassword ? "text" : "password";
+
+                    toggle.src = isPassword
+                        ? "/icons/eye.svg"
+                        : "/icons/eye-off.svg";
+
+                    toggle.alt = isPassword
+                        ? "Hide password"
+                        : "Show password";
+
+                }
+
+                toggle.addEventListener("click", toggleVisibility);
+
+                toggle.addEventListener("keydown", function (event) {
+
+                    if (event.key === "Enter" || event.key === " ") {
+                        event.preventDefault();
+                        toggleVisibility();
+                    }
+
+                });
+
+            }
+
+            setupPasswordToggle("togglePassword", "password");
+
+            setupPasswordToggle(
+                "toggleConfirmPassword",
+                "confirmPassword"
+            );
+
+            /*
+             * Validate everything before submitting.
+             */
+            form.addEventListener("submit", function (event) {
+
+                let isValid = true;
+
+                nameError.textContent = "";
+                emailError.textContent = "";
+                phoneError.textContent = "";
+                passwordError.textContent = "";
+                confirmPasswordError.textContent = "";
+                termsError.textContent = "";
+
+                document.querySelectorAll(
+                    "#signupForm input"
+                ).forEach(function (input) {
+                    input.classList.remove("invalid");
+                });
+
+                const name = nameInput.value.trim();
+                const email = emailInput.value.trim();
+                const phone = phoneInput.value.trim();
+                const password = passwordInput.value;
+                const confirmPassword = confirmPasswordInput.value;
+
+                /*
+                 * Name validation.
+                 */
+                if (!name) {
+
+                    nameError.textContent = "Please enter your full name.";
+
+                    nameInput.classList.add("invalid");
+
+                    isValid = false;
+
+                } else if (!/^[A-Za-z ]+$/.test(name)) {
+
+                    nameError.textContent =
+                        "Name must contain only letters and spaces.";
+
+                    nameInput.classList.add("invalid");
+
+                    isValid = false;
+
+                }
+
+                /*
+                 * Email validation.
+                 */
+                if (!email) {
+
+                    emailError.textContent =
+                        "Please enter your email address.";
+
+                    emailInput.classList.add("invalid");
+
+                    isValid = false;
+
+                } else if (
+                    !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
+                ) {
+
+                    emailError.textContent =
+                        "Please enter a valid email address.";
+
+                    emailInput.classList.add("invalid");
+
+                    isValid = false;
+
+                }
+
+                /*
+                 * Phone validation.
+                 */
+                if (!phone) {
+
+                    phoneError.textContent =
+                        "Please enter your mobile number.";
+
+                    phoneInput.classList.add("invalid");
+
+                    isValid = false;
+
+                } else if (!/^[0-9]{10}$/.test(phone)) {
+
+                    phoneError.textContent =
+                        "Mobile number must contain exactly 10 digits.";
+
+                    phoneInput.classList.add("invalid");
+
+                    isValid = false;
+
+                }
+
+                /*
+                 * Password validation.
+                 */
+                if (!password) {
+
+                    passwordError.textContent =
+                        "Please enter a password.";
+
+                    passwordInput.classList.add("invalid");
+
+                    isValid = false;
+
+                } else if (password.length < 8) {
+
+                    passwordError.textContent =
+                        "Password must contain at least 8 characters.";
+
+                    passwordInput.classList.add("invalid");
+
+                    isValid = false;
+
+                } else if (!/[A-Z]/.test(password)) {
+
+                    passwordError.textContent =
+                        "Password must contain an uppercase letter.";
+
+                    passwordInput.classList.add("invalid");
+
+                    isValid = false;
+
+                } else if (!/[a-z]/.test(password)) {
+
+                    passwordError.textContent =
+                        "Password must contain a lowercase letter.";
+
+                    passwordInput.classList.add("invalid");
+
+                    isValid = false;
+
+                } else if (!/[0-9]/.test(password)) {
+
+                    passwordError.textContent =
+                        "Password must contain a number.";
+
+                    passwordInput.classList.add("invalid");
+
+                    isValid = false;
+
+                } else if (!/[^A-Za-z0-9]/.test(password)) {
+
+                    passwordError.textContent =
+                        "Password must contain a special character.";
+
+                    passwordInput.classList.add("invalid");
+
+                    isValid = false;
+
+                }
+
+                /*
+                 * Confirm password validation.
+                 */
+                if (!confirmPassword) {
+
+                    confirmPasswordError.textContent =
+                        "Please confirm your password.";
+
+                    confirmPasswordInput.classList.add("invalid");
+
+                    isValid = false;
+
+                } else if (password !== confirmPassword) {
+
+                    confirmPasswordError.textContent =
+                        "Passwords do not match.";
+
+                    confirmPasswordInput.classList.add("invalid");
+
+                    isValid = false;
+
+                }
+
+                /*
+                 * Terms validation.
+                 */
+                if (!termsInput.checked) {
+
+                    termsError.textContent =
+                        "Please accept the Terms & Conditions and Privacy Policy.";
+
+                    isValid = false;
+
+                }
+
+                /*
+                 * Stop submission if validation fails.
+                 */
+                if (!isValid) {
+
+                    event.preventDefault();
+
+                    const firstInvalidField =
+                        document.querySelector("#signupForm .invalid");
+
+                    if (firstInvalidField) {
+                        firstInvalidField.focus();
+                    }
+
+                    return;
+
+                }
+
+                /*
+                 * Prevent repeated clicks while submitting.
+                 */
+                signupButton.disabled = true;
+                signupButton.textContent = "Creating Account...";
+
+            });
+
+        });
+    </script>
 
 </body>
 

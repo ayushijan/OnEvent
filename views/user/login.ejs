@@ -2,301 +2,196 @@
 <html lang="en">
 
 <head>
-
     <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>OnEvent - Login</title>
 
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
-        rel="stylesheet"
-    >
-
     <link rel="stylesheet" href="/css/user/login.css">
 
-</head>
+    <style>
+        .login-error {
+            display: block;
+            color: #d93025;
+            font-size: 12px;
+            margin-top: 7px;
+            line-height: 1.5;
+        }
 
+        .input-wrapper.has-error {
+            border-color: #d93025;
+        }
+    </style>
+</head>
 
 <body>
 
-
-    <!-- ================= HEADER ================= -->
-
+    <!-- HEADER -->
     <header class="auth-header">
-
-        <div class="logo">
-
-            <a href="/">
-
-                <img
-                    src="/images/OnEvent%20LOGO.png"
-                    alt="OnEvent"
-                >
-
-            </a>
-
-        </div>
-
+        <a href="/" class="logo" aria-label="OnEvent home">
+            <img src="/images/OnEvent%20LOGO.png" alt="OnEvent">
+        </a>
     </header>
 
 
-
-    <!-- ================= MAIN ================= -->
-
+    <!-- LOGIN CARD -->
     <main class="login-container">
 
-
-        <!-- ================= LEFT PANEL ================= -->
-
+        <!-- LEFT PANEL -->
         <section class="login-left">
 
-
-            <!-- Seamless Access -->
-
             <div class="access-title">
-
                 <span class="access-icon">
-
-                    <img
-                        src="/icons/ticket.svg"
-                        alt=""
-                    >
-
+                    <img src="/icons/shield-check.svg" alt="">
                 </span>
-
-                <span>
-                    SEAMLESS ACCESS
-                </span>
-
+                <span>SECURE ACCESS</span>
             </div>
 
-
-
-            <!-- Fast Track -->
-
+            <!-- EVENT JOURNEY CARD -->
             <div class="track-card">
 
                 <div class="track-header">
 
-                    <div class="track-icon">
-
-                        <img
-                            src="/icons/zap.svg"
-                            alt=""
-                        >
-
-                    </div>
-
+                    <span class="track-icon">
+                        <img src="/icons/zap.svg" alt="">
+                    </span>
 
                     <div class="track-text">
-
-                        <strong>
-                            FAST TRACK READY
-                        </strong>
-
-                        <span>
-                            1-Click Saved Booking
-                        </span>
-
+                        <strong>Your Event Journey</strong>
+                        <span>Everything starts here</span>
                     </div>
 
-
-                    <span class="active-badge">
-                        ACTIVE PASSES
-                    </span>
+                    <span class="active-badge">READY</span>
 
                 </div>
 
-
                 <p>
-                    Log in to instantly view your upcoming QR access tickets,
-                    manage reserved seats, and receive real-time event updates.
+                    Sign in to explore events, manage your bookings,
+                    and keep your experiences organised.
                 </p>
 
             </div>
 
-
-
-            <!-- Heading -->
-
+            <!-- LEFT HEADING -->
             <h2>
-                Your Ticket to Endless<br>
-                Moments
+                Your next experience<br>
+                starts here.
             </h2>
 
-
             <p class="left-description">
-                Join millions of festival-goers, tech conference attendees,
-                and live event enthusiasts worldwide.
+                Discover amazing events, reserve your spot,
+                and make every moment memorable with OnEvent.
             </p>
 
-
-
-            <!-- Feature 1 -->
-
+            <!-- FEATURE 1 -->
             <div class="feature">
-
-                <div class="feature-icon">
-
-                    <img
-                        src="/icons/shield-check.svg"
-                        alt=""
-                    >
-
-                </div>
-
-                <div>
-
-                    <strong>
-                        End-to-end encrypted single-use tokens
-                    </strong>
-
-                </div>
-
+                <span class="feature-icon">
+                    <img src="/icons/ticket.svg" alt="">
+                </span>
+                <strong>Easy event booking</strong>
             </div>
 
-
-
-            <!-- Feature 2 -->
-
+            <!-- FEATURE 2 -->
             <div class="feature">
-
-                <div class="feature-icon">
-
-                    <img
-                        src="/icons/qr-code.svg"
-                        alt=""
-                    >
-
-                </div>
-
-                <div>
-
-                    <strong>
-                        Instant offline QR phone pass entry
-                    </strong>
-
-                </div>
-
+                <span class="feature-icon">
+                    <img src="/icons/badge-check.svg" alt="">
+                </span>
+                <strong>Keep track of your bookings</strong>
             </div>
 
+            <!-- FEATURE 3 -->
+            <div class="feature">
+                <span class="feature-icon">
+                    <img src="/icons/lock-keyhole.svg" alt="">
+                </span>
+                <strong>Secure account access</strong>
+            </div>
 
-
-            <!-- Reviews -->
-
+            <!-- REVIEWS -->
             <div class="reviews">
 
                 <div class="review-avatars">
-
-                    <img
-                        src="/images/review-1.png"
-                        alt="Reviewer 1"
-                    >
-
-                    <img
-                        src="/images/review-2.png"
-                        alt="Reviewer 2"
-                    >
-
-                    <img
-                        src="/images/review-3.png"
-                        alt="Reviewer 3"
-                    >
-
+                    <img src="/images/review-1.png" alt="Event attendee">
+                    <img src="/images/review-2.png" alt="Event attendee">
+                    <img src="/images/review-3.png" alt="Event attendee">
                 </div>
-
 
                 <div class="review-content">
 
                     <div>
-
-                        <img
-                            src="/icons/star.svg"
-                            class="rating-star"
-                            alt=""
-                        >
-
-                        <strong>
-                            4.9 / 5
-                        </strong>
-
+                        <img src="/icons/star.svg" alt="" class="rating-star">
+                        <strong>Made for experiences</strong>
                     </div>
 
-                    <span>
-                        from 450k+ attendee reviews
-                    </span>
+                    <span>Discover something worth remembering.</span>
 
                 </div>
 
             </div>
 
-
         </section>
 
 
-
-        <!-- ================= RIGHT PANEL ================= -->
-
+        <!-- RIGHT PANEL -->
         <section class="login-right">
 
+            <span class="form-badge">WELCOME BACK</span>
 
-            <span class="form-badge">
-                ● ATTENDEE PORTAL
-            </span>
-
-
-            <h1>
-                Welcome Back
-            </h1>
-
+            <h1>Login to OnEvent</h1>
 
             <p class="login-description">
-                Log in to continue discovering and booking events.
+                Enter your details to access your account.
             </p>
 
+            <!-- BLOCKED ACCOUNT MESSAGE -->
+            <% if (typeof blocked !== "undefined" && blocked) { %>
 
+                <div class="blocked-message" id="blockedMessage">
 
-            <!-- Google -->
+                    <span class="blocked-icon">!</span>
 
-            <a
-                href="/auth/google"
-                class="google-btn"
-            >
+                    <div>
+                        <strong>Account blocked</strong>
+
+                        <p>
+                            Your account has been blocked.
+                            Please contact support.
+                        </p>
+                    </div>
+
+                </div>
+
+            <% } %>
+
+            <!-- GOOGLE LOGIN -->
+            <a href="/auth/google" class="google-btn">
 
                 <span class="google-icon">
 
                     <svg
-                        width="18"
-                        height="18"
-                        viewBox="0 0 18 18"
                         xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 48 48"
+                        aria-hidden="true"
                     >
-
                         <path
-                            fill="#4285F4"
-                            d="M17.64 9.205c0-.638-.057-1.252-.164-1.841H9v3.481h4.844a4.14 4.14 0 0 1-1.796 2.716v2.258h2.908c1.702-1.567 2.684-3.88 2.684-6.614z"
+                            fill="#EA4335"
+                            d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"
                         />
 
                         <path
-                            fill="#34A853"
-                            d="M9 18c2.43 0 4.467-.806 5.956-2.181l-2.908-2.258c-.806.54-1.834.859-3.048.859-2.344 0-4.33-1.584-5.039-3.714H.955v2.332A9 9 0 0 0 9 18z"
+                            fill="#4285F4"
+                            d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.76 7.18l7.73 6C44.42 37.91 46.98 31.77 46.98 24.55z"
                         />
 
                         <path
                             fill="#FBBC05"
-                            d="M3.961 10.706A5.41 5.41 0 0 1 3.678 9c0-.592.102-1.168.283-1.706V4.962H.955A9 9 0 0 0 0 9c0 1.452.348 2.827.955 4.038l3.006-2.332z"
+                            d="M10.53 28.59A14.4 14.4 0 0 1 9.75 24c0-1.59.27-3.13.76-4.59l-7.98-6.19A23.9 23.9 0 0 0 0 24c0 3.87.93 7.52 2.56 10.78l7.97-6.19z"
                         />
 
                         <path
-                            fill="#EA4335"
-                            d="M9 3.58c1.323 0 2.507.455 3.44 1.347l2.581-2.581C13.463.891 11.426 0 9 0A9 9 0 0 0 .955 4.962l3.006 2.332C4.67 5.164 6.656 3.58 9 3.58z"
+                            fill="#34A853"
+                            d="M24 48c6.48 0 11.93-2.13 15.91-5.8l-7.73-6c-2.15 1.45-4.92 2.3-8.18 2.3-6.26 0-11.57-4.22-13.46-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"
                         />
-
                     </svg>
 
                 </span>
@@ -305,224 +200,280 @@
 
             </a>
 
-
-
-            <!-- Divider -->
-
+            <!-- DIVIDER -->
             <div class="divider">
-
                 <span></span>
-
-                <p>
-                    OR CONTINUE WITH EMAIL
-                </p>
-
+                <p>OR CONTINUE WITH EMAIL</p>
                 <span></span>
-
             </div>
 
 
-
-            <!-- Login Form -->
-
+            <!-- LOGIN FORM -->
             <form
                 action="/login"
                 method="POST"
                 id="loginForm"
+                autocomplete="on"
+                novalidate
             >
 
-
-                <!-- Email -->
-
+                <!-- EMAIL -->
                 <div class="form-group">
 
                     <label for="email">
-                        EMAIL ADDRESS <span>*</span>
+                        Email <span>*</span>
                     </label>
 
-
                     <div class="input-wrapper">
-
-                        <img
-                            src="/icons/mail.svg"
-                            class="input-icon"
-                            alt=""
-                        >
-
 
                         <input
                             type="email"
                             id="email"
                             name="email"
                             placeholder="Enter your email"
+                            autocomplete="email"
+                            value="<%= typeof email !== 'undefined' ? email : '' %>"
                             required
                         >
 
                     </div>
 
+                    <% if (typeof emailError !== "undefined" && emailError) { %>
 
-                    <p class="field-helper">
-                        We'll verify your booking confirmation tickets through this address.
-                    </p>
+                        <small class="login-error server-login-error">
+                            <%= emailError %>
+                        </small>
+
+                    <% } %>
 
                 </div>
 
 
-
-                <!-- Password -->
-
+                <!-- PASSWORD -->
                 <div class="form-group">
 
                     <label for="password">
-                        PASSWORD <span>*</span>
+                        Password <span>*</span>
                     </label>
 
-
                     <div class="input-wrapper">
-
-                        <img
-                            src="/icons/lock-keyhole.svg"
-                            class="input-icon"
-                            alt=""
-                        >
-
 
                         <input
                             type="password"
                             id="password"
                             name="password"
                             placeholder="Enter your password"
+                            autocomplete="current-password"
                             required
                         >
 
-
-                        <img
-                            src="/icons/eye-off.svg"
-                            class="eye-icon"
-                            alt="Show password"
-                            id="passwordEye"
-                        >
-
                     </div>
+
+                    <% if (typeof error !== "undefined" && error) { %>
+
+                        <small
+                            class="login-error server-login-error"
+                            id="loginError"
+                        ><%= error %></small>
+
+                    <% } %>
 
                 </div>
 
 
-
-                <!-- Remember / Forgot -->
-
+                <!-- REMEMBER / FORGOT -->
                 <div class="login-options">
 
-                    <label class="remember">
+                    <label class="remember" for="rememberMe">
 
                         <input
                             type="checkbox"
+                            id="rememberMe"
                             name="rememberMe"
                         >
 
-                        <span>
-                            Remember Me
-                        </span>
+                        Remember me
 
                     </label>
 
-
-                    <a href="/forgot-password">
-                        Forgot Password?
-                    </a>
+                    <a href="/forgot-password">Forgot Password?</a>
 
                 </div>
 
 
-                <% if (blocked) { %>
-                    <div class="blocked-message" id="blockedMessage">
-                        <div class="blocked-icon">⚠</div>
-                
-                        <div>
-                            <strong>Account Blocked</strong>
-                            <p>Your account has been blocked by the administrator.</p>
-                        </div>
-                    </div>
-                    <% } %>
-
-
-
-                <!-- Login -->
-
-                <button
-                    type="submit"
-                    class="login-button"
-                >
-
-                    Log In
-
-                    <span>
-                        →
-                    </span>
-
+                <!-- LOGIN BUTTON -->
+                <button type="submit" class="login-button">
+                    Login <span>→</span>
                 </button>
-
 
             </form>
 
 
-
-            <!-- Signup -->
-
+            <!-- SIGNUP LINK -->
             <p class="signup-link">
-
                 Don't have an account?
-
-                <a href="/signup">
-                    Sign Up
-                </a>
-
+                <a href="/signup">Sign Up</a>
             </p>
 
-
         </section>
-
 
     </main>
 
 
-
-    <!-- ================= FOOTER ================= -->
-
+    <!-- FOOTER -->
     <footer class="auth-footer">
 
         <span>
-            © 2026 OnEvent Platform Inc. All rights reserved.
+            © <%= new Date().getFullYear() %> OnEvent Platform Inc. All rights reserved.
         </span>
 
-
         <div>
-
-            <a href="/privacy">
-                Privacy Policy
-            </a>
-
-            <a href="/terms">
-                Terms of Service
-            </a>
-
-            <a href="/contact">
-                Help & Support
-            </a>
-
+            <a href="/privacy">Privacy Policy</a>
+            <a href="/terms">Terms of Service</a>
+            <a href="/contact">Help &amp; Support</a>
         </div>
 
     </footer>
 
 
-    <script src="/js/login.js"></script>
-
     <script>
+    // Clear the password when returning through browser history.
+    window.addEventListener("pageshow", function (event) {
+        if (event.persisted) {
+            const password = document.getElementById("password");
+
+            if (password) {
+                password.value = "";
+            }
+        }
+    });
+
+
+    // Remove the blocked query parameter after displaying the message.
     const blockedMessage = document.getElementById("blockedMessage");
 
     if (blockedMessage) {
-        window.history.replaceState({}, document.title, "/login");
+        window.history.replaceState(
+            {},
+            document.title,
+            "/login"
+        );
     }
+
+
+    // LOGIN FORM VALIDATION
+    const loginForm = document.getElementById("loginForm");
+    const emailInput = document.getElementById("email");
+    const passwordInput = document.getElementById("password");
+
+
+    // Remove a client-side error from a specific input.
+    function removeClientError(input) {
+        const wrapper = input.closest(".input-wrapper");
+
+        if (!wrapper) return;
+
+        wrapper.classList.remove("has-error");
+
+        const nextElement = wrapper.nextElementSibling;
+
+        if (
+            nextElement &&
+            nextElement.classList.contains("client-login-error")
+        ) {
+            nextElement.remove();
+        }
+    }
+
+
+    // Display a client-side validation error.
+    function showClientError(input, message) {
+        removeClientError(input);
+
+        const wrapper = input.closest(".input-wrapper");
+
+        if (!wrapper) return;
+
+        wrapper.classList.add("has-error");
+
+        const error = document.createElement("small");
+
+        error.className = "login-error client-login-error";
+        error.textContent = message;
+
+        wrapper.insertAdjacentElement("afterend", error);
+    }
+
+
+    // Remove server-side errors when the user edits either field.
+    function clearServerErrors() {
+        document.querySelectorAll(".server-login-error").forEach(function (error) {
+            error.remove();
+        });
+    }
+
+
+    // Clear errors while the user edits the email field.
+    emailInput.addEventListener("input", function () {
+        removeClientError(emailInput);
+        clearServerErrors();
+    });
+
+
+    // Clear errors while the user edits the password field.
+    passwordInput.addEventListener("input", function () {
+        removeClientError(passwordInput);
+        clearServerErrors();
+    });
+
+
+    // LOGIN FORM SUBMISSION
+    loginForm.addEventListener("submit", function (event) {
+        let hasError = false;
+
+        // Remove previous client-side errors.
+        removeClientError(emailInput);
+        removeClientError(passwordInput);
+
+        // Remove old server-side errors before a new submission.
+        clearServerErrors();
+
+        const email = emailInput.value.trim();
+        const password = passwordInput.value;
+
+        // Email validation.
+        if (!email) {
+            showClientError(
+                emailInput,
+                "Please enter your email address."
+            );
+
+            hasError = true;
+
+        } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+            showClientError(
+                emailInput,
+                "Please enter a valid email address."
+            );
+
+            hasError = true;
+        }
+
+        // Password validation.
+        if (!password.trim()) {
+            showClientError(
+                passwordInput,
+                "Please enter your password."
+            );
+
+            hasError = true;
+        }
+
+        // Stop submission when validation fails.
+        if (hasError) {
+            event.preventDefault();
+        }
+    });
 </script>
 
 </body>

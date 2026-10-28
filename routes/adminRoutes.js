@@ -3,59 +3,97 @@ const express = require("express");
 const router = express.Router();
 
 const adminLoginController = require("../controllers/admin/adminLoginController");
-
 const adminController = require("../controllers/admin/adminController");
-
 const isAdmin = require("../middleware/adminAuth");
-
 const adminUserController = require("../controllers/admin/adminUserController");
 
+// ==================== PREVENT CACHE ====================
 
-// Admin Login Page
+const preventCache = (req, res, next) => {
+    res.set({
+        "Cache-Control": "no-store, no-cache, must-revalidate, private, max-age=0",
+        "Pragma": "no-cache",
+        "Expires": "0"
+    });
 
-router.get("/admin/login", (req, res) => {
+    next();
+};
 
-    res.render("admin/login");
+// ==================== ADMIN LOGIN PAGE ====================
 
+router.get("/admin/login", preventCache, (req, res) => {
+    if (
+        req.session &&
+        req.session.adminId &&
+        req.session.adminRole === "admin"
+    ) {
+        return res.redirect(303, "/admin/dashboard");
+    }
+
+    return res.render("admin/login");
 });
 
-
-// Admin Login
+// ==================== ADMIN LOGIN ====================
 
 router.post("/admin/login", adminLoginController);
 
+// ==================== ADMIN DASHBOARD ====================
 
-// Admin Dashboard
+router.get(
+"/admin/dashboard",
+isAdmin,
+adminController.dashboard
+);
 
-router.get("/admin/dashboard",
-    isAdmin,
-    adminController.dashboard);
+// ==================== EXPORT ALL USERS ====================
 
-// Admin Logout
+router.get(
+"/admin/users/export",
+isAdmin,
+adminController.exportUsers
+);
 
-router.get("/admin/logout", (req, res) => {
+
+// ==================== ADMIN LOGOUT ====================
+
+router.post("/admin/logout", preventCache, (req, res, next) => {
+    const clearSessionCookie = () => {
+        res.clearCookie("onevent.sid", {
+            path: "/",
+            httpOnly: true,
+            secure: process.env.NODE_ENV === "production",
+            sameSite: "lax"
+        });
+    };
+
+    if (!req.session) {
+        clearSessionCookie();
+        return res.redirect(303, "/admin/login");
+    }
 
     req.session.destroy((error) => {
-
         if (error) {
-
-            return res
-                .status(500)
-                .send("Unable to logout");
-
+            return next(error);
         }
 
-        res.redirect("/admin/login");
+        clearSessionCookie();
 
+        res.set({
+            "Cache-Control": "no-store, no-cache, must-revalidate, private, max-age=0",
+            "Pragma": "no-cache",
+            "Expires": "0"
+        });
+
+        return res.redirect(303, "/admin/login?loggedOut=true");
     });
-
 });
+
+// ==================== UPDATE USER STATUS ====================
 
 router.post(
     "/admin/users/:id/status",
     isAdmin,
     adminUserController.updateUserStatus
 );
-
 
 module.exports = router;

@@ -6,15 +6,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>OnEvent - Home</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="/css/user/home.css">
+    <link rel="stylesheet" href="/css/user/navbar.css">
+    <link rel="stylesheet" href="/css/user/footer.css">
+
 </head>
 
 <body>
 
     <header>
-
-        <h2>OnEvent</h2>
-
-        <link rel="stylesheet" href="/css/user/home.css">
+        
 
         <%- include("../partials/navbar") %>
 
@@ -29,6 +35,18 @@
         <a href="/profile">View Profile</a>
 
     </main>
+
+    <script>
+    window.addEventListener("pageshow", function (event) {
+
+        if (event.persisted) {
+            window.location.reload();
+        }
+
+    });
+</script>
+
+<%- include("../partials/footer.ejs") %>
 
 </body>
 
