@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>OnEvent - Add Category</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/admin/dashboard.css">
+    <link rel="stylesheet" href="/css/admin/addCategory.css">
+</head>
+
+<body>
+
+    <div class="admin-layout">
+
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+
+            <a href="/admin/dashboard" class="brand">
+                <img src="/images/OnEvent%20LOGO.png" alt="OnEvent">
+                <span class="admin-badge">ADMIN</span>
+            </a>
+
+            <nav class="sidebar-nav">
+            
+                <a href="/admin/dashboard" class="nav-item">
+                    <img src="/icons/dashboard.svg" alt="">
+                    <span>Dashboard</span>
+                </a>
+            
+                <a href="/admin/events" class="nav-item">
+                    <img src="/icons/calendar.svg" alt="">
+                    <span>Events</span>
+                </a>
+            
+                <a href="/admin/categories" class="nav-item active">
+                    <img src="/icons/shapes.svg" alt="">
+                    <span>Categories</span>
+                </a>
+            
+                <a href="/admin/dashboard" class="nav-item">
+                    <img src="/icons/users.svg" alt="">
+                    <span>Users</span>
+                </a>
+            
+                <a href="#" class="nav-item">
+                    <img src="/icons/ticket.svg" alt="">
+                    <span>Bookings</span>
+                </a>
+            
+                <a href="#" class="nav-item">
+                    <img src="/icons/shield-check.svg" alt="">
+                    <span>Attendee Verification</span>
+                </a>
+            
+                <a href="#" class="nav-item">
+                    <img src="/icons/reports.svg" alt="">
+                    <span>Reports & Revenue</span>
+                </a>
+            
+            </nav>
+
+            <div class="sidebar-bottom">
+
+                <div class="system-status">
+                    <span class="status-dot"></span>
+
+                    <div>
+                        <small>SYSTEM STATUS</small>
+                        <strong>Operational</strong>
+                    </div>
+                </div>
+
+            </div>
+
+        </aside>
+
+
+        <!-- MAIN AREA -->
+        <div class="main-area">
+
+            <!-- TOPBAR -->
+            <header class="topbar">
+
+                <div class="breadcrumbs">
+                    <span>Home</span>
+                    <span class="breadcrumb-separator">/</span>
+                    <a href="/admin/categories">Categories</a>
+                    <span class="breadcrumb-separator">/</span>
+                    <strong>Add Category</strong>
+                </div>
+
+                <div class="topbar-right">
+
+                    <div class="date-badge">
+                        <span class="date-icon">◷</span>
+                        Last 30 Days
+                    </div>
+
+                    <button
+                        type="button"
+                        class="icon-button"
+                        aria-label="Notifications"
+                    >
+                        ♧
+                    </button>
+
+                    <div class="admin-profile">
+                        <span class="admin-avatar">SA</span>
+
+                        <div class="admin-profile-info">
+                            <strong>Admin Console</strong>
+                            <small>Super Administrator</small>
+                        </div>
+                    </div>
+
+                    <button
+                        type="button"
+                        class="topbar-logout"
+                        id="logoutButton"
+                    >
+                        <span>⇥</span>
+                        <span>Logout</span>
+                    </button>
+
+                </div>
+
+            </header>
+
+
+            <!-- PAGE CONTENT -->
+            <main class="page-content add-category-page">
+
+                <!-- PAGE HEADING -->
+                <section class="page-heading">
+
+                    <div class="heading-copy">
+
+                        <div class="eyebrow">
+                            <span>OPERATIONS SUITE</span>
+                            <span class="eyebrow-divider">•</span>
+                            <span class="eyebrow-muted">PLATFORM TAXONOMY</span>
+                        </div>
+
+                        <h1>Add Category</h1>
+
+                        <p>
+                            Create a new category for OnEvent events.
+                        </p>
+
+                    </div>
+
+                    <div class="heading-actions">
+
+                        <a href="/admin/categories" class="secondary-button">
+                            ← Back to List
+                        </a>
+
+                    </div>
+
+                </section>
+
+
+                <!-- ADD CATEGORY FORM -->
+                <form
+                    action="/admin/categories/add"
+                    method="POST"
+                    enctype="multipart/form-data"
+                    id="addCategoryForm"
+                >
+
+                    <section class="category-form-card">
+
+                        <!-- CARD HEADER -->
+                        <div class="category-card-header">
+
+                            <div class="category-card-title">
+
+                                <span class="category-section-icon">▦</span>
+
+                                <div>
+                                    <h2>Category Details</h2>
+
+                                    <p>
+                                        Configure basic information, status,
+                                        and visual iconography for the category.
+                                    </p>
+                                </div>
+
+                            </div>
+
+                            <span class="required-label">
+                                FIELDS WITH * ARE REQUIRED
+                            </span>
+
+                        </div>
+
+
+                        <div class="category-form-body">
+
+                            <!-- CATEGORY NAME -->
+                            <div class="form-group">
+
+                                <div class="form-label-row">
+
+                                    <label for="categoryName">
+                                        CATEGORY NAME <span>*</span>
+                                    </label>
+
+                                    <small>Recommended: 3–40 characters</small>
+
+                                </div>
+
+                                <input
+                                    type="text"
+                                    id="categoryName"
+                                    name="name"
+                                    placeholder="Enter category name"
+                                    minlength="3"
+                                    maxlength="50"
+                                    required
+                                >
+
+                                <div class="slug-preview">
+                                    <span>↗</span>
+                                    Slug will be generated automatically:
+
+                                    <code id="slugPreview">
+                                        /category/your-category
+                                    </code>
+                                </div>
+
+                            </div>
+
+
+                            <!-- DESCRIPTION -->
+                            <div class="form-group">
+
+                                <div class="form-label-row">
+
+                                    <label for="categoryDescription">
+                                        CATEGORY DESCRIPTION
+                                    </label>
+
+                                    <small>
+                                        <span id="descriptionCount">0</span>
+                                        / 500 characters
+                                    </small>
+
+                                </div>
+
+                                <textarea
+                                    id="categoryDescription"
+                                    name="description"
+                                    maxlength="500"
+                                    placeholder="Write a short description about this category..."
+                                    rows="4"
+                                ></textarea>
+
+                                <small class="field-help">
+                                    This synopsis will be featured in platform
+                                    search headers and SEO metadata tags.
+                                </small>
+
+                            </div>
+
+
+                            <!-- CATEGORY STATUS -->
+                            <div class="form-group">
+
+                                <div class="form-label-row">
+
+                                    <label>
+                                        CATEGORY STATUS <span>*</span>
+                                    </label>
+
+                                </div>
+
+                                <p class="status-description">
+                                    Determine whether this category is
+                                    immediately visible to public users.
+                                </p>
+
+                                <div class="status-options">
+
+                                    <!-- ACTIVE -->
+                                    <label class="status-option selected">
+
+                                        <input
+                                            type="radio"
+                                            name="status"
+                                            value="active"
+                                            checked
+                                        >
+
+                                        <span class="radio-circle"></span>
+
+                                        <div class="status-option-content">
+
+                                            <div class="status-title">
+                                                <strong>Active</strong>
+                                                <span class="published-badge">
+                                                    ● Published
+                                                </span>
+                                            </div>
+
+                                            <p>
+                                                Visible immediately across
+                                                category filters, navigation
+                                                bars, and organizer creation forms.
+                                            </p>
+
+                                        </div>
+
+                                    </label>
+
+
+                                    <!-- INACTIVE -->
+                                    <label class="status-option">
+
+                                        <input
+                                            type="radio"
+                                            name="status"
+                                            value="inactive"
+                                        >
+
+                                        <span class="radio-circle"></span>
+
+                                        <div class="status-option-content">
+
+                                            <div class="status-title">
+                                                <strong>Inactive</strong>
+                                                <span class="draft-badge">
+                                                    ● Draft / Hidden
+                                                </span>
+                                            </div>
+
+                                            <p>
+                                                Hidden from event discovery,
+                                                public listings, and tag pickers
+                                                until activated.
+                                            </p>
+
+                                        </div>
+
+                                    </label>
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- CATEGORY IMAGE -->
+                            <div class="form-group">
+
+                                <div class="form-label-row">
+
+                                    <label for="categoryImage">
+                                        CATEGORY ICON & MEDIA <span>*</span>
+                                    </label>
+
+                                    <small>SVG icon or high-resolution thumbnail</small>
+
+                                </div>
+
+                                <p class="field-help">
+                                    Upload a clean icon or visual symbol
+                                    to represent this category across the app.
+                                </p>
+
+                                <div class="media-layout">
+
+                                    <!-- UPLOAD AREA -->
+                                    <div class="upload-area" id="uploadArea">
+
+                                        <input
+                                            type="file"
+                                            id="categoryImage"
+                                            name="image"
+                                            accept=".svg,.png,.jpg,.jpeg,image/svg+xml,image/png,image/jpeg"
+                                            hidden
+                                            required
+                                        >
+
+                                        <div class="upload-content" id="uploadContent">
+
+                                            <div class="upload-icon">
+                                                <img src="/icons/cloudUpload.svg" alt="Upload">
+                                            </div>
+
+                                            <strong>
+                                                Click to upload category icon
+                                                or drag and drop
+                                            </strong>
+
+                                            <small>
+                                                SVG, PNG or JPG
+                                                (maximum file size 2MB)
+                                            </small>
+
+                                        </div>
+
+                                        <div
+                                            class="selected-file"
+                                            id="selectedFile"
+                                            hidden
+                                        >
+
+                                            <img
+                                                id="imagePreview"
+                                                src=""
+                                                alt="Category preview"
+                                            >
+
+                                            <div class="selected-file-info">
+                                                <strong id="fileName"></strong>
+                                                <small id="fileSize"></small>
+                                            </div>
+
+                                            <button
+                                                type="button"
+                                                id="removeImage"
+                                                aria-label="Remove image"
+                                            >
+                                                ×
+                                            </button>
+
+                                        </div>
+
+                                    </div>
+
+
+                                    <!-- LIVE PREVIEW -->
+                                    <div class="live-preview-panel">
+
+                                        <small class="preview-heading">
+                                            LIVE CATALOG PREVIEW
+                                        </small>
+
+                                        <div class="preview-category-card">
+
+                                            <div class="preview-category-icon">
+                                                <img
+                                                    id="previewIcon"
+                                                    src=""
+                                                    alt=""
+                                                    hidden
+                                                >
+
+                                                <span id="defaultPreviewIcon">
+                                                    ◇
+                                                </span>
+                                            </div>
+
+                                            <div class="preview-category-info">
+
+                                                <strong id="previewName">
+                                                    Category Name
+                                                </strong>
+
+                                                <small id="previewSlug">
+                                                    /category/category-name
+                                                </small>
+
+                                            </div>
+
+                                            <div class="preview-category-footer">
+
+                                                <span class="preview-event-count">
+                                                    0 Events
+                                                </span>
+
+                                                <span
+                                                    class="preview-status active"
+                                                    id="previewStatus"
+                                                >
+                                                    ● Active
+                                                </span>
+
+                                            </div>
+
+                                        </div>
+
+                                        <small class="preview-note">
+                                            Appearance in search filters
+                                            and category catalog.
+                                        </small>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- VALIDATION INFORMATION -->
+                            <div class="validation-note">
+
+                                <span>ⓘ</span>
+
+                                <p>
+                                    <strong>Validation Rules:</strong>
+                                    Square 1:1 ratio recommended.
+                                    Transparent background supported for icons.
+                                    Images should be clear and appropriate
+                                    for the selected category.
+                                </p>
+
+                            </div>
+
+
+                            <!-- FOOTER INFORMATION -->
+                            <div class="category-info-note">
+
+                                <span>ⓘ</span>
+
+                                Categories added are synchronized across
+                                discovery tags and event creation forms.
+
+                            </div>
+
+
+                            <!-- FORM ACTIONS -->
+                            <div class="form-actions">
+
+                                <a
+                                    href="/admin/categories"
+                                    class="cancel-button"
+                                >
+                                    Cancel
+                                </a>
+
+                                <button
+                                    type="submit"
+                                    class="submit-category-button"
+                                    id="submitCategory"
+                                >
+                                    + Add Category
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    </section>
+
+                </form>
+
+            </main>
+
+        </div>
+
+    </div>
+
+
+    <!-- JAVASCRIPT -->
+    <script>
+
+        const form = document.getElementById("addCategoryForm");
+
+        const nameInput = document.getElementById("categoryName");
+        const descriptionInput = document.getElementById("categoryDescription");
+
+        const slugPreview = document.getElementById("slugPreview");
+        const previewName = document.getElementById("previewName");
+        const previewSlug = document.getElementById("previewSlug");
+
+        const descriptionCount = document.getElementById("descriptionCount");
+
+        const imageInput = document.getElementById("categoryImage");
+        const uploadArea = document.getElementById("uploadArea");
+
+        const uploadContent = document.getElementById("uploadContent");
+        const selectedFile = document.getElementById("selectedFile");
+
+        const imagePreview = document.getElementById("imagePreview");
+        const previewIcon = document.getElementById("previewIcon");
+
+        const defaultPreviewIcon =
+            document.getElementById("defaultPreviewIcon");
+
+        const fileName = document.getElementById("fileName");
+        const fileSize = document.getElementById("fileSize");
+
+        const previewStatus = document.getElementById("previewStatus");
+
+
+        // GENERATE SLUG
+        function generateSlug(value) {
+
+            return value
+                .toLowerCase()
+                .trim()
+                .replace(/[^a-z0-9]+/g, "-")
+                .replace(/^-+|-+$/g, "");
+
+        }
+
+
+        // CATEGORY NAME PREVIEW
+        nameInput.addEventListener("input", function () {
+
+            const name = this.value.trim();
+
+            const slug = generateSlug(name);
+
+            previewName.textContent = name || "Category Name";
+
+            previewSlug.textContent =
+                `/category/${slug || "category-name"}`;
+
+            slugPreview.textContent =
+                `/category/${slug || "your-category"}`;
+
+        });
+
+
+        // DESCRIPTION CHARACTER COUNT
+        descriptionInput.addEventListener("input", function () {
+
+            descriptionCount.textContent = this.value.length;
+
+        });
+
+
+        // STATUS PREVIEW
+        document.querySelectorAll('input[name="status"]')
+            .forEach(input => {
+
+                input.addEventListener("change", function () {
+
+                    document.querySelectorAll(".status-option")
+                        .forEach(option => {
+                            option.classList.remove("selected");
+                        });
+
+                    this.closest(".status-option")
+                        .classList.add("selected");
+
+
+                    if (this.value === "active") {
+
+                        previewStatus.textContent = "● Active";
+
+                        previewStatus.className =
+                            "preview-status active";
+
+                    } else {
+
+                        previewStatus.textContent = "● Inactive";
+
+                        previewStatus.className =
+                            "preview-status inactive";
+
+                    }
+
+                });
+
+            });
+
+
+        // OPEN FILE SELECTOR
+        uploadArea.addEventListener("click", function (event) {
+
+            if (
+                event.target.id === "removeImage" ||
+                event.target.closest("#removeImage")
+            ) {
+                return;
+            }
+
+            imageInput.click();
+
+        });
+
+
+        // DISPLAY SELECTED IMAGE
+        function displayImage(file) {
+
+            if (!file) return;
+
+            const allowedTypes = [
+                "image/png",
+                "image/jpeg",
+                "image/svg+xml"
+            ];
+
+            const extensionAllowed =
+                /\.(svg|png|jpe?g)$/i.test(file.name);
+
+            if (!allowedTypes.includes(file.type) && !extensionAllowed) {
+
+                alert("Please upload an SVG, PNG or JPG image.");
+
+                imageInput.value = "";
+
+                return;
+
+            }
+
+            if (file.size > 2 * 1024 * 1024) {
+
+                alert("Image size must be less than 2MB.");
+
+                imageInput.value = "";
+
+                return;
+
+            }
+
+            const reader = new FileReader();
+
+            reader.onload = function (event) {
+
+                imagePreview.src = event.target.result;
+
+                previewIcon.src = event.target.result;
+
+                previewIcon.hidden = false;
+
+                defaultPreviewIcon.hidden = true;
+
+                fileName.textContent = file.name;
+
+                fileSize.textContent =
+                    (file.size / 1024).toFixed(1) + " KB";
+
+                uploadContent.hidden = true;
+
+                selectedFile.hidden = false;
+
+            };
+
+            reader.readAsDataURL(file);
+
+        }
+
+
+        imageInput.addEventListener("change", function () {
+
+            displayImage(this.files[0]);
+
+        });
+
+
+        // REMOVE IMAGE
+        document.getElementById("removeImage")
+            .addEventListener("click", function (event) {
+
+                event.stopPropagation();
+
+                imageInput.value = "";
+
+                imagePreview.src = "";
+
+                previewIcon.src = "";
+
+                previewIcon.hidden = true;
+
+                defaultPreviewIcon.hidden = false;
+
+                selectedFile.hidden = true;
+
+                uploadContent.hidden = false;
+
+            });
+
+
+        // DRAG AND DROP
+        uploadArea.addEventListener("dragover", function (event) {
+
+            event.preventDefault();
+
+            uploadArea.classList.add("dragging");
+
+        });
+
+
+        uploadArea.addEventListener("dragleave", function () {
+
+            uploadArea.classList.remove("dragging");
+
+        });
+
+
+        uploadArea.addEventListener("drop", function (event) {
+
+            event.preventDefault();
+
+            uploadArea.classList.remove("dragging");
+
+            const file = event.dataTransfer.files[0];
+
+            if (!file) return;
+
+            const dataTransfer = new DataTransfer();
+
+            dataTransfer.items.add(file);
+
+            imageInput.files = dataTransfer.files;
+
+            displayImage(file);
+
+        });
+
+
+        // LOGOUT
+        const logoutButton = document.getElementById("logoutButton");
+
+        if (logoutButton) {
+
+            logoutButton.addEventListener("click", function () {
+
+                if (confirm("Are you sure you want to logout?")) {
+
+                    window.location.href = "/admin/logout";
+
+                }
+
+            });
+
+        }
+
+
+        // FORM VALIDATION
+        form.addEventListener("submit", function (event) {
+
+            if (!nameInput.value.trim()) {
+
+                event.preventDefault();
+
+                alert("Please enter a category name.");
+
+                nameInput.focus();
+
+                return;
+
+            }
+
+            if (!imageInput.files.length) {
+
+                event.preventDefault();
+
+                alert("Please upload a category icon.");
+
+                return;
+
+            }
+
+        });
+
+    </script>
+
+</body>
+
+</html>

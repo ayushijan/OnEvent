@@ -10,52 +10,744 @@
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>Verify OTP</title>
+    <title>OnEvent - Reset Password Verification</title>
 
     <link
         rel="stylesheet"
-        href="/css/user/otp.css"
+        href="/css/user/verifyOtp.css"
     >
+
+    <style>
+        /* OTP ERROR MESSAGE */
+
+        .otp-error-message {
+            display: none;
+            margin-top: 12px;
+            padding: 11px 14px;
+
+            color: #dc2626;
+            background: #fff1f0;
+
+            border: 1px solid #fecaca;
+            border-radius: 8px;
+
+            font-size: 12px;
+            line-height: 1.5;
+            text-align: center;
+        }
+
+        .otp-error-message.show {
+            display: block;
+        }
+
+        /* INVALID OTP INPUTS */
+
+        .otp-box.invalid {
+            border: 1.5px solid #dc2626 !important;
+            background: #fff8f8;
+        }
+    </style>
 
 </head>
 
+
 <body>
 
-    <main>
 
-        <h1>Verify OTP</h1>
+    <!-- HEADER -->
 
-        <p>
-            OTP sent to:
-            <strong><%= email %></strong>
-        </p>
+    <header class="auth-header">
 
-        <form
-            action="/verify-forgot-otp"
-            method="POST"
-        >
+        <a href="/" class="logo">
 
-            <input
-                type="hidden"
-                name="email"
-                value="<%= email %>"
+            <img
+                src="/images/OnEvent LOGO.png"
+                alt="OnEvent"
             >
 
-            <input
-                type="text"
-                name="otp"
-                maxlength="6"
-                placeholder="Enter OTP"
-                required
-            >
+        </a>
 
-            <button type="submit">
-                Verify OTP
-            </button>
 
-        </form>
+        <div class="login-link">
+
+            <span>Already have an account?</span>
+
+            <a href="/login">
+                Log In
+            </a>
+
+        </div>
+
+    </header>
+
+
+
+    <!-- MAIN -->
+
+    <main class="page-content">
+
+        <section class="otp-card-wrapper">
+
+
+            <!-- LEFT SIDE -->
+
+            <div class="otp-left">
+
+
+                <div class="instant-title">
+
+                    <span class="instant-icon">
+                        ✓
+                    </span>
+
+                    <span>
+                        SECURE PASSWORD RECOVERY
+                    </span>
+
+                </div>
+
+
+
+                <div class="verification-info">
+
+                    <div class="verification-heading">
+
+                        <div class="mail-icon">
+                            ✉
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                Direct Email Verification
+                            </strong>
+
+                            <span>
+                                Secured via OTP validation
+                            </span>
+
+                        </div>
+
+                        <span class="fast-badge">
+                            FAST & EASY
+                        </span>
+
+                    </div>
+
+                    <p>
+                        We send a 6-digit verification code straight
+                        to your registered email address to help you
+                        securely reset your password.
+                    </p>
+
+                </div>
+
+
+
+                <h2>
+                    Your Ticket to Endless<br>
+                    Moments
+                </h2>
+
+
+
+                <p class="left-description">
+
+                    Get back to discovering concerts, festivals,
+                    conferences and unforgettable experiences
+                    with OnEvent.
+
+                </p>
+
+
+
+                <div class="feature-box">
+
+                    <div class="feature-icon">
+                        ✓
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            Secure password recovery process
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="feature-box">
+
+                    <div class="feature-icon">
+                        ◈
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            Encrypted single-use OTP verification
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- REVIEW -->
+
+                <div class="rating">
+
+                    <div class="review-avatars">
+
+                        <img
+                            src="/images/review-1.png"
+                            alt="Reviewer"
+                        >
+
+                        <img
+                            src="/images/review-2.png"
+                            alt="Reviewer"
+                        >
+
+                        <img
+                            src="/images/review-3.png"
+                            alt="Reviewer"
+                        >
+
+                    </div>
+
+                    <span class="star">
+                        ★
+                    </span>
+
+                    <strong>
+                        4.9 / 5
+                    </strong>
+
+                    <span>
+                        rating from 450k+ reviews
+                    </span>
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- RIGHT SIDE -->
+
+            <div class="otp-right">
+
+
+                <div class="security-badge">
+
+                    <span>•</span>
+
+                    PASSWORD RECOVERY • SECURITY CHECK
+
+                </div>
+
+
+
+                <h1>
+                    Verify Your Email
+                </h1>
+
+
+
+                <p class="description">
+
+                    Enter the 6-digit OTP sent to your email
+                    to continue resetting your password.
+
+                </p>
+
+
+
+                <!-- EMAIL -->
+
+                <div class="email-box">
+
+                    <div class="email-icon">
+                        ✉
+                    </div>
+
+                    <div class="email-content">
+
+                        <span>
+                            OTP sent to
+                        </span>
+
+                        <strong>
+                            <%= email %>
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- OTP LABEL -->
+
+                <label class="otp-label">
+
+                    ONE-TIME PASSWORD (OTP)
+
+                </label>
+
+
+
+                <!-- OTP FORM -->
+
+                <form
+                    id="forgotOtpForm"
+                    method="POST"
+                    action="/verify-forgot-otp"
+                >
+
+
+                    <!-- EMAIL -->
+
+                    <input
+                        type="hidden"
+                        name="email"
+                        value="<%= email %>"
+                    >
+
+
+                    <!-- OTP INPUTS -->
+
+                    <div class="otp-inputs">
+
+                        <% for (let i = 0; i < 6; i++) { %>
+
+                            <input
+                                type="text"
+                                maxlength="1"
+                                class="otp-box <%= typeof errorMessage !== 'undefined' && errorMessage ? 'invalid' : '' %>"
+                                inputmode="numeric"
+                                autocomplete="<%= i === 0 ? 'one-time-code' : 'off' %>"
+                                aria-label="OTP digit <%= i + 1 %>"
+                            >
+
+                        <% } %>
+
+                    </div>
+
+
+
+                    <!-- ERROR MESSAGE -->
+
+                    <div
+                        id="otpErrorMessage"
+                        class="otp-error-message <%= typeof errorMessage !== 'undefined' && errorMessage ? 'show' : '' %>"
+                        role="alert"
+                        aria-live="polite"
+                    ><%= typeof errorMessage !== 'undefined' ? errorMessage : '' %></div>
+
+
+
+                    <!-- COMBINED OTP VALUE -->
+
+                    <input
+                        type="hidden"
+                        name="otp"
+                        id="otpValue"
+                    >
+
+
+
+                    <!-- HELPER -->
+
+                    <p class="otp-helper">
+
+                        Enter digits individually or paste your
+                        6-digit verification code.
+
+                    </p>
+
+
+
+                    <!-- VERIFY BUTTON -->
+
+                    <button
+                        type="submit"
+                        class="verify-button"
+                        id="verifyButton"
+                    >
+
+                        Verify OTP
+
+                        <span>
+                            →
+                        </span>
+
+                    </button>
+
+
+                </form>
+
+                <!-- RESEND OTP -->
+                <div class="resend-container">
+                    <span>Didn't receive the OTP?</span>
+                    <span id="resendTimer" class="timer">01:00</span>
+                    <button type="button" id="resendOtpButton" class="resend-btn" disabled>Resend Code</button>
+                </div>
+                <p id="resendMessage" class="resend-message" role="status" aria-live="polite"></p>
+
+
+                <!-- BOTTOM LINKS -->
+
+                <div class="otp-bottom-links">
+
+                    <a href="/forgot-password">
+
+                        ← Back
+
+                    </a>
+
+                    <a href="/login">
+
+                        Remember your password?
+
+                        <span>
+                            Log In
+                        </span>
+
+                    </a>
+
+                </div>
+
+
+            </div>
+
+
+        </section>
+
 
     </main>
+
+
+
+    <!-- FOOTER -->
+
+    <footer class="auth-footer">
+
+        <span>
+            © <%= new Date().getFullYear() %> OnEvent Platform Inc.
+            All rights reserved.
+        </span>
+
+        <div>
+
+            <a href="/privacy-policy">
+                Privacy Policy
+            </a>
+
+            <a href="/terms">
+                Terms of Service
+            </a>
+
+            <a href="/contact">
+                Help & Support
+            </a>
+
+        </div>
+
+    </footer>
+
+
+
+    <!-- OTP JAVASCRIPT -->
+
+    <script>
+
+        document.addEventListener("DOMContentLoaded", function () {
+
+            const form = document.getElementById("forgotOtpForm");
+
+            const otpBoxes = document.querySelectorAll(".otp-box");
+
+            const otpValue = document.getElementById("otpValue");
+
+            const errorMessage =
+                document.getElementById("otpErrorMessage");
+
+            const verifyButton =
+                document.getElementById("verifyButton");
+
+
+            // =====================================
+            // SHOW ERROR
+            // =====================================
+
+            function showError(message) {
+
+                errorMessage.textContent = message;
+
+                errorMessage.classList.add("show");
+
+                otpBoxes.forEach(function (box) {
+
+                    box.classList.add("invalid");
+
+                });
+
+            }
+
+
+            // =====================================
+            // CLEAR ERROR
+            // =====================================
+
+            function clearError() {
+
+                errorMessage.textContent = "";
+
+                errorMessage.classList.remove("show");
+
+                otpBoxes.forEach(function (box) {
+
+                    box.classList.remove("invalid");
+
+                });
+
+            }
+
+
+            // =====================================
+            // UPDATE OTP VALUE
+            // =====================================
+
+            function updateOtpValue() {
+
+                let otp = "";
+
+                otpBoxes.forEach(function (box) {
+
+                    otp += box.value;
+
+                });
+
+                otpValue.value = otp;
+
+            }
+
+
+            // =====================================
+            // OTP INPUT
+            // =====================================
+
+            otpBoxes.forEach(function (box, index) {
+
+                box.addEventListener("input", function () {
+
+                    clearError();
+
+                    this.value = this.value
+                        .replace(/\D/g, "")
+                        .slice(0, 1);
+
+                    if (this.value && index < 5) {
+
+                        otpBoxes[index + 1].focus();
+
+                    }
+
+                    updateOtpValue();
+
+                });
+
+
+                // BACKSPACE AND ARROW KEYS
+
+                box.addEventListener("keydown", function (event) {
+
+                    if (
+                        event.key === "Backspace" &&
+                        !this.value &&
+                        index > 0
+                    ) {
+
+                        otpBoxes[index - 1].focus();
+
+                    }
+
+                    if (
+                        event.key === "ArrowLeft" &&
+                        index > 0
+                    ) {
+
+                        otpBoxes[index - 1].focus();
+
+                    }
+
+                    if (
+                        event.key === "ArrowRight" &&
+                        index < 5
+                    ) {
+
+                        otpBoxes[index + 1].focus();
+
+                    }
+
+                });
+
+
+                // =====================================
+                // PASTE OTP
+                // =====================================
+
+                box.addEventListener("paste", function (event) {
+
+                    event.preventDefault();
+
+                    clearError();
+
+                    const pastedOTP = event.clipboardData
+                        .getData("text")
+                        .replace(/\D/g, "")
+                        .slice(0, 6);
+
+                    otpBoxes.forEach(function (input, i) {
+
+                        input.value = pastedOTP[i] || "";
+
+                    });
+
+                    updateOtpValue();
+
+                    if (pastedOTP.length < 6) {
+
+                        otpBoxes[pastedOTP.length].focus();
+
+                    } else {
+
+                        otpBoxes[5].focus();
+
+                    }
+
+                });
+
+            });
+
+
+
+            // =====================================
+            // FORM SUBMISSION
+            // =====================================
+
+            form.addEventListener("submit", function (event) {
+
+                updateOtpValue();
+
+                if (otpValue.value.length !== 6) {
+
+                    event.preventDefault();
+
+                    showError(
+                        "Please enter the complete six-digit OTP."
+                    );
+
+                    return;
+
+                }
+
+                verifyButton.disabled = true;
+
+                verifyButton.querySelector("span").textContent = "...";
+
+            });
+
+
+            // =====================================
+            // INITIAL ERROR DISPLAY
+            // =====================================
+
+            if (errorMessage.textContent.trim() !== "") {
+
+                showError(errorMessage.textContent.trim());
+
+            }
+
+
+            // INITIAL FOCUS
+            otpBoxes[0].focus();
+
+            // =====================================
+            // RESEND FORGOT PASSWORD OTP
+            // =====================================
+            const resendButton = document.getElementById("resendOtpButton");
+            const resendTimer = document.getElementById("resendTimer");
+            const resendMessage = document.getElementById("resendMessage");
+            let countdownInterval;
+
+            function startResendCountdown(seconds) {
+                clearInterval(countdownInterval);
+                let remaining = Math.max(0, Number(seconds) || 0);
+                resendButton.disabled = true;
+                resendButton.textContent = "Resend Code";
+
+                const updateTimer = () => {
+                    const minutes = Math.floor(remaining / 60);
+                    const secondsLeft = remaining % 60;
+                    resendTimer.textContent = `${String(minutes).padStart(2, "0")}:${String(secondsLeft).padStart(2, "0")}`;
+                    if (remaining <= 0) {
+                        clearInterval(countdownInterval);
+                        resendButton.disabled = false;
+                        resendTimer.style.display = "none";
+                        return;
+                    }
+                    resendTimer.style.display = "inline";
+                    remaining -= 1;
+                };
+                updateTimer();
+                if (remaining >= 0) countdownInterval = setInterval(updateTimer, 1000);
+            }
+
+            startResendCountdown(<%= typeof resendWaitSeconds !== 'undefined' ? resendWaitSeconds : 60 %>);
+
+            resendButton.addEventListener("click", async function () {
+                resendButton.disabled = true;
+                resendButton.textContent = "Sending...";
+                resendMessage.textContent = "";
+                resendMessage.className = "resend-message";
+
+                try {
+                    const response = await fetch("/resend-forgot-otp", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({})
+                    });
+                    const result = await response.json();
+                    if (!response.ok) {
+                        if (result.remainingSeconds) startResendCountdown(result.remainingSeconds);
+                        throw new Error(result.message || "Unable to resend OTP.");
+                    }
+                    resendMessage.textContent = result.message || "A new OTP has been sent to your email.";
+                    resendMessage.classList.add("success");
+                    startResendCountdown(result.remainingSeconds || 60);
+                } catch (error) {
+                    resendMessage.textContent = error.message;
+                    resendMessage.classList.add("error");
+                    if (!resendTimer.textContent || resendTimer.textContent === "00:00") {
+                        resendButton.disabled = false;
+                    }
+                } finally {
+                    resendButton.textContent = "Resend Code";
+                }
+            });
+
+        });
+
+    </script>
+
 
 </body>
 

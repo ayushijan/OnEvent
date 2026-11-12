@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>OnEvent - View Event</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="/css/admin/dashboard.css">
+    <link rel="stylesheet" href="/css/admin/viewEvent.css">
+</head>
+
+<body>
+
+<div class="admin-layout">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+        <a href="/admin/dashboard" class="brand">
+            <img src="/images/OnEvent%20LOGO.png" alt="OnEvent">
+            <span class="admin-badge">ADMIN</span>
+        </a>
+
+        <nav class="sidebar-nav">
+
+    <a href="/admin/dashboard" class="nav-item">
+        <img src="/icons/dashboard.svg" class="nav-icon" alt="">
+        <span>Dashboard</span>
+    </a>
+
+    <a href="/admin/events" class="nav-item active">
+        <img src="/icons/calendar.svg" class="nav-icon" alt="">
+        <span>Events</span>
+    </a>
+
+    <a href="/admin/categories" class="nav-item">
+        <img src="/icons/shapes.svg" class="nav-icon" alt="">
+        <span>Categories</span>
+    </a>
+
+    <a href="/admin/users" class="nav-item">
+        <img src="/icons/users.svg" class="nav-icon" alt="">
+        <span>Users</span>
+    </a>
+
+    <a href="#" class="nav-item">
+        <img src="/icons/ticket.svg" class="nav-icon" alt="">
+        <span>Bookings</span>
+    </a>
+
+    <a href="#" class="nav-item">
+        <img src="/icons/shield-check.svg" class="nav-icon" alt="">
+        <span>Attendee Verification</span>
+    </a>
+
+    <a href="#" class="nav-item">
+        <img src="/icons/reports.svg" class="nav-icon" alt="">
+        <span>Reports & Revenue</span>
+    </a>
+
+</nav>
+
+        <div class="sidebar-bottom">
+
+            <div class="system-status">
+                <span class="status-dot"></span>
+
+                <div>
+                    <small>SYSTEM STATUS</small>
+                    <strong>Operational</strong>
+                </div>
+            </div>
+
+        </div>
+
+    </aside>
+
+
+    <!-- MAIN AREA -->
+    <div class="main-area">
+
+        <!-- TOPBAR -->
+        <header class="topbar">
+
+            <div class="breadcrumbs">
+                <a href="/admin/dashboard">Home</a>
+                <span class="breadcrumb-separator">/</span>
+                <a href="/admin/events">Events</a>
+                <span class="breadcrumb-separator">/</span>
+                <strong>View Event</strong>
+            </div>
+
+            <div class="topbar-right">
+
+                <div class="date-badge">
+                    <span class="date-icon">◷</span>
+                    Last 30 Days
+                </div>
+
+                <button type="button" class="icon-button"
+                    aria-label="Notifications">
+
+                    <svg class="notification-icon"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg">
+
+                        <path
+                            d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"
+                            stroke="currentColor"
+                            stroke-width="1.7"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        />
+
+                        <path
+                            d="M10 21h4"
+                            stroke="currentColor"
+                            stroke-width="1.7"
+                            stroke-linecap="round"
+                        />
+
+                    </svg>
+
+                    <span class="notification-dot"></span>
+
+                </button>
+
+                <div class="admin-profile">
+
+                    <span class="admin-avatar">SA</span>
+
+                    <div class="admin-profile-info">
+                        <strong>Admin Console</strong>
+                        <small>Super Administrator</small>
+                    </div>
+
+                </div>
+
+                <form action="/admin/logout" method="POST">
+
+                    <button type="submit" class="topbar-logout">
+                        <span>↪</span>
+                        Logout
+                    </button>
+
+                </form>
+
+            </div>
+
+        </header>
+
+
+        <!-- PAGE CONTENT -->
+        <main class="page-content">
+
+            <!-- PAGE HEADING -->
+            <section class="page-heading">
+
+                <div class="heading-copy">
+
+                    <div class="eyebrow">
+                        <span>OPERATIONS SUITE</span>
+                        <span class="eyebrow-divider">•</span>
+                        <span class="eyebrow-muted">
+                            EVENT MANAGEMENT
+                        </span>
+                    </div>
+
+                    <h1>Event Details</h1>
+
+                    <p>
+                        View complete event information, ticket details and revenue.
+                    </p>
+
+                </div>
+
+            </section>
+
+
+            <!-- EVENT SUMMARY -->
+            <section class="view-event-summary">
+
+                <div>
+                    <span>EVENT ID</span>
+                    <strong><%= event.eventId %></strong>
+                </div>
+
+                <div>
+                    <span>TICKETS SOLD</span>
+                    <strong><%= event.ticketsSold %></strong>
+                </div>
+
+                <div>
+                    <span>AVAILABLE TICKETS</span>
+                    <strong><%= event.availableTickets %></strong>
+                </div>
+
+                <div>
+                    <span>PROJECTED REVENUE</span>
+                    <strong>
+                        ₹<%= Number(projectedRevenue).toLocaleString("en-IN") %>
+                    </strong>
+                </div>
+
+            </section>
+
+
+            <!-- EVENT DETAILS -->
+            <section class="view-event-card">
+
+                <div class="view-card-heading">
+                    <div>
+                        <h2>Basic Information</h2>
+                        <p>General information about this event.</p>
+                    </div>
+                </div>
+
+
+                <div class="event-basic-layout">
+
+                    <div class="event-image">
+
+                        <% if (imageUrl) { %>
+
+                            <img
+                                src="<%= imageUrl %>"
+                                alt="<%= event.title %>"
+                            >
+
+                        <% } else { %>
+
+                            <div class="event-image-placeholder">
+                                No event image available
+                            </div>
+
+                        <% } %>
+
+                    </div>
+
+
+                    <div class="event-basic-details">
+
+                        <span class="event-category">
+                            <%= event.categoryId && event.categoryId.name
+                                ? event.categoryId.name
+                                : "Uncategorized" %>
+                        </span>
+
+                        <h2><%= event.title %></h2>
+
+                        <p class="event-description">
+                            <%= event.description %>
+                        </p>
+
+                        <div class="event-status-row">
+
+                            <span>Event Status</span>
+
+                            <span class="event-status <%= event.status %>">
+                                <%= event.status %>
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- DATE AND VENUE -->
+            <section class="view-event-card">
+
+                <div class="view-card-heading">
+                    <div>
+                        <h2>Date & Venue</h2>
+                        <p>Event schedule and location information.</p>
+                    </div>
+                </div>
+
+                <div class="view-details-grid">
+
+                    <div class="view-detail-item">
+                        <span>EVENT DATE</span>
+                        <strong>
+                            <%= new Date(event.eventDate).toLocaleDateString("en-IN", {
+                                day: "2-digit",
+                                month: "long",
+                                year: "numeric"
+                            }) %>
+                        </strong>
+                    </div>
+
+                    <div class="view-detail-item">
+                        <span>START TIME</span>
+                        <strong><%= event.startTime %></strong>
+                    </div>
+
+                    <div class="view-detail-item">
+                        <span>END TIME</span>
+                        <strong><%= event.endTime %></strong>
+                    </div>
+
+                    <div class="view-detail-item">
+                        <span>VENUE</span>
+                        <strong><%= event.venue %></strong>
+                    </div>
+
+                    <div class="view-detail-item full-width">
+                        <span>LOCATION</span>
+                        <strong><%= event.location %></strong>
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- TICKET INFORMATION -->
+            <section class="view-event-card">
+
+                <div class="view-card-heading">
+                    <div>
+                        <h2>Ticket Information</h2>
+                        <p>Ticket pricing, capacity and revenue details.</p>
+                    </div>
+                </div>
+
+                <div class="view-details-grid">
+
+                    <div class="view-detail-item">
+                        <span>TICKET PRICE</span>
+                        <strong>
+                            ₹<%= Number(event.ticketPrice).toLocaleString("en-IN") %>
+                        </strong>
+                    </div>
+
+                    <div class="view-detail-item">
+                        <span>TOTAL CAPACITY</span>
+                        <strong><%= event.totalTickets %></strong>
+                    </div>
+
+                    <div class="view-detail-item">
+                        <span>TICKETS SOLD</span>
+                        <strong><%= event.ticketsSold %></strong>
+                    </div>
+
+                    <div class="view-detail-item">
+                        <span>AVAILABLE TICKETS</span>
+                        <strong><%= event.availableTickets %></strong>
+                    </div>
+
+                    <div class="view-detail-item">
+                        <span>PROJECTED REVENUE</span>
+                        <strong>
+                            ₹<%= Number(projectedRevenue).toLocaleString("en-IN") %>
+                        </strong>
+                    </div>
+
+                    <div class="view-detail-item">
+                        <span>ACTUAL REVENUE</span>
+                        <strong>
+                            ₹<%= Number(actualRevenue).toLocaleString("en-IN") %>
+                        </strong>
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- ACTION BUTTONS -->
+            <div class="view-event-actions">
+
+                <a href="/admin/events" class="secondary-button">
+                    Back to Events
+                </a>
+
+                <a
+                    href="/admin/events/edit/<%= event._id %>"
+                    class="primary-button"
+                >
+                    Edit Event
+                </a>
+
+            </div>
+
+
+            <!-- FOOTER -->
+            <footer class="page-footer">
+
+                <span>OnEvent Administration</span>
+                <span>View Event</span>
+
+            </footer>
+
+        </main>
+
+    </div>
+
+</div>
+
+</body>
+</html>

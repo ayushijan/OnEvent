@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Explore Events | OnEvent</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="/css/user/navbar.css">
+    <link rel="stylesheet" href="/css/user/footer.css">
+    <link rel="stylesheet" href="/css/user/events.css">
+</head>
+
+<body>
+
+    <header>
+        <%- include("../partials/navbar") %>
+    </header>
+
+    <main class="events-page">
+
+        <!-- Breadcrumb -->
+        <div class="events-breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>Explore Events</span>
+        </div>
+
+        <!-- Heading -->
+        <section class="events-heading">
+
+            <div>
+                <h1>Explore <span>Events</span></h1>
+
+                <p>
+                    Discover concerts, tech summits, marathons,
+                    creative workshops, and unforgettable experiences.
+                </p>
+            </div>
+
+            <div class="events-live-badge">
+                <span></span>
+                Discover amazing experiences
+            </div>
+
+        </section>
+
+        <!-- Search Section -->
+        <section class="events-search-section">
+
+            <form action="/events" method="GET" class="events-search-form">
+
+                <div class="search-field">
+
+                    <label>KEYWORD OR EVENT</label>
+
+                    <input
+                        type="text"
+                        name="search"
+                        placeholder="Search events..."
+                        value="<%= search %>"
+                    >
+
+                </div>
+
+                <div class="search-field">
+
+                    <label>CATEGORY</label>
+
+                    <select name="category">
+
+                        <option value="all">All Categories</option>
+
+                        <% categories.forEach(categoryItem => { %>
+
+                            <option
+                                value="<%= categoryItem._id %>"
+                                <%= category === categoryItem._id.toString() ? "selected" : "" %>
+                            >
+                                <%= categoryItem.name %>
+                            </option>
+
+                        <% }) %>
+
+                    </select>
+
+                </div>
+
+                <div class="search-button-wrapper">
+
+                    <label>&nbsp;</label>
+
+                    <button type="submit">
+                        Search Events
+                    </button>
+
+                </div>
+
+                <!-- Preserve existing filters -->
+                <input
+                    type="hidden"
+                    name="minPrice"
+                    value="<%= minPrice %>"
+                >
+
+                <input
+                    type="hidden"
+                    name="maxPrice"
+                    value="<%= maxPrice %>"
+                >
+
+                <input
+                    type="hidden"
+                    name="sort"
+                    value="<%= sort %>"
+                >
+
+            </form>
+
+            <% if (search || category !== "all" || minPrice !== "" || maxPrice !== "") { %>
+
+                <a href="/events" class="clear-search">
+                    Clear all searches and filters
+                </a>
+
+            <% } %>
+
+        </section>
+
+        <!-- Category Chips -->
+        <section class="category-chips-section">
+
+            <span class="category-chips-label">CATEGORIES:</span>
+
+            <div class="category-chips">
+
+                <a
+                    href="/events?<%= new URLSearchParams({
+                        search,
+                        sort,
+                        minPrice,
+                        maxPrice,
+                        category: "all"
+                    }).toString() %>"
+                    class="category-chip <%= category === 'all' ? 'active' : '' %>"
+                >
+                    All Events
+                </a>
+
+                <% categories.forEach(categoryItem => { %>
+
+                    <a
+                        href="/events?<%= new URLSearchParams({
+                            search,
+                            sort,
+                            minPrice,
+                            maxPrice,
+                            category: categoryItem._id.toString()
+                        }).toString() %>"
+                        class="category-chip <%= category === categoryItem._id.toString() ? 'active' : '' %>"
+                    >
+                        <%= categoryItem.name %>
+                    </a>
+
+                <% }) %>
+
+            </div>
+
+        </section>
+
+        <!-- Main Listing Layout -->
+        <section class="events-layout">
+
+            <!-- LEFT FILTER SIDEBAR -->
+            <aside class="events-sidebar">
+
+                <div class="sidebar-heading">
+
+                    <h2>Filters</h2>
+
+                    <a href="/events">Reset All</a>
+
+                </div>
+
+                <form action="/events" method="GET" id="eventsFilterForm">
+
+                    <!-- Preserve search and sorting -->
+                    <input
+                        type="hidden"
+                        name="search"
+                        value="<%= search %>"
+                    >
+
+                    <input
+                        type="hidden"
+                        name="sort"
+                        value="<%= sort %>"
+                    >
+
+                    <!-- Category Filter -->
+                    <div class="filter-group">
+
+                        <h3>Categories</h3>
+
+                        <% categories.forEach(categoryItem => { %>
+
+                            <label class="filter-option">
+
+                                <input
+                                    type="radio"
+                                    name="category"
+                                    value="<%= categoryItem._id %>"
+                                    <%= category === categoryItem._id.toString() ? "checked" : "" %>
+                                >
+
+                                <span>
+                                    <%= categoryItem.name %>
+                                </span>
+
+                            </label>
+
+                        <% }) %>
+
+                        <label class="filter-option">
+
+                            <input
+                                type="radio"
+                                name="category"
+                                value="all"
+                                <%= category === "all" ? "checked" : "" %>
+                            >
+
+                            <span>All Categories</span>
+
+                        </label>
+
+                    </div>
+
+                    <!-- Price Filter -->
+                    <div class="filter-group">
+
+                        <h3>Price Range</h3>
+
+                        <div class="price-inputs">
+
+                            <div>
+
+                                <label>Minimum</label>
+
+                                <input
+                                    type="number"
+                                    name="minPrice"
+                                    min="0"
+                                    placeholder="₹0"
+                                    value="<%= minPrice %>"
+                                >
+
+                            </div>
+
+                            <div>
+
+                                <label>Maximum</label>
+
+                                <input
+                                    type="number"
+                                    name="maxPrice"
+                                    min="0"
+                                    placeholder="No limit"
+                                    value="<%= maxPrice %>"
+                                >
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <button type="submit" class="apply-filters-button">
+                        Apply Filters
+                    </button>
+
+                </form>
+
+            </aside>
+
+            <!-- RIGHT EVENT CONTENT -->
+            <div class="events-content">
+
+                <!-- Results Toolbar -->
+                <div class="events-toolbar">
+
+                    <div class="events-count">
+
+                        <h2>Discover Events</h2>
+
+                        <p>
+                            Showing
+                            <strong><%= events.length %></strong>
+                            of
+                            <strong><%= totalEvents %></strong>
+                            events
+                        </p>
+
+                    </div>
+
+                    <!-- Sorting -->
+                    <form
+                        action="/events"
+                        method="GET"
+                        class="sort-form"
+                    >
+
+                        <input
+                            type="hidden"
+                            name="search"
+                            value="<%= search %>"
+                        >
+
+                        <input
+                            type="hidden"
+                            name="category"
+                            value="<%= category %>"
+                        >
+
+                        <input
+                            type="hidden"
+                            name="minPrice"
+                            value="<%= minPrice %>"
+                        >
+
+                        <input
+                            type="hidden"
+                            name="maxPrice"
+                            value="<%= maxPrice %>"
+                        >
+
+                        <label for="sort">Sort by:</label>
+
+                        <select
+                            name="sort"
+                            id="sort"
+                            onchange="this.form.submit()"
+                        >
+
+                            <option
+                                value="az"
+                                <%= sort === "az" ? "selected" : "" %>
+                            >
+                                A–Z
+                            </option>
+
+                            <option
+                                value="za"
+                                <%= sort === "za" ? "selected" : "" %>
+                            >
+                                Z–A
+                            </option>
+
+                            <option
+                                value="price-low"
+                                <%= sort === "price-low" ? "selected" : "" %>
+                            >
+                                Price: Low to High
+                            </option>
+
+                            <option
+                                value="price-high"
+                                <%= sort === "price-high" ? "selected" : "" %>
+                            >
+                                Price: High to Low
+                            </option>
+
+                        </select>
+
+                    </form>
+
+                </div>
+
+                <!-- Event Cards -->
+                <div class="events-grid">
+
+                    <% if (events.length === 0) { %>
+
+                        <div class="no-events">
+
+                            <h2>No events found</h2>
+
+                            <p>
+                                We couldn't find events matching your search.
+                                Try changing your filters.
+                            </p>
+
+                            <a href="/events">
+                                Explore All Events
+                            </a>
+
+                        </div>
+
+                    <% } else { %>
+
+                        <% events.forEach(event => { %>
+
+                            <article class="event-card">
+
+                                <div class="event-card-image">
+
+                                    <% if (event.imageUrl) { %>
+
+                                        <img
+                                            src="<%= event.imageUrl %>"
+                                            alt="<%= event.title %>"
+                                        >
+
+                                    <% } else { %>
+
+                                        <div class="event-image-placeholder">
+                                            Image unavailable
+                                        </div>
+
+                                    <% } %>
+
+                                    <span class="event-category-badge">
+                                        <%= event.categoryId ? event.categoryId.name : "Event" %>
+                                    </span>
+
+                                </div>
+
+                                <div class="event-card-content">
+
+                                    <div class="event-date">
+
+                                        <span>EVENT DATE</span>
+
+                                        <strong>
+                                            <%= new Date(event.eventDate).toLocaleDateString("en-IN", {
+                                                day: "numeric",
+                                                month: "short",
+                                                year: "numeric"
+                                            }) %>
+                                        </strong>
+
+                                    </div>
+
+                                    <h3>
+                                        <%= event.title %>
+                                    </h3>
+
+                                    <p class="event-location">
+                                        📍 <%= event.venue %>, <%= event.location %>
+                                    </p>
+
+                                    <div class="event-card-footer">
+
+                                        <div class="event-price">
+
+                                            <span>Starting from</span>
+
+                                            <strong>
+                                                ₹<%= Number(event.ticketPrice).toLocaleString("en-IN") %>
+                                            </strong>
+
+                                        </div>
+
+                                        <span class="tickets-available">
+                                            <%= event.availableTickets %> tickets left
+                                        </span>
+
+                                    </div>
+
+                                    <a
+                                        href="/events/<%= event._id %>"
+                                        class="view-event-button"
+                                    >
+                                        View Details
+                                    </a>
+
+                                </div>
+
+                            </article>
+
+                        <% }) %>
+
+                    <% } %>
+
+                </div>
+
+                <!-- Pagination -->
+                <% if (totalPages > 1) { %>
+
+                    <nav class="pagination">
+
+                        <% if (currentPage > 1) { %>
+
+                            <a href="/events?<%= new URLSearchParams({
+                                search,
+                                category,
+                                sort,
+                                minPrice,
+                                maxPrice,
+                                page: currentPage - 1
+                            }).toString() %>">
+                                Previous
+                            </a>
+
+                        <% } %>
+
+                        <span>
+                            Page <%= currentPage %> of <%= totalPages %>
+                        </span>
+
+                        <% if (currentPage < totalPages) { %>
+
+                            <a href="/events?<%= new URLSearchParams({
+                                search,
+                                category,
+                                sort,
+                                minPrice,
+                                maxPrice,
+                                page: currentPage + 1
+                            }).toString() %>">
+                                Next
+                            </a>
+
+                        <% } %>
+
+                    </nav>
+
+                <% } %>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <%- include("../partials/footer.ejs") %>
+
+</body>
+</html>

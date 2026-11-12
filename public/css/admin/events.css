@@ -1,0 +1,459 @@
+/* =========================================
+   EVENT MANAGEMENT
+========================================= */
+
+.event-stats-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    width: 100%;
+    max-width: none;
+    gap: 13px;
+}
+
+
+/* =========================================
+   EVENT FILTER PANEL
+========================================= */
+
+.event-filter-panel {
+    margin-top: 4px;
+}
+
+.event-filter-panel .search-box {
+    flex: 1;
+    min-width: 180px;
+}
+
+.event-filter-panel select {
+    min-width: 115px;
+}
+
+
+/* =========================================
+   EVENT TABLE
+========================================= */
+
+.events-table {
+    width: 100%;
+    min-width: 1100px;
+}
+
+.events-table th {
+    padding: 13px 14px;
+    white-space: nowrap;
+}
+
+.events-table td {
+    padding: 13px 14px;
+    vertical-align: middle;
+}
+
+
+/* =========================================
+   EVENT CELL
+========================================= */
+
+.event-cell {
+    min-width: 180px;
+    display: flex;
+    align-items: center;
+    gap: 11px;
+}
+
+.event-image {
+    width: 39px;
+    height: 39px;
+    flex-shrink: 0;
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+    border-radius: 9px;
+    background: #eeedff;
+    color: #5145ed;
+    font-size: 15px;
+    font-weight: 750;
+}
+
+.event-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.event-info {
+    min-width: 0;
+}
+
+.event-info strong,
+.event-info small {
+    display: block;
+}
+
+.event-info strong {
+    max-width: 170px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: #172033;
+    font-size: 11px;
+    font-weight: 650;
+}
+
+.event-info small {
+    margin-top: 4px;
+    color: #929bad;
+    font-size: 9px;
+}
+
+
+/* =========================================
+   EVENT CATEGORY
+========================================= */
+
+.event-category {
+    display: inline-block;
+    padding: 5px 9px;
+    border-radius: 6px;
+    background: #f1efff;
+    color: #6254df;
+    font-size: 9px;
+    font-weight: 650;
+    white-space: nowrap;
+}
+
+
+/* =========================================
+   EVENT DATE AND TIME
+========================================= */
+
+.event-date {
+    display: block;
+    color: #344054;
+    font-size: 10px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.event-time {
+    display: block;
+    margin-top: 5px;
+    color: #929bad;
+    font-size: 9px;
+    white-space: nowrap;
+}
+
+
+/* =========================================
+   EVENT VENUE
+========================================= */
+
+.event-venue {
+    min-width: 115px;
+}
+
+.event-venue strong,
+.event-venue small {
+    display: block;
+}
+
+.event-venue strong {
+    color: #344054;
+    font-size: 10px;
+    font-weight: 600;
+}
+
+.event-venue small {
+    margin-top: 4px;
+    color: #929bad;
+    font-size: 9px;
+}
+
+
+/* =========================================
+   TICKET SALES
+========================================= */
+
+.ticket-progress-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 6px;
+}
+
+.ticket-progress-info strong {
+    color: #344054;
+    font-size: 10px;
+    font-weight: 650;
+}
+
+.ticket-progress-info span {
+    color: #5145ed;
+    font-size: 9px;
+    font-weight: 700;
+}
+
+.ticket-progress {
+    width: 115px;
+    height: 5px;
+    overflow: hidden;
+    border-radius: 10px;
+    background: #ececf5;
+}
+
+.ticket-progress-fill {
+    height: 100%;
+    border-radius: 10px;
+    background: #5145ed;
+    transition: width 0.3s ease;
+}
+
+.available-tickets {
+    display: block;
+    margin-top: 5px;
+    color: #929bad;
+    font-size: 9px;
+}
+
+
+/* =========================================
+   EVENT STATUS
+========================================= */
+
+.events-table .status-badge {
+    white-space: nowrap;
+}
+
+.event-status-draft {
+    color: #b7791f;
+    background: #fff7e6;
+}
+
+.event-status-scheduled {
+    color: #3b64bb;
+    background: #edf3ff;
+}
+
+.event-status-live {
+    color: #087a55;
+    background: #e9fbf3;
+}
+
+.event-status-completed {
+    color: #667085;
+    background: #f1f3f6;
+}
+
+
+/* =========================================
+   EVENT ACTION BUTTONS
+========================================= */
+
+.events-table .action-buttons {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.events-table .action-button {
+    min-height: 27px;
+    padding: 5px 8px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+    cursor: pointer;
+}
+
+.events-table .view-btn {
+    color: #5145ed;
+    border: 1px solid #dedbff;
+    background: #fff;
+}
+
+.events-table .view-btn:hover {
+    background: #f1efff;
+}
+
+.events-table .edit-btn {
+    color: #475467;
+    border: 1px solid #e1e5ec;
+    background: #fff;
+}
+
+.events-table .edit-btn:hover {
+    background: #f5f6fa;
+}
+
+.events-table .delete-btn {
+    color: #d92d50;
+    border: 1px solid #ffd5dd;
+    background: #fff;
+}
+
+.events-table .delete-btn:hover {
+    background: #fff0f2;
+}
+
+.events-table .delete-form {
+    display: inline-flex;
+    margin: 0;
+}
+
+
+/* =========================================
+   DELETE EVENT MODAL
+========================================= */
+
+.event-delete-modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: rgba(16, 24, 40, 0.45);
+}
+
+.event-delete-modal.show {
+    display: flex;
+}
+
+.event-delete-content {
+    width: 100%;
+    max-width: 420px;
+    padding: 25px;
+    border: 1px solid #e8ebf3;
+    border-radius: 13px;
+    background: #fff;
+    text-align: center;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+    animation: eventModalOpen 0.2s ease;
+}
+
+@keyframes eventModalOpen {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.event-delete-icon {
+    width: 55px;
+    height: 55px;
+    margin: 0 auto 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: #fff1f2;
+    color: #ef4444;
+    font-size: 28px;
+    font-weight: 700;
+}
+
+.event-delete-content h2 {
+    margin-bottom: 10px;
+    color: #172033;
+    font-size: 19px;
+    font-weight: 700;
+}
+
+.event-delete-content p {
+    color: #64748b;
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+.event-delete-content strong {
+    color: #172033;
+}
+
+.event-delete-warning {
+    margin-top: 10px;
+}
+
+.event-delete-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 9px;
+    margin-top: 22px;
+}
+
+.event-delete-actions button {
+    min-height: 36px;
+}
+
+.event-delete-confirm {
+    padding: 9px 17px;
+    border: none;
+    border-radius: 7px;
+    background: #ef4444;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.event-delete-confirm:hover {
+    background: #dc2626;
+}
+
+
+/* =========================================
+   RESPONSIVE DESIGN
+========================================= */
+
+@media (max-width: 1100px) {
+
+    .event-stats-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+}
+
+@media (max-width: 760px) {
+
+    .event-filter-panel {
+        flex-wrap: wrap;
+    }
+
+    .event-filter-panel .search-box {
+        flex-basis: 100%;
+    }
+
+    .event-filter-panel select {
+        flex: 1;
+        min-width: 0;
+    }
+
+    .events-table {
+        min-width: 1000px;
+    }
+
+}
+
+@media (max-width: 420px) {
+
+    .event-stats-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .event-delete-content {
+        padding: 19px;
+    }
+
+    .event-delete-actions {
+        flex-direction: column-reverse;
+    }
+
+    .event-delete-actions button {
+        width: 100%;
+    }
+
+}

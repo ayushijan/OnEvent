@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Unavailable | OnEvent</title>
+    <link rel="stylesheet" href="/css/user/navbar.css">
+    <link rel="stylesheet" href="/css/user/footer.css">
+    <link rel="stylesheet" href="/css/user/eventDetails.css">
+</head>
+<body>
+    <header><%- include("../partials/navbar") %></header>
+    <main class="event-not-found">
+        <div class="not-found-icon">!</div>
+        <h1>Event unavailable</h1>
+        <p><%= message %></p>
+        <a href="/events" class="event-book-button">Explore other events</a>
+    </main>
+    <%- include("../partials/footer") %>
+</body>
+</html>

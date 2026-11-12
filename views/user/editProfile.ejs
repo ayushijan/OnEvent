@@ -14,12 +14,10 @@
 
 <body>
 
-    <!-- Shared Navbar -->
     <%- include("../partials/navbar") %>
 
     <main class="edit-profile-page">
 
-        <!-- Page Heading -->
         <section class="edit-page-heading">
 
             <div class="edit-heading-content">
@@ -56,13 +54,10 @@
         </section>
 
 
-        <!-- Main Layout -->
         <section class="edit-profile-layout">
 
-            <!-- Left Sidebar -->
             <aside class="edit-profile-sidebar">
 
-                <!-- Profile Card -->
                 <div class="edit-profile-card">
 
                     <div class="edit-profile-cover"></div>
@@ -118,7 +113,7 @@
                                 <span class="edit-contact-icon">☎</span>
 
                                 <span>
-                                    <%= user && user.phone
+                                    <%= user && user.phone && user.phone !== "0000000000"
                                         ? user.phone
                                         : "Phone not provided" %>
                                 </span>
@@ -131,7 +126,6 @@
                 </div>
 
 
-                <!-- Sidebar Navigation -->
                 <nav class="edit-profile-menu">
 
                     <a href="/profile" class="edit-menu-item">
@@ -169,7 +163,6 @@
                 </nav>
 
 
-                <!-- Account Engagement -->
                 <div class="engagement-card">
 
                     <div class="engagement-heading">
@@ -210,10 +203,8 @@
             </aside>
 
 
-            <!-- Right Side: Edit Details -->
             <section class="edit-details-card">
 
-                <!-- Details Heading -->
                 <div class="edit-details-heading">
 
                     <div>
@@ -233,6 +224,7 @@
 
 
                 <!-- PROFILE PHOTO UPLOAD -->
+
                 <div class="photo-upload-form">
 
                     <div class="photo-preview">
@@ -266,7 +258,6 @@
 
                         <div class="photo-upload-actions">
 
-                            <!-- Change Photo -->
                             <form
                                 action="/profile/upload-image"
                                 method="POST"
@@ -292,7 +283,6 @@
                             </form>
 
 
-                            <!-- Remove Photo -->
                             <% if (user && user.profileImage) { %>
 
                                 <form
@@ -324,6 +314,7 @@
 
 
                 <!-- REMOVE PHOTO CONFIRMATION MODAL -->
+
                 <div
                     class="confirmation-modal"
                     id="removePhotoModal"
@@ -382,6 +373,7 @@
 
 
                 <!-- EDIT PROFILE FORM -->
+
                 <form
                     action="/profile/edit"
                     method="POST"
@@ -389,7 +381,8 @@
                     novalidate
                 >
 
-                    <!-- Full Name -->
+                    <!-- FULL NAME -->
+
                     <div class="form-field full-width-field">
 
                         <label for="name">
@@ -423,13 +416,13 @@
 
 
                     <!-- EMAIL ADDRESS -->
+
                     <div class="form-field">
 
                         <div class="label-row">
 
                             <label for="currentEmail">
                                 Email Address
-                                <span class="required-mark">*</span>
                             </label>
 
                             <% if (user && user.isVerified) { %>
@@ -458,7 +451,6 @@
                         </p>
 
 
-                        <!-- CHANGE EMAIL: HIDDEN FOR GOOGLE ACCOUNTS -->
                         <% if (user && user.authProvider !== "google") { %>
 
                             <div class="new-email-section">
@@ -512,14 +504,14 @@
                     </div>
 
 
-                    <!-- Mobile Number -->
+                    <!-- MOBILE NUMBER -->
+
                     <div class="form-field">
 
                         <div class="label-row">
 
                             <label for="phone">
                                 Mobile Number
-                                <span class="required-mark">*</span>
                             </label>
 
                             <% if (user && user.isVerified) { %>
@@ -538,12 +530,12 @@
                                 type="tel"
                                 id="phone"
                                 name="phone"
-                                value="<%= user && user.phone ? user.phone : '' %>"
+                                value="<%= user && user.phone && user.phone !== '0000000000' ? user.phone : '' %>"
                                 placeholder="Enter your mobile number"
                                 maxlength="10"
-                                pattern="[0-9]{10}"
+                                inputmode="numeric"
+                                autocomplete="tel"
                                 title="Enter a valid 10-digit mobile number"
-                                required
                             >
 
                         </div>
@@ -558,7 +550,8 @@
                     </div>
 
 
-                    <!-- Preferred City / Location -->
+                    <!-- PREFERRED CITY / LOCATION -->
+
                     <div class="form-field full-width-field">
 
                         <label for="preferredLocation">
@@ -639,7 +632,8 @@
                     </div>
 
 
-                    <!-- Form Actions -->
+                    <!-- FORM ACTIONS -->
+
                     <div class="edit-form-actions">
 
                         <button
@@ -666,6 +660,7 @@
 
 
         <!-- FEATURE CARDS -->
+
         <section class="edit-feature-grid">
 
             <article class="edit-feature-card">
@@ -720,11 +715,11 @@
     </main>
 
 
-    <!-- Shared Footer -->
     <%- include("../partials/footer") %>
 
 
     <!-- EDIT PROFILE JAVASCRIPT -->
+
     <script>
         document.addEventListener("DOMContentLoaded", function () {
 
@@ -768,7 +763,7 @@
 
                     const name = nameInput.value.trim();
 
-                    if (!namePattern.test(name)) {
+                    if (!name || !namePattern.test(name)) {
                         nameError.textContent =
                             "Name must contain only letters and spaces.";
 
@@ -784,26 +779,64 @@
 
 
             // =====================================
-            // PHONE VALIDATION
+            // PHONE VALIDATION (REAL-TIME)
             // =====================================
+
+            function validatePhone() {
+
+                if (!phoneInput || !phoneError) {
+                    return true;
+                }
+
+                const phone = phoneInput.value.trim();
+
+                // Empty phone number is allowed.
+                if (phone === "") {
+                    phoneError.textContent = "";
+                    phoneError.style.display = "none";
+                    return true;
+                }
+
+                // Reject ten zeros immediately.
+                if (/^0{10}$/.test(phone)) {
+                    phoneError.textContent =
+                        "Phone number cannot contain only zeros.";
+
+                    phoneError.style.display = "block";
+                    return false;
+                }
+
+                // Validate exactly 10 digits.
+                if (!phonePattern.test(phone)) {
+                    phoneError.textContent =
+                        "Please enter a valid 10-digit mobile number.";
+
+                    phoneError.style.display = "block";
+                    return false;
+                }
+
+                phoneError.textContent = "";
+                phoneError.style.display = "none";
+
+                return true;
+            }
+
 
             if (phoneInput && phoneError) {
 
                 phoneInput.addEventListener("input", function () {
 
-                    this.value = this.value.replace(/\D/g, "").slice(0, 10);
+                    // Allow only numbers and limit to 10 digits.
+                    this.value = this.value
+                        .replace(/\D/g, "")
+                        .slice(0, 10);
 
-                    if (!phonePattern.test(this.value)) {
-                        phoneError.textContent =
-                            "Enter a valid 10-digit mobile number.";
-
-                        phoneError.style.display = "block";
-                    } else {
-                        phoneError.textContent = "";
-                        phoneError.style.display = "none";
-                    }
+                    validatePhone();
 
                 });
+
+                // Check the existing phone value on page load.
+                validatePhone();
 
             }
 
@@ -818,34 +851,36 @@
 
                     let isValid = true;
 
-                    const name = nameInput.value.trim();
+                    // Validate name.
+                    const name = nameInput
+                        ? nameInput.value.trim()
+                        : "";
 
-                    if (!namePattern.test(name)) {
+                    if (!name || !namePattern.test(name)) {
+
                         nameError.textContent =
                             "Name must contain only letters and spaces.";
 
                         nameError.style.display = "block";
 
                         isValid = false;
+
                     } else {
+
                         nameError.textContent = "";
                         nameError.style.display = "none";
+
                     }
 
 
-                    if (!phonePattern.test(phoneInput.value)) {
-                        phoneError.textContent =
-                            "Enter a valid 10-digit mobile number.";
-
-                        phoneError.style.display = "block";
-
+                    // Validate phone.
+                    // Empty phone is allowed.
+                    if (!validatePhone()) {
                         isValid = false;
-                    } else {
-                        phoneError.textContent = "";
-                        phoneError.style.display = "none";
                     }
 
 
+                    // Stop form submission if validation fails.
                     if (!isValid) {
                         event.preventDefault();
                     }
@@ -857,7 +892,6 @@
 
             // =====================================
             // CHANGE EMAIL AND SEND OTP
-            // Only runs when the email-change form exists.
             // =====================================
 
             const newEmailInput =

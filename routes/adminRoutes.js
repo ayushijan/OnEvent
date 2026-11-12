@@ -6,6 +6,7 @@ const adminLoginController = require("../controllers/admin/adminLoginController"
 const adminController = require("../controllers/admin/adminController");
 const isAdmin = require("../middleware/adminAuth");
 const adminUserController = require("../controllers/admin/adminUserController");
+const userController = require("../controllers/admin/userController");
 
 // ==================== PREVENT CACHE ====================
 
@@ -45,12 +46,19 @@ isAdmin,
 adminController.dashboard
 );
 
+// User Management
+router.get(
+    "/admin/users",
+    isAdmin,
+    userController.users
+);
+
 // ==================== EXPORT ALL USERS ====================
 
 router.get(
 "/admin/users/export",
 isAdmin,
-adminController.exportUsers
+userController.exportUsers
 );
 
 

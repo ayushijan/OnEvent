@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OnEvent - Category Management</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/admin/dashboard.css">
+    <link rel="stylesheet" href="/css/admin/categories.css">
+</head>
+<body>
+    <div class="admin-layout">
+
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+            <a href="/admin/dashboard" class="brand">
+                <img src="/images/OnEvent%20LOGO.png" alt="OnEvent">
+                <span class="admin-badge">ADMIN</span>
+            </a>
+        
+            <nav class="sidebar-nav">
+        
+                <a href="/admin/dashboard" class="nav-item">
+                    <img src="/icons/dashboard.svg" alt="">
+                    <span>Dashboard</span>
+                </a>
+        
+                <a href="/admin/events" class="nav-item">
+                    <img src="/icons/calendar.svg" alt="">
+                    <span>Events</span>
+                </a>
+        
+                <a href="/admin/categories" class="nav-item active">
+                    <img src="/icons/shapes.svg" alt="">
+                    <span>Categories</span>
+                    <span class="nav-count">
+                        <%= totalCategories %>
+                    </span>
+                </a>
+        
+                <a href="/admin/users" class="nav-item">
+                    <img src="/icons/users.svg" alt="">
+                    <span>Users</span>
+                </a>
+        
+                <a href="#" class="nav-item">
+                    <img src="/icons/ticket.svg" alt="">
+                    <span>Bookings</span>
+                </a>
+        
+                <a href="#" class="nav-item">
+                    <img src="/icons/shield-check.svg" alt="">
+                    <span>Attendee Verification</span>
+                </a>
+        
+                <a href="#" class="nav-item">
+                    <img src="/icons/reports.svg" alt="">
+                    <span>Reports & Revenue</span>
+                </a>
+        
+            </nav>
+
+            <div class="sidebar-bottom">
+                <div class="system-status">
+                    <span class="status-dot"></span>
+                    <div>
+                        <small>SYSTEM STATUS</small>
+                        <strong>Operational</strong>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- MAIN AREA -->
+        <div class="main-area">
+
+            <!-- TOPBAR -->
+            <header class="topbar">
+                <div class="breadcrumbs">
+                    <a href="/admin/dashboard">Home</a>
+                    <span class="breadcrumb-separator">/</span>
+                    <strong>Categories</strong>
+                </div>
+
+                <div class="topbar-right">
+                    <div class="date-badge">
+                        <span class="date-icon">◷</span>
+                        Last 30 Days
+                    </div>
+
+                    <button type="button" class="icon-button" aria-label="Notifications">
+                        <svg
+                            class="notification-icon"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <path
+                                d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"
+                                stroke="currentColor"
+                                stroke-width="1.7"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            />
+                            <path
+                                d="M10 21h4"
+                                stroke="currentColor"
+                                stroke-width="1.7"
+                                stroke-linecap="round"
+                            />
+                        </svg>
+                        <span class="notification-dot"></span>
+                    </button>
+
+                    <div class="admin-profile">
+                        <span class="admin-avatar">SA</span>
+                        <div class="admin-profile-info">
+                            <strong>Admin Console</strong>
+                            <small>Super Administrator</small>
+                        </div>
+                    </div>
+
+                    <form action="/admin/logout" method="POST">
+                        <button type="submit" class="topbar-logout">
+                            <span>↪</span>
+                            Logout
+                        </button>
+                    </form>
+                </div>
+            </header>
+
+            <!-- PAGE CONTENT -->
+            <main class="page-content">
+
+                <!-- PAGE HEADING -->
+                <section class="page-heading">
+                    <div class="heading-copy">
+                        <div class="eyebrow">
+                            <span>OPERATIONS SUITE</span>
+                            <span class="eyebrow-divider">•</span>
+                            <span class="eyebrow-muted">
+                                CONTENT MANAGEMENT
+                            </span>
+                        </div>
+
+                        <h1>Category Management</h1>
+
+                        <p>
+                            Organize and manage event categories across
+                            the OnEvent platform.
+                        </p>
+                    </div>
+
+                    <div class="heading-actions">
+                        <a
+                            href="/admin/categories/new"
+                            class="primary-button"
+                        >
+                            <span class="button-icon">+</span>
+                            Add Category
+                        </a>
+                    </div>
+                </section>
+
+                <!-- SUCCESS / ERROR MESSAGES -->
+                <% if (successMessage) { %>
+                    <div class="category-alert success-alert">
+                        <%= successMessage %>
+                    </div>
+                <% } %>
+
+                <% if (errorMessage) { %>
+                    <div class="category-alert error-alert">
+                        <%= errorMessage %>
+                    </div>
+                <% } %>
+
+                <!-- STATISTICS CARDS -->
+                <section class="stats-grid category-stats-grid">
+
+                    <!-- TOTAL CATEGORIES -->
+                    <article class="stat-card">
+                        <div class="stat-top">
+                            <span>TOTAL CATEGORIES</span>
+                            <span class="stat-icon purple">
+                                <svg viewBox="0 0 24 24">
+                                    <rect x="3" y="3" width="7" height="7" rx="1"/>
+                                    <rect x="14" y="3" width="7" height="7" rx="1"/>
+                                    <rect x="3" y="14" width="7" height="7" rx="1"/>
+                                    <rect x="14" y="14" width="7" height="7" rx="1"/>
+                                </svg>
+                            </span>
+                        </div>
+
+                        <h2><%= totalCategories %></h2>
+                        <p>All registered categories</p>
+                    </article>
+
+                    <!-- LINKED EVENTS -->
+                    <article class="stat-card">
+                        <div class="stat-top">
+                            <span>LINKED EVENTS</span>
+                            <span class="stat-icon green">
+                                <svg viewBox="0 0 24 24">
+                                    <rect x="3" y="4" width="18" height="17" rx="2"/>
+                                    <path d="M16 2v4M8 2v4M3 10h18"/>
+                                </svg>
+                            </span>
+                        </div>
+
+                        <h2><%= totalLinkedEvents %></h2>
+                        <p>Events assigned to categories</p>
+                    </article>
+
+                </section>
+
+                <!-- SEARCH AND FILTERS -->
+                <form
+                    action="/admin/categories"
+                    method="GET"
+                    class="filter-panel category-filter-panel"
+                >
+                    <label class="search-box">
+                        <img
+                            src="/icons/search.svg"
+                            alt=""
+                            class="search-icon"
+                        >
+
+                        <input
+                            type="search"
+                            name="search"
+                            placeholder="Search categories..."
+                            value="<%= search || '' %>"
+                            aria-label="Search categories"
+                        >
+                    </label>
+
+                    <select name="status">
+                        <option value="all" <%= status === "all" ? "selected" : "" %>>
+                            All Status
+                        </option>
+
+                        <option value="active" <%= status === "active" ? "selected" : "" %>>
+                            Active
+                        </option>
+
+                        <option value="inactive" <%= status === "inactive" ? "selected" : "" %>>
+                            Inactive
+                        </option>
+                    </select>
+
+                    <select name="sort">
+                        <option value="newest" <%= sort === "newest" ? "selected" : "" %>>
+                            Newest First
+                        </option>
+
+                        <option value="oldest" <%= sort === "oldest" ? "selected" : "" %>>
+                            Oldest First
+                        </option>
+
+                        <option value="az" <%= sort === "az" ? "selected" : "" %>>
+                            Name: A - Z
+                        </option>
+
+                        <option value="za" <%= sort === "za" ? "selected" : "" %>>
+                            Name: Z - A
+                        </option>
+                    </select>
+
+                    <button
+                        type="submit"
+                        class="filter-button"
+                        aria-label="Apply filters"
+                    >
+                        <img src="/icons/search.svg" alt="">
+                    </button>
+
+                    <a
+                        href="/admin/categories"
+                        class="clear-filters"
+                    >
+                        Clear
+                    </a>
+                </form>
+
+                <!-- CATEGORY TABLE -->
+                <section class="table-card">
+                    <div class="table-scroll">
+                        <table class="users-table categories-table">
+                            <thead>
+                                <tr>
+                                    <th>CATEGORY</th>
+                                    <th>DESCRIPTION</th>
+                                    <th>LINKED EVENTS</th>
+                                    <th>STATUS</th>
+                                    <th>CREATED DATE</th>
+                                    <th class="actions-heading">ACTIONS</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <% if (categories.length === 0) { %>
+                                    <tr>
+                                        <td colspan="6" class="empty-state">
+                                            <div class="empty-icon">
+                                                <img src="/icons/search.svg" alt="">
+                                            </div>
+
+                                            <strong>No categories found</strong>
+
+                                            <p>
+                                                Try changing your search
+                                                or filters.
+                                            </p>
+                                        </td>
+                                    </tr>
+                                <% } else { %>
+
+                                    <% categories.forEach((category, index) => { %>
+                                        <tr>
+
+                                            <!-- CATEGORY -->
+                                            <td>
+                                                <div class="category-cell">
+                                                    <div class="category-image">
+                                                        <% if (category.imageUrl) { %>
+                                                            <img
+                                                                src="<%= category.imageUrl %>"
+                                                                alt="<%= category.name %>"
+                                                                loading="lazy"
+                                                            >
+                                                        <% } else { %>
+                                                            <span>
+                                                                <%= category.name.charAt(0).toUpperCase() %>
+                                                            </span>
+                                                        <% } %>
+                                                    </div>
+
+                                                    <div class="category-info">
+                                                        <strong>
+                                                            <%= category.name %>
+                                                        </strong>
+
+                                                        <small>
+                                                            <%= category.slug %>
+                                                        </small>
+                                                    </div>
+                                                </div>
+                                            </td>
+
+                                            <!-- DESCRIPTION -->
+                                            <td>
+                                                <span class="category-description">
+                                                    <%= category.description || "No description" %>
+                                                </span>
+                                            </td>
+
+                                            <!-- LINKED EVENTS -->
+                                            <td>
+                                                <span class="event-count">
+                                                    <%= category.eventCount %> Events
+                                                </span>
+                                            </td>
+
+                                            <!-- STATUS -->
+                                            <td>
+                                                <% if (category.status === "active") { %>
+                                                    <span class="status-badge active-status">
+                                                        <span></span>
+                                                        Active
+                                                    </span>
+                                                <% } else { %>
+                                                    <span class="status-badge blocked-status">
+                                                        <span></span>
+                                                        Inactive
+                                                    </span>
+                                                <% } %>
+                                            </td>
+
+                                            <!-- CREATED DATE -->
+                                            <td>
+                                                <span class="joined-date">
+                                                    <%= category.createdAt
+                                                        ? new Date(category.createdAt).toLocaleDateString(
+                                                            "en-GB",
+                                                            {
+                                                                day: "2-digit",
+                                                                month: "short",
+                                                                year: "numeric"
+                                                            }
+                                                        )
+                                                        : "-" %>
+                                                </span>
+                                            </td>
+
+                                            <!-- ACTIONS -->
+                                            <td>
+                                                <div class="action-buttons">
+                                                    <button type="button" class="action-button view-btn" data-name="<%= category.name %>" data-slug="<%= category.slug %>"
+                                                        data-description="<%= category.description || 'No description available' %>" data-status="<%= category.status %>"
+                                                        data-image="<%= category.imageUrl || '' %>"
+                                                        data-created="<%= category.createdAt ? new Date(category.createdAt).toLocaleDateString('en-GB') : '-' %>"
+                                                        onclick="openViewModal(this)">
+                                                        View
+                                                    </button>
+
+                                                    <button
+                                                        type="button"
+                                                        class="action-button edit-btn"
+                                                        data-id="<%= category._id %>"
+                                                        data-name="<%= category.name %>"
+                                                        data-description="<%= category.description || '' %>"
+                                                        data-status="<%= category.status %>"
+                                                        onclick="openEditModal(this)"
+                                                    >
+                                                        Edit
+                                                    </button>
+
+                                                    <form
+                                                        action="/admin/categories/delete/<%= category._id %>"
+                                                        method="POST"
+                                                        class="delete-form"
+                                                        data-name="<%= category.name %>"
+                                                    >
+                                                        <button
+                                                            type="submit"
+                                                            class="action-button delete-btn"
+                                                        >
+                                                            Delete
+                                                        </button>
+                                                    </form>
+                                                </div>
+                                            </td>
+
+                                        </tr>
+                                    <% }); %>
+                                <% } %>
+                            </tbody>
+                        </table>
+                    </div>
+
+                                        <!-- TABLE FOOTER -->
+                    <div class="table-footer">
+
+                        <div class="table-summary">
+                            Showing
+
+                            <strong>
+                                <%= categories.length > 0
+                                    ? ((currentPage - 1) * limit) + 1
+                                    : 0 %>
+
+                                –
+
+                                <%= ((currentPage - 1) * limit) + categories.length %>
+                            </strong>
+
+                            categories of
+
+                            <strong><%= totalCategories %></strong>
+                        </div>
+
+                        <!-- PAGINATION -->
+                        <div class="pagination">
+
+                            <% if (currentPage > 1) { %>
+                                <a
+                                    class="page-button"
+                                    href="/admin/categories?page=<%= currentPage - 1 %>&search=<%= encodeURIComponent(search || '') %>&status=<%= status %>&sort=<%= sort %>"
+                                >
+                                    Previous
+                                </a>
+                            <% } else { %>
+                                <button
+                                    type="button"
+                                    class="page-button"
+                                    disabled
+                                >
+                                    Previous
+                                </button>
+                            <% } %>
+
+
+                            <% for (let p = 1; p <= totalPages; p++) { %>
+                                <a
+                                    class="page-number <%= p === currentPage ? 'current-page' : '' %>"
+                                    href="/admin/categories?page=<%= p %>&search=<%= encodeURIComponent(search || '') %>&status=<%= status %>&sort=<%= sort %>"
+                                >
+                                    <%= p %>
+                                </a>
+                            <% } %>
+
+
+                            <% if (currentPage < totalPages) { %>
+                                <a
+                                    class="page-button"
+                                    href="/admin/categories?page=<%= currentPage + 1 %>&search=<%= encodeURIComponent(search || '') %>&status=<%= status %>&sort=<%= sort %>"
+                                >
+                                    Next
+                                </a>
+                            <% } else { %>
+                                <button
+                                    type="button"
+                                    class="page-button"
+                                    disabled
+                                >
+                                    Next
+                                </button>
+                            <% } %>
+
+                        </div>
+
+                    </div>
+                </section>
+
+
+                <!-- FOOTER -->
+                <footer class="page-footer">
+                    <span>OnEvent Administration</span>
+                    <span>Category Management</span>
+                </footer>
+
+            </main>
+
+        </div>
+    </div>
+
+
+    <!-- ========================================
+         EDIT CATEGORY MODAL
+    ========================================= -->
+
+    <div class="category-modal" id="editCategoryModal">
+
+        <div class="category-modal-content">
+
+            <h2>Edit Category</h2>
+
+            <p>Update your category information.</p>
+
+            <form
+                id="editCategoryForm"
+                method="POST"
+            >
+
+                <label for="editName">Category Name</label>
+
+                <input
+                    type="text"
+                    id="editName"
+                    name="name"
+                    maxlength="50"
+                    required
+                >
+
+
+                <label for="editDescription">Description</label>
+
+                <textarea
+                    id="editDescription"
+                    name="description"
+                    maxlength="500"
+                ></textarea>
+
+
+                <label for="editStatus">Status</label>
+
+                <select
+                    id="editStatus"
+                    name="status"
+                >
+                    <option value="active">Active</option>
+                    <option value="inactive">Inactive</option>
+                </select>
+
+
+                <div class="category-modal-actions">
+
+                    <button
+                        type="button"
+                        class="secondary-button"
+                        onclick="closeEditModal()"
+                    >
+                        Cancel
+                    </button>
+
+                    <button
+                        type="submit"
+                        class="primary-button"
+                    >
+                        Save Changes
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+    <!-- VIEW CATEGORY MODAL -->
+
+<div class="category-modal" id="viewCategoryModal">
+
+    <div class="category-modal-content">
+
+        <h2>Category Details</h2>
+
+        <div style="text-align: center; margin: 20px 0;">
+            <img
+                id="viewCategoryImage"
+                src=""
+                alt="Category Image"
+                style="width: 100px; height: 100px; object-fit: cover; border-radius: 12px; display: none;"
+            >
+
+            <div
+                id="viewCategoryPlaceholder"
+                style="width: 100px; height: 100px; margin: auto; border-radius: 12px; background: #eeeeff; display: flex; align-items: center; justify-content: center; font-size: 35px;"
+            >
+                ◇
+            </div>
+        </div>
+
+        <div class="view-category-details">
+
+            <p><strong>Name:</strong> <span id="viewName"></span></p>
+
+            <p><strong>Slug:</strong> <span id="viewSlug"></span></p>
+
+            <p><strong>Description:</strong> <span id="viewDescription"></span></p>
+
+            <p><strong>Status:</strong> <span id="viewStatus"></span></p>
+
+            <p><strong>Created Date:</strong> <span id="viewCreated"></span></p>
+
+        </div>
+
+        <div class="category-modal-actions">
+
+            <button
+                type="button"
+                class="secondary-button"
+                onclick="closeViewModal()"
+            >
+                Close
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+    <!-- ========================================
+         DELETE CATEGORY MODAL
+    ========================================= -->
+
+    <div class="category-modal" id="deleteCategoryModal">
+
+        <div class="category-modal-content delete-modal-content">
+
+            <div class="delete-modal-icon">!</div>
+
+            <h2>Delete Category?</h2>
+
+            <p>
+                Are you sure you want to delete
+                <strong id="deleteCategoryName"></strong>?
+            </p>
+
+            <p class="delete-warning">
+                This action will remove the category from your category list.
+            </p>
+
+            <div class="category-modal-actions">
+
+                <button
+                    type="button"
+                    class="secondary-button"
+                    onclick="closeDeleteModal()"
+                >
+                    Cancel
+                </button>
+
+                <button
+                    type="button"
+                    class="delete-confirm-button"
+                    id="confirmDeleteButton"
+                >
+                    Yes, Delete
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ========================================
+         JAVASCRIPT
+    ========================================= -->
+
+    <script>
+
+        // ========================================
+// VIEW CATEGORY MODAL
+// ========================================
+
+const viewModal = document.getElementById("viewCategoryModal");
+
+function openViewModal(button) {
+
+    document.getElementById("viewName").textContent =
+        button.dataset.name;
+
+    document.getElementById("viewSlug").textContent =
+        button.dataset.slug;
+
+    document.getElementById("viewDescription").textContent =
+        button.dataset.description;
+
+    document.getElementById("viewStatus").textContent =
+        button.dataset.status;
+
+    document.getElementById("viewCreated").textContent =
+        button.dataset.created;
+
+    const image = document.getElementById("viewCategoryImage");
+    const placeholder = document.getElementById("viewCategoryPlaceholder");
+
+    if (button.dataset.image) {
+        image.src = button.dataset.image;
+        image.style.display = "block";
+        placeholder.style.display = "none";
+    } else {
+        image.style.display = "none";
+        placeholder.style.display = "flex";
+    }
+
+    viewModal.classList.add("show");
+}
+
+function closeViewModal() {
+    viewModal.classList.remove("show");
+}
+
+        // ========================================
+        // EDIT CATEGORY MODAL
+        // ========================================
+
+        const editModal = document.getElementById("editCategoryModal");
+
+
+        function openEditModal(button) {
+
+            const id = button.dataset.id;
+            const name = button.dataset.name;
+            const description = button.dataset.description;
+            const status = button.dataset.status;
+
+            document.getElementById("editName").value = name;
+
+            document.getElementById("editDescription").value = description;
+
+            document.getElementById("editStatus").value = status;
+
+            document.getElementById("editCategoryForm").action =
+                `/admin/categories/edit/${id}`;
+
+            editModal.classList.add("show");
+
+        }
+
+
+        function closeEditModal() {
+
+            editModal.classList.remove("show");
+
+        }
+
+
+        // ========================================
+        // DELETE CATEGORY MODAL
+        // ========================================
+
+        const deleteModal = document.getElementById("deleteCategoryModal");
+
+        const deleteCategoryName =
+            document.getElementById("deleteCategoryName");
+
+        const confirmDeleteButton =
+            document.getElementById("confirmDeleteButton");
+
+        let selectedDeleteForm = null;
+
+
+        // Open delete confirmation modal
+
+        document.querySelectorAll(".delete-form").forEach(form => {
+
+            form.addEventListener("submit", function(event) {
+
+                event.preventDefault();
+
+                selectedDeleteForm = this;
+
+                deleteCategoryName.textContent = this.dataset.name;
+
+                deleteModal.classList.add("show");
+
+            });
+
+        });
+
+
+        // Close delete modal
+
+        function closeDeleteModal() {
+
+            deleteModal.classList.remove("show");
+
+            selectedDeleteForm = null;
+
+        }
+
+
+        // Confirm deletion
+
+        confirmDeleteButton.addEventListener("click", function() {
+
+            if (selectedDeleteForm) {
+
+                selectedDeleteForm.submit();
+
+            }
+
+        });
+
+
+        // ========================================
+        // CLOSE MODALS WHEN CLICKING OUTSIDE
+        // ========================================
+
+        editModal.addEventListener("click", function(event) {
+
+            if (event.target === editModal) {
+
+                closeEditModal();
+
+            }
+
+        });
+
+
+        deleteModal.addEventListener("click", function(event) {
+
+            if (event.target === deleteModal) {
+
+                closeDeleteModal();
+
+            }
+
+        });
+
+
+        // ========================================
+        // ESCAPE KEY
+        // ========================================
+
+        document.addEventListener("keydown", function(event) {
+
+            if (event.key === "Escape") {
+
+                closeEditModal();
+
+                closeDeleteModal();
+
+            }
+
+        });
+
+        // ========================================
+// AUTO DISMISS SUCCESS MESSAGE
+// ========================================
+
+const successAlert = document.querySelector(".success-alert");
+
+if (successAlert) {
+
+    // Remove success message from URL
+    const currentUrl = new URL(window.location.href);
+
+    currentUrl.searchParams.delete("success");
+
+    window.history.replaceState(
+        {},
+        document.title,
+        currentUrl.pathname + currentUrl.search + currentUrl.hash
+    );
+
+    // Hide message after 3 seconds
+    setTimeout(() => {
+
+        successAlert.classList.add("fade-out");
+
+        setTimeout(() => {
+            successAlert.remove();
+        }, 400);
+
+    }, 3000);
+
+}
+
+    </script>
+
+</body>
+</html>

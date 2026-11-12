@@ -70,8 +70,8 @@ const sendEmailChangeOtp = async (userId, newEmail) => {
     // Generate a cryptographically secure six-digit OTP.
     const otp = crypto.randomInt(100000, 1000000).toString();
 
-    // OTP expires in five minutes.
-    const expiresAt = new Date(Date.now() + 5 * 60 * 1000);
+    // OTP expires in one minutes.
+    const expiresAt = new Date(Date.now() + 60000);
 
     // Save the OTP.
     const otpData = new Otp({

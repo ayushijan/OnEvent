@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Checkout | OnEvent</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/user/navbar.css"><link rel="stylesheet" href="/css/user/footer.css"><link rel="stylesheet" href="/css/user/booking.css"><link rel="stylesheet" href="/css/user/checkout.css">
+</head><body>
+<header><%- include('../partials/navbar') %></header>
+<main class="booking-page checkout-page">
+<nav class="booking-breadcrumb"><a href="/">Home</a><span>›</span><a href="/events">Explore Events</a><span>›</span><a href="/events/<%= event._id %>"><%= event.title %></a><span>›</span><strong>Checkout</strong></nav>
+<div class="booking-stepper"><span class="step-complete"><b>✓</b> Tickets & attendee details</span><i></i><span class="step-active"><b>2</b> Checkout</span></div>
+<div class="booking-heading"><span class="booking-eyebrow">ALMOST THERE</span><h1>Review & checkout</h1><p>Please review your information before proceeding.</p></div>
+<div class="checkout-layout">
+<div class="checkout-main-column">
+<section class="checkout-card"><div class="checkout-card-heading"><div><span class="booking-eyebrow">CUSTOMER INFORMATION</span><h2>Attendee details</h2></div><span class="verified-pill">✓ Details provided</span></div>
+<div class="customer-info-grid"><div><small>FULL NAME</small><strong><%= attendeeName %></strong></div><div><small>EMAIL ADDRESS</small><strong><%= attendeeEmail %></strong></div><div><small>MOBILE NUMBER</small><strong><%= attendeePhone %></strong></div></div></section>
+<section class="checkout-card"><span class="booking-eyebrow">EVENT DETAILS</span><div class="checkout-event-row"><% if(imageUrl){ %><img src="<%= imageUrl %>" alt="<%= event.title %>"><% } %><div><span class="booking-event-category"><%= event.categoryId ? event.categoryId.name : 'EVENT' %></span><h2><%= event.title %></h2><p><%= new Date(event.eventDate).toLocaleDateString('en-IN',{weekday:'long',day:'numeric',month:'long',year:'numeric'}) %> · <%= event.startTime %> – <%= event.endTime %></p><p><%= event.venue %>, <%= event.location %></p></div></div>
+<div class="checkout-ticket-line"><span>General Admission × <%= quantity %></span><strong><%= totalAmount === 0 ? 'Free' : '₹'+totalAmount.toLocaleString('en-IN') %></strong></div></section>
+<section class="checkout-card policy-card"><span class="booking-eyebrow">PLEASE REVIEW</span><h2>Booking policies</h2><label><input type="checkbox" required checked disabled><span>I understand that event entry is subject to the organiser's terms and venue rules.</span></label><label><input type="checkbox" required checked disabled><span>I have reviewed the attendee information and ticket quantity above.</span></label><p class="policy-disclaimer">Cancellation, rescheduling and refund eligibility depend on the event organiser's policy. Please check the event terms before completing a booking.</p></section>
+</div>
+<aside class="checkout-card checkout-summary"><span class="booking-eyebrow">ORDER SUMMARY</span><h2>Payment summary</h2><div class="checkout-summary-line"><span>Ticket price</span><strong><%= Number(event.ticketPrice) === 0 ? 'Free' : '₹'+Number(event.ticketPrice).toLocaleString('en-IN') %></strong></div><div class="checkout-summary-line"><span>Tickets</span><strong><%= quantity %></strong></div><div class="checkout-summary-line"><span>Booking fees</span><strong>Calculated at payment</strong></div><div class="checkout-grand-total"><span>Total payable</span><strong><%= totalAmount === 0 ? 'Free' : '₹'+totalAmount.toLocaleString('en-IN') %></strong></div>
+<div class="payment-unavailable"><strong>Payment integration pending</strong><p>This checkout screen is a review step only. No payment has been taken and no tickets have been reserved.</p></div>
+<a class="booking-secondary-button checkout-back" href="/events/<%= event._id %>/book">← Edit attendee / ticket details</a>
+<button type="button" class="booking-primary-button" disabled>Continue to Payment</button>
+</aside>
+</div>
+</main><%- include('../partials/footer') %></body></html>

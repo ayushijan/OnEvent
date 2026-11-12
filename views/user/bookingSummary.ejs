@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking Summary | OnEvent</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/user/navbar.css">
+    <link rel="stylesheet" href="/css/user/footer.css">
+    <link rel="stylesheet" href="/css/user/booking.css">
+</head>
+<body>
+    <header><%- include("../partials/navbar") %></header>
+
+    <main class="booking-page">
+        <nav class="booking-breadcrumb" aria-label="Breadcrumb">
+            <a href="/events">Explore Events</a><span>›</span>
+            <a href="/events/<%= event._id %>"><%= event.title %></a><span>›</span>
+            <span>Booking Summary</span>
+        </nav>
+
+        <div class="booking-heading">
+            <span class="booking-eyebrow">STEP 2 OF 3</span>
+            <h1>Review your booking</h1>
+            <p>Check the details before continuing.</p>
+        </div>
+
+        <section class="summary-card">
+            <div class="summary-event-row">
+                <% if (imageUrl) { %>
+                    <img class="summary-event-image" src="<%= imageUrl %>" alt="<%= event.title %>">
+                <% } %>
+                <div>
+                    <span class="booking-event-category"><%= event.categoryId ? event.categoryId.name : "EVENT" %></span>
+                    <h2><%= event.title %></h2>
+                    <p><%= event.venue %>, <%= event.location %></p>
+                    <p><%= new Date(event.eventDate).toLocaleDateString("en-IN", { day: "numeric", month: "long", year: "numeric" }) %> · <%= event.startTime %></p>
+                </div>
+            </div>
+
+            <div class="summary-lines">
+                <div><span>Ticket price</span><strong><%= ticketPrice === 0 ? "Free" : "₹" + ticketPrice.toLocaleString("en-IN") %></strong></div>
+                <div><span>Number of tickets</span><strong><%= quantity %></strong></div>
+                <div class="price-total"><span>Total amount</span><strong><%= totalAmount === 0 ? "Free" : "₹" + totalAmount.toLocaleString("en-IN") %></strong></div>
+            </div>
+
+            <div class="summary-actions">
+                <a class="booking-secondary-button" href="/events/<%= event._id %>/book">Change tickets</a>
+                <button class="booking-primary-button" type="button" disabled title="Booking confirmation will be implemented in the next step">Continue to Booking <span>→</span></button>
+            </div>
+            <p class="booking-disclaimer">This is a review only. No booking has been created and no tickets have been reserved.</p>
+        </section>
+    </main>
+
+    <%- include("../partials/footer") %>
+</body>
+</html>

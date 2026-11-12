@@ -9,6 +9,7 @@ const loginController = require("../controllers/user/loginController");
 const forgotPasswordController = require("../controllers/user/forgotPasswordController");
 const resetPasswordController = require("../controllers/user/resetPasswordController");
 const profileController = require("../controllers/user/profileController");
+const eventController = require("../controllers/user/eventController");
 const profileService = require("../services/user/profileService");
 const emailChangeController = require("../controllers/user/emailChangeController");
 const emailChangeVerifyController = require("../controllers/user/emailChangeVerifyController");
@@ -52,7 +53,35 @@ router.post(
     otpController.verifyForgotPasswordOtp
 );
 
+router.post("/resend-forgot-otp", otpController.resendForgotPasswordOtp);
+
 router.post("/reset-password", resetPasswordController);
+
+// ==================== CUSTOMER EVENTS ====================
+
+router.get(
+    "/events",
+    isAuthenticated,
+    eventController.getEvents
+);
+
+router.get(
+    "/events/:id/book",
+    isAuthenticated,
+    eventController.getTicketSelection
+);
+
+router.get(
+    "/events/:id/booking/summary",
+    isAuthenticated,
+    eventController.getBookingSummary
+);
+
+router.get(
+    "/events/:id",
+    isAuthenticated,
+    eventController.getEventDetails
+);
 
 // ==================== HOME ====================
 

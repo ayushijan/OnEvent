@@ -5,10 +5,19 @@ const path = require("path");
 const session = require("express-session");
 const passport = require("./config/passport");
 
+// User session middleware
+const userSession = require("./middleware/userSession");
+
 const app = express();
+
+// =====================================
+// IMPORT ROUTES
+// =====================================
 
 const userRoutes = require("./routes/userRoutes");
 const adminRoutes = require("./routes/adminRoutes");
+const categoryRoutes = require("./routes/categoryRoutes");
+const eventRoutes = require("./routes/eventRoutes");
 
 // =====================================
 // VALIDATE ENVIRONMENT VARIABLES
@@ -51,12 +60,6 @@ app.use(
 // SESSION CONFIGURATION
 // =====================================
 
-if (!process.env.SESSION_SECRET) {
-    throw new Error(
-        "SESSION_SECRET is missing from your .env file."
-    );
-}
-
 app.use(
     session({
         name: "onevent.sid",
@@ -90,12 +93,26 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // =====================================
-// ROUTES
+// USER SESSION MIDDLEWARE
 // =====================================
 
+app.use(userSession);
+
+// =====================================
+// APPLICATION ROUTES
+// =====================================
+
+// User routes
 app.use("/", userRoutes);
 
+// Admin routes
 app.use("/", adminRoutes);
+
+// Category management routes
+app.use("/admin", categoryRoutes);
+
+// Event management routes
+app.use("/admin", eventRoutes);
 
 // =====================================
 // 404 HANDLER

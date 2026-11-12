@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Tickets | OnEvent</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/user/navbar.css">
+    <link rel="stylesheet" href="/css/user/footer.css">
+    <link rel="stylesheet" href="/css/user/booking.css">
+</head>
+<body>
+    <header><%- include("../partials/navbar") %></header>
+
+    <main class="booking-page">
+        <nav class="booking-breadcrumb" aria-label="Breadcrumb">
+            <a href="/events">Explore Events</a><span>›</span>
+            <a href="/events/<%= event._id %>"><%= event.title %></a><span>›</span>
+            <span>Select Tickets</span>
+        </nav>
+
+        <div class="booking-heading">
+            <span class="booking-eyebrow">STEP 1 OF 3</span>
+            <h1>Select your tickets</h1>
+            <p>Choose how many tickets you'd like for this event.</p>
+        </div>
+
+        <div class="booking-layout">
+            <section class="booking-event-card">
+                <% if (imageUrl) { %>
+                    <img class="booking-event-image" src="<%= imageUrl %>" alt="<%= event.title %>">
+                <% } else { %>
+                    <div class="booking-event-image booking-image-placeholder">Event image unavailable</div>
+                <% } %>
+                <div class="booking-event-info">
+                    <span class="booking-event-category"><%= event.categoryId ? event.categoryId.name : "EVENT" %></span>
+                    <h2><%= event.title %></h2>
+                    <p>📍 <%= event.venue %>, <%= event.location %></p>
+                    <p>📅 <%= new Date(event.eventDate).toLocaleDateString("en-IN", { weekday: "long", day: "numeric", month: "long", year: "numeric" }) %></p>
+                    <p>🕒 <%= event.startTime %> – <%= event.endTime %></p>
+                </div>
+            </section>
+
+            <section class="ticket-selection-card">
+                <h2>Ticket quantity</h2>
+                <p class="ticket-availability"><%= event.availableTickets %> tickets available</p>
+
+                <form action="/events/<%= event._id %>/booking/summary" method="GET" id="ticketSelectionForm">
+                    <label for="quantity">Number of tickets</label>
+                    <div class="quantity-control">
+                        <button type="button" class="quantity-button" id="decreaseQuantity" aria-label="Decrease ticket quantity">−</button>
+                        <input type="number" id="quantity" name="quantity" value="1" min="1" max="<%= maxSelectable %>" readonly>
+                        <button type="button" class="quantity-button" id="increaseQuantity" aria-label="Increase ticket quantity">+</button>
+                    </div>
+                    <p class="quantity-limit">Maximum <%= maxSelectable %> tickets per booking.</p>
+
+                    <div class="price-breakdown">
+                        <div><span>Ticket price</span><strong id="unitPrice" data-price="<%= Number(event.ticketPrice) %>"><%= Number(event.ticketPrice) === 0 ? "Free" : "₹" + Number(event.ticketPrice).toLocaleString("en-IN") %></strong></div>
+                        <div><span>Quantity</span><strong id="quantityLabel">1</strong></div>
+                        <div class="price-total"><span>Total amount</span><strong id="totalAmount"><%= Number(event.ticketPrice) === 0 ? "Free" : "₹" + Number(event.ticketPrice).toLocaleString("en-IN") %></strong></div>
+                    </div>
+
+                    <button type="submit" class="booking-primary-button">Continue to Summary <span>→</span></button>
+                    <a class="booking-back-link" href="/events/<%= event._id %>">Back to event details</a>
+                </form>
+            </section>
+        </div>
+        <p class="booking-disclaimer">Your tickets are not reserved until you complete the booking.</p>
+    </main>
+
+    <%- include("../partials/footer") %>
+    <script>
+        (() => {
+            const quantityInput = document.getElementById("quantity");
+            const decreaseButton = document.getElementById("decreaseQuantity");
+            const increaseButton = document.getElementById("increaseQuantity");
+            const quantityLabel = document.getElementById("quantityLabel");
+            const totalAmount = document.getElementById("totalAmount");
+            const unitPriceElement = document.getElementById("unitPrice");
+            const unitPrice = Number(unitPriceElement.dataset.price);
+            const maximum = Number(quantityInput.max);
+            const formatPrice = (amount) => amount === 0 ? "Free" : "₹" + amount.toLocaleString("en-IN");
+
+            const updateTotal = () => {
+                const quantity = Number(quantityInput.value);
+                quantityLabel.textContent = quantity;
+                totalAmount.textContent = formatPrice(unitPrice * quantity);
+                decreaseButton.disabled = quantity <= 1;
+                increaseButton.disabled = quantity >= maximum;
+            };
+
+            decreaseButton.addEventListener("click", () => {
+                quantityInput.value = Math.max(1, Number(quantityInput.value) - 1);
+                updateTotal();
+            });
+
+            increaseButton.addEventListener("click", () => {
+                quantityInput.value = Math.min(maximum, Number(quantityInput.value) + 1);
+                updateTotal();
+            });
+
+            document.getElementById("ticketSelectionForm").addEventListener("submit", (event) => {
+                const quantity = Number(quantityInput.value);
+                if (!Number.isInteger(quantity) || quantity < 1 || quantity > maximum) {
+                    event.preventDefault();
+                    alert("Please select a valid ticket quantity.");
+                }
+            });
+
+            updateTotal();
+        })();
+    </script>
+</body>
+</html>

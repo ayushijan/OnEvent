@@ -1,0 +1,316 @@
+/* =========================================
+   VIEW EVENT SUMMARY
+========================================= */
+
+.view-event-summary {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.view-event-summary > div {
+    padding: 16px;
+    border: 1px solid #e8ebf3;
+    border-radius: 9px;
+    background: #fff;
+}
+
+.view-event-summary span,
+.view-event-summary strong {
+    display: block;
+}
+
+.view-event-summary span {
+    margin-bottom: 8px;
+    color: #929bad;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: .5px;
+}
+
+.view-event-summary strong {
+    color: #172033;
+    font-size: 17px;
+    font-weight: 700;
+}
+
+
+/* =========================================
+   EVENT CARDS
+========================================= */
+
+.view-event-card {
+    margin-bottom: 17px;
+    padding: 21px;
+    border: 1px solid #e8ebf3;
+    border-radius: 10px;
+    background: #fff;
+}
+
+.view-card-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 22px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #edf0f4;
+}
+
+.view-card-heading h2 {
+    margin: 0 0 6px;
+    color: #172033;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.view-card-heading p {
+    margin: 0;
+    color: #929bad;
+    font-size: 10px;
+}
+
+
+/* =========================================
+   BASIC EVENT INFORMATION
+========================================= */
+
+.event-basic-layout {
+    display: flex;
+    align-items: flex-start;
+    gap: 24px;
+}
+
+.event-image {
+    width: 230px;
+    height: 165px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    border: 1px solid #e8ebf3;
+    border-radius: 9px;
+    background: #f8f8fc;
+}
+
+.event-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.event-image-placeholder {
+    padding: 10px;
+    color: #929bad;
+    font-size: 11px;
+    text-align: center;
+}
+
+.event-basic-details {
+    flex: 1;
+    min-width: 0;
+}
+
+.event-category {
+    display: inline-block;
+    padding: 6px 10px;
+    border-radius: 5px;
+    background: #f0efff;
+    color: #5145ed;
+    font-size: 10px;
+    font-weight: 650;
+}
+
+.event-basic-details h2 {
+    margin: 13px 0 10px;
+    color: #172033;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.event-description {
+    margin: 0;
+    color: #667085;
+    font-size: 11px;
+    line-height: 1.8;
+    white-space: pre-line;
+}
+
+.event-status-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 18px;
+}
+
+.event-status-row > span:first-child {
+    color: #929bad;
+    font-size: 10px;
+    font-weight: 600;
+}
+
+.event-status {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 9px;
+    font-weight: 700;
+    text-transform: capitalize;
+}
+
+.event-status.live {
+    background: #e7f8ef;
+    color: #16834a;
+}
+
+.event-status.draft {
+    background: #f0f1f4;
+    color: #667085;
+}
+
+.event-status.scheduled {
+    background: #fff5df;
+    color: #b7791f;
+}
+
+.event-status.completed {
+    background: #eaf0ff;
+    color: #3659b8;
+}
+
+
+/* =========================================
+   DETAIL GRID
+========================================= */
+
+.view-details-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+}
+
+.view-detail-item {
+    min-width: 0;
+    padding: 13px;
+    border: 1px solid #edf0f4;
+    border-radius: 8px;
+    background: #fafbfe;
+}
+
+.view-detail-item span,
+.view-detail-item strong {
+    display: block;
+}
+
+.view-detail-item span {
+    margin-bottom: 8px;
+    color: #929bad;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: .5px;
+}
+
+.view-detail-item strong {
+    color: #172033;
+    font-size: 12px;
+    font-weight: 650;
+    overflow-wrap: anywhere;
+}
+
+.view-detail-item.full-width {
+    grid-column: 1 / -1;
+}
+
+
+/* =========================================
+   ACTION BUTTONS
+========================================= */
+
+.view-event-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 20px;
+    margin-bottom: 25px;
+}
+
+.view-event-actions .primary-button,
+.view-event-actions .secondary-button {
+    min-height: 38px;
+    padding: 10px 18px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 7px;
+    font-family: inherit;
+    font-size: 11px;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.view-event-actions .primary-button {
+    border: none;
+    background: #5145ed;
+    color: #fff;
+}
+
+.view-event-actions .primary-button:hover {
+    background: #4035d3;
+}
+
+.view-event-actions .secondary-button {
+    border: 1px solid #e1e5ec;
+    background: #fff;
+    color: #475467;
+}
+
+.view-event-actions .secondary-button:hover {
+    background: #f5f6fa;
+}
+
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 900px) {
+
+    .view-event-summary {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+}
+
+@media (max-width: 600px) {
+
+    .event-basic-layout {
+        flex-direction: column;
+    }
+
+    .event-image {
+        width: 100%;
+        max-width: 300px;
+    }
+
+    .view-details-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .view-detail-item.full-width {
+        grid-column: auto;
+    }
+
+    .view-event-actions {
+        flex-direction: column-reverse;
+        align-items: stretch;
+    }
+
+    .view-event-actions a {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+}

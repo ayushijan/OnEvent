@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= event.title %> | OnEvent</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/user/navbar.css">
+    <link rel="stylesheet" href="/css/user/footer.css">
+    <link rel="stylesheet" href="/css/user/eventDetails.css">
+</head>
+<body>
+    <header>
+        <%- include("../partials/navbar") %>
+    </header>
+
+    <main class="event-details-page">
+        <nav class="event-details-breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a><span>›</span>
+            <a href="/events">Explore Events</a><span>›</span>
+            <span><%= event.title %></span>
+        </nav>
+
+        <section class="event-details-hero">
+            <div class="event-details-image-wrap">
+                <% if (imageUrl) { %>
+                    <img class="event-details-image" src="<%= imageUrl %>" alt="<%= event.title %>">
+                <% } else { %>
+                    <div class="event-details-image-placeholder">Event image unavailable</div>
+                <% } %>
+                <% if (event.categoryId) { %>
+                    <span class="event-details-category"><%= event.categoryId.name %></span>
+                <% } %>
+            </div>
+
+            <div class="event-details-main">
+                <span class="event-details-eyebrow">ONEVENT EXPERIENCE</span>
+                <h1><%= event.title %></h1>
+                <p class="event-details-location">📍 <%= event.venue %>, <%= event.location %></p>
+
+                <div class="event-details-facts">
+                    <div class="event-fact">
+                        <span class="fact-label">DATE</span>
+                        <strong><%= new Date(event.eventDate).toLocaleDateString("en-IN", { weekday: "long", day: "numeric", month: "long", year: "numeric" }) %></strong>
+                    </div>
+                    <div class="event-fact">
+                        <span class="fact-label">TIME</span>
+                        <strong><%= event.startTime %> – <%= event.endTime %></strong>
+                    </div>
+                    <div class="event-fact">
+                        <span class="fact-label">TICKETS LEFT</span>
+                        <strong><%= event.availableTickets %></strong>
+                    </div>
+                </div>
+
+                <div class="event-details-price-row">
+                    <div>
+                        <span class="fact-label">TICKET PRICE</span>
+                        <strong class="event-details-price"><%= Number(event.ticketPrice) === 0 ? "Free" : "₹" + Number(event.ticketPrice).toLocaleString("en-IN") %></strong>
+                    </div>
+                    <% if (event.availableTickets > 0) { %>
+                        <a class="event-book-button" href="/events/<%= event._id %>/book">Book Now <span>→</span></a>
+                    <% } else { %>
+                        <button class="event-book-button sold-out-button" type="button" disabled>Sold Out</button>
+                    <% } %>
+                </div>
+                <p class="booking-note">Choose your tickets to continue.</p>
+            </div>
+        </section>
+
+        <section class="event-description-section">
+            <div class="section-heading">
+                <span>ABOUT THE EVENT</span>
+                <h2>Event Description</h2>
+            </div>
+            <p class="event-description"><%= event.description %></p>
+        </section>
+
+        <a class="back-to-events" href="/events">← Back to Explore Events</a>
+    </main>
+
+    <%- include("../partials/footer") %>
+</body>
+</html>

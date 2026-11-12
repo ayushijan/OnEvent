@@ -10,7 +10,7 @@ const updateUserStatus = async (req, res) => {
             req.body.status
         );
 
-        res.redirect("/admin/dashboard");
+        res.redirect("/admin/users");
 
     } catch (error) {
 

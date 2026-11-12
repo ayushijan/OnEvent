@@ -10,7 +10,11 @@ const getProfile = async (userId) => {
         throw error;
     }
 
-    return user;
+    if (user.phone === "0000000000") {
+    user.phone = "";
+}
+
+return user;
 };
 
 module.exports = getProfile;
